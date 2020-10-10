@@ -1347,25 +1347,25 @@ lesshat-selector {
     text-align: center;
 }
 
-.widget-box .ti-eye,
+.widget-box .ti-1,
 .grad-progress-1,
 .bg-gradient .bg-grad-1 {
     background: -webkit-linear-gradient(315deg, rgba(158, 15, 184, 0.7) -10%, rgba(5, 232, 255, 0.8) 180%);
 }
 
-.widget-box .ti-user,
+.widget-box .ti-2,
 .grad-progress-2,
 .bg-gradient .bg-grad-2 {
     background: -webkit-linear-gradient(315deg, #66cccc -10%, #ffff66 180%);
 }
 
-.widget-box .ti-money,
+.widget-box .ti-3,
 .grad-progress-3,
 .bg-gradient .bg-grad-3 {
     background: -webkit-linear-gradient(315deg, #ff6699 -10%, #ff9933 180%);
 }
 
-.widget-box .ti-wallet,
+.widget-box .ti-4,
 .grad-progress-4,
 .bg-gradient .bg-grad-4 {
     background: -webkit-linear-gradient(315deg, #ffcc33 -10%, #ff6699 180%);

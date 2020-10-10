@@ -17,7 +17,30 @@
     "LOGOUT" : "خروج",
     "MAIN_MENU" : "منوی اصلی",
     "OTHER_SETTINGS" : "سایر تنظیمات",
+    "LOADING..." : "در حال بارگذاری...",
+    "RECENT_SHOP_LIST" : "لیست آخرین خرید ها",
     "" : "",
     "" : "",
+    "" : "",
+    "" : "",
+    "" : "",
+
+
+    "TODAY_SELL_COUNT" : "تعداد فروش امروز",
+    "TODAY_INCOME" : "دریافتی های امروز",
+    "TODAY_COUNSELING_SESSIONS" : "جلسات مشاوره امروز",
+    "ACTIVE_VISA_COUNT" : "تعداد ویزا های فعال",
+
+
+    "DASHBOARD" : "داشبورد",
+    "MAIN_DASHBOARD" : "داشبورد اصلی",
+    "MANAGE_VISA" : "مدیریت ویزا",
+    "MANAGE_AGENCIES" : "مدیریت آزانس ها",
+    "USERS" : "کاربران",
+    "COUNSELING_SESSIONS" : "جلسات مشاوره",
+    "BANK_TRANSACTIONS" : "تراکنش های بانکی",
+    "FACTORS" : "فاکتور ها",
+    "CONTRACTS" : "قرارداد ها",
+    "QUIZ_MAKER" : "آزمون ساز",
     "" : ""
 }

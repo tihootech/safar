@@ -144,7 +144,7 @@ Author:
 }
 .side-navigation > li > a i{
   font-size: 18px;
-  margin-right: 10px;
+  margin-left: 10px;
 }
 .side-navigation > li.menu-list > a {
     position: relative;
