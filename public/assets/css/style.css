@@ -41,18 +41,20 @@
 /*---------------------
    1. body css
 -----------------------*/
-@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,700');
-@import url('https://fonts.googleapis.com/css?family=Archivo+Black');
-@import url('https://fonts.googleapis.com/css?family=Orbitron:900');
+@font-face {
+    font-family: 'Dirooz';
+    src: url(../fonts/Dirooz.ttf);
+}
 
 body {
-    font-family: 'Nunito Sans', sans-serif;
+    font-family: 'Dirooz', sans-serif;
     color: #323232;
     font-size: 14px;
     line-height: 20px;
     overflow-x: hidden;
     background: #2d3540;
     direction: rtl;
+    text-align: right;
 }
 
 a{
