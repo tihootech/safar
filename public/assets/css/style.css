@@ -2659,11 +2659,11 @@ ul.p-social-link li a {
     24.Responsive
 -------------------------*/
 
-@media (min-width: 1024px) {
+/* @media (min-width: 1024px) {
     .body-content {
         min-height: 1600px;
     }
-}
+} */
 
 @media (max-width: 414px) {
     .btn-mb-5 .btn {

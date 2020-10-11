@@ -7,23 +7,19 @@
    // Sidebar toggle
 
    jQuery('.menu-list > a').click(function() {
-      
+
       var parent = jQuery(this).parent();
       var sub = parent.find('> ul');
-      
+
       if(!jQuery('body').hasClass('sidebar-collapsed')) {
          if(sub.is(':visible')) {
             sub.slideUp(300, function(){
                parent.removeClass('nav-active');
                jQuery('.body-content').css({height: ''});
-               adjustMainContentHeight();
             });
          } else {
             visibleSubMenuClose();
             parent.addClass('nav-active');
-            sub.slideDown(300, function(){
-                adjustMainContentHeight();
-            });
          }
       }
       return false;
@@ -41,14 +37,6 @@
       });
    }
 
-   function adjustMainContentHeight() {
-
-      // Adjust main content height
-      var docHeight = jQuery(document).height();
-      if(docHeight > jQuery('.body-content').height())
-         jQuery('.body-content').height(docHeight);
-   }
-
    // add class mouse hover
 
    jQuery('.side-navigation > li').hover(function(){
@@ -57,7 +45,7 @@
       jQuery(this).removeClass('nav-hover');
    });
 
-   
+
 
 
    // Toggle Menu
@@ -85,7 +73,6 @@
          else
             body.addClass('sidebar-open');
 
-         adjustMainContentHeight();
       }
 
        //var owl = $("#news-feed").data("owlCarousel");
@@ -249,4 +236,3 @@ function($) {
     "use strict";
     $.Components.init();
 }(window.jQuery);
-

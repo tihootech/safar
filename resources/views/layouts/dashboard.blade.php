@@ -13,17 +13,22 @@
         <!-- Theme icon -->
         <link rel="shortcut icon" href="{{asset('assets/images/favicon.ico')}}">
 
-        <link href="{{asset('assets/plugins/morris-chart/morris.css')}}" rel="stylesheet">
         <!-- Theme Css -->
         <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
         <link href="{{asset('assets/css/slidebars.min.css')}}" rel="stylesheet">
         <link href="{{asset('assets/css/icons.css')}}" rel="stylesheet">
         <link href="{{asset('assets/css/menu.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
+
+        <link href="{{asset('assets/plugins/select2/select2.min.css')}}" rel="stylesheet">
+        <link href="{{asset('assets/plugins/morris-chart/morris.css')}}" rel="stylesheet">
+        <link href="{{asset('assets/plugins/dropify/css/dropify.css')}}" rel="stylesheet" type="text/css">
+
     </head>
 
     <body class="sticky-header">
-        <section>
+
+        <section id="vue-app">
 
             @include('fragments.dashboard-sidebar')
 
@@ -43,6 +48,9 @@
 
         </section>
 
+        <!-- app vuejs -->
+        <script src="{{asset('js/app.js')}}"></script>
+
         <!-- jQuery -->
         <script src="{{asset('assets/js/jquery-3.2.1.min.js')}}"></script>
         <script src="{{asset('assets/js/popper.min.js')}}"></script>
@@ -61,18 +69,13 @@
         <script src="{{asset('assets/plugins/chart-js/Chart.bundle.js')}}"></script>
         <script src="{{asset('assets/plugins/morris-chart/raphael-min.js')}}"></script>
         <script src="{{asset('assets/plugins/morris-chart/morris.js')}}"></script>
-        <script src="{{asset('assets/pages/dashboard-init.js')}}"></script>
+        <script src="{{asset('assets/plugins/dropify/js/dropify.min.js')}}"></script>
+        <script src="{{asset('assets/plugins/select2/select2.min.js')}}"></script>
 
 
         <!--app js-->
         <script src="{{asset('assets/js/jquery.app.js')}}"></script>
-        <script>
-            jQuery(document).ready(function($) {
-                $('.counter').counterUp({
-                delay: 100,
-                time: 1200
-                });
-            });
-        </script>
+        <script src="{{asset('assets/js/custom.js')}}"></script>
+
     </body>
 </html>
