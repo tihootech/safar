@@ -48,7 +48,7 @@
 
 
     "COUNTRY_FA_NAME" : "نام کشور به فارسی",
-    "COUNTRY_EN_NAME" : "نام کشور به لاتین",
+    "COUNTRY_LATIN_NAME" : "نام کشور به لاتین",
     "ISO_CODE" : "کد دو حرفی ISO",
     "COUNTRY_CODE" : "پیش شماره کشور",
     "BRIEF_INFO" : "توضیحات مختصر",

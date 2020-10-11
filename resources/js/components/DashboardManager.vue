@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import fa from '../../lang/fa.json';
+    import fa from '../../lang/fa.json'; // translate file
     import VueRouter from 'vue-router';
     import Dashboard from './Dashboard.vue';
     import VisaList from './VisaList.vue';
@@ -26,6 +26,7 @@
                 {
                     path : '/visa-list',
                     component : VisaList,
+                    name : 'visa-list',
                 },
                 {
                     path : '/new-visa',

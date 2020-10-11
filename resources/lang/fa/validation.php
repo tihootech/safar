@@ -56,7 +56,7 @@ return array(
     "not_in"           => ":attribute انتخاب شده، معتبر نیست.",
     "numeric"          => ":attribute باید شامل عدد باشد.",
     "regex"            => ":attribute یک فرمت معتبر نیست.",
-    "required"         => "فیلد :attribute الزامی است.",
+    "required"         => ":attribute الزامی است.",
     "required_if"      => "فیلد :attribute هنگامی که :other برابر با :value است، الزامیست.",
     "required_with"    => ":attribute الزامی است زمانی که :values موجود است.",
     "required_with_all"=> ":attribute الزامی است زمانی که :values موجود است.",
@@ -70,7 +70,7 @@ return array(
         "array"   => ":attribute باسد شامل :size آیتم باشد.",
     ),
     "timezone"         => "The :attribute must be a valid zone.",
-    "unique"           => ":attribute قبلا انتخاب شده است.",
+    "unique"           => ":attribute قبلا استفاده شده است.",
     "url"              => "فرمت آدرس :attribute اشتباه است.",
     "exists_code"      => "کد ارسالی در سیستم وجود ندارد.",
     "expire_code"      => "اعتبار کد ارسالی به پایان رسیده است.",
@@ -105,5 +105,19 @@ return array(
     | of "email". This simply helps us make messages a little cleaner.
     |
     */
-    'attributes' => [],
+    'attributes' => [
+        "country.fa_name" => "نام کشور به فارسی",
+        "country.latin_name" => "نام کشور به لاتین",
+        "country.iso_code" => "کد دو حرفی ISO",
+        "country.country_code" => "پیش شماره کشور",
+        "country.lang" => "زبان",
+        "country.local_name" => "نام محلی",
+        "country.brief_info" => "توضیحات مختصر",
+        "country.full_info" => "توضیحات کامل",
+        "visas.*.name" => "نام ویزا",
+        "visas.*.latin_name" => "نام لاتین ویزا",
+        "visas.*.type" => "نوع ویزا",
+        "visas.*.quiz" => "انتخاب آزمون",
+        "visas.*.counselings" => "نوع مشاوره های در دسترس",
+    ],
 );

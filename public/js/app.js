@@ -2041,6 +2041,7 @@ var _lang_fa_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
 //
 //
 //
+ // translate file
 
 
 
@@ -2059,7 +2060,8 @@ var _lang_fa_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
       }
     }, {
       path: '/visa-list',
-      component: _VisaList_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+      component: _VisaList_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+      name: 'visa-list'
     }, {
       path: '/new-visa',
       component: _NewVisa_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
@@ -2252,9 +2254,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['fa'],
+  methods: {
+    formSubmit: function formSubmit() {
+      var countryData = {};
+      var visas = [];
+      $('#country-data input, textarea').each(function () {
+        var name = $(this).attr('name');
+        countryData[name] = $(this).val();
+      });
+      $('#visas > .card').each(function () {
+        var visaData = {};
+        $(this).find('input, select, textarea').each(function () {
+          var type = $(this).attr('type');
+          var name = $(this).attr('name');
+          var value = type == 'checkbox' ? $(this).is(':checked') : $(this).val();
+          visaData[name] = value;
+        });
+        visas.push(visaData);
+      });
+      var formData = {
+        country: countryData,
+        visas: visas
+      };
+      axios.post('/api/visa/store', formData).then(function (res) {
+        console.log(res);
+
+        if (res.status == 200 && res.data.success) {
+          window.location.href = "/dashboard#/visa-list";
+          swalSuccess();
+        } else {
+          swalError();
+        }
+      })["catch"](function (err) {
+        if (err.response.status == 422) {
+          // validation error
+          swalValidationErrors(err.response.data.errors);
+        }
+      });
+    }
+  },
   mounted: function mounted() {
     $('.dropify').dropify(window.DROPIFY_OPTIONS);
     $('.select2').select2(window.SELECT2_OPTIONS);
@@ -20807,379 +20847,384 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("form", [
-    _c("div", { staticClass: "page-head" }, [
-      _c("h4", { staticClass: "mt-2 mb-2" }, [
-        _vm._v(" " + _vm._s(_vm.fa.NEW_VISA) + " ")
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card card-body" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-3 form-group" }, [
-          _c("label", [_vm._v(" " + _vm._s(_vm.fa.COUNTRY_FA_NAME) + " ")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", name: "fa_name", required: "", value: "" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-3 form-group" }, [
-          _c("label", [_vm._v(" " + _vm._s(_vm.fa.COUNTRY_EN_NAME) + " ")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", name: "en_name", required: "", value: "" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-3 form-group" }, [
-          _c("label", [_vm._v(" " + _vm._s(_vm.fa.ISO_CODE) + " ")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              name: "iso_code",
-              required: "",
-              value: "",
-              maxlength: "2",
-              dir: "ltr"
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-3 form-group" }, [
-          _c("label", [_vm._v(" " + _vm._s(_vm.fa.COUNTRY_CODE) + " ")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              name: "country_code",
-              required: "",
-              value: "",
-              dir: "ltr"
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-3 form-group" }, [
-          _c("label", [_vm._v(" " + _vm._s(_vm.fa.LANG) + " ")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", name: "lang", required: "", value: "" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-3 form-group" }, [
-          _c("label", [_vm._v(" " + _vm._s(_vm.fa.LOCAL_NAME) + " ")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", name: "local_name", required: "", value: "" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-12 form-group" }, [
-          _c("label", [_vm._v(" " + _vm._s(_vm.fa.BRIEF_INFO) + " ")]),
-          _vm._v(" "),
-          _c("textarea", {
-            staticClass: "form-control",
-            attrs: { name: "brief_info", rows: "3", required: "" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-12 form-group" }, [
-          _c("label", [_vm._v(" " + _vm._s(_vm.fa.FULL_INFO) + " ")]),
-          _vm._v(" "),
-          _c("textarea", {
-            staticClass: "form-control",
-            attrs: { name: "full_info", rows: "6", required: "" }
-          })
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card bg-info text-light my-4" }, [
-      _c("div", { staticClass: "card-body py-0" }, [
-        _c("div", { staticClass: "page-head d-flex justify-content-between" }, [
-          _c("h4", [_vm._v(" " + _vm._s(_vm.fa.UPLOAD_PICTURES))]),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-light btn-sm ml-3 cloner",
-              attrs: {
-                href: "javascript:void(0)",
-                "data-target": "upload-images"
-              }
-            },
-            [
-              _c("i", { staticClass: "mdi mdi-plus" }),
-              _vm._v(" " + _vm._s(_vm.fa.NEW_PICTURE) + "\n                ")
-            ]
-          )
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row", attrs: { id: "upload-images" } }, [
-      _c("div", { staticClass: "col-md-4" }, [
-        _c("div", { staticClass: "card m-b-30" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("h5", { staticClass: "header-title" }, [
-              _vm._v(" " + _vm._s(_vm.fa.MAIN_PICTURE) + " ")
-            ]),
-            _vm._v(" "),
-            _c(
-              "label",
-              { staticClass: "mb-3", attrs: { for: "input-file-now" } },
-              [_vm._v(_vm._s(_vm.fa.THIS_WILL_BE_YOUR_MAIN_PICTURE))]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "dropify",
-              attrs: { type: "file", name: "main_picture" }
-            })
-          ])
+  return _c(
+    "form",
+    {
+      attrs: { method: "post" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.formSubmit($event)
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "page-head" }, [
+        _c("h4", { staticClass: "mt-2 mb-2" }, [
+          _vm._v(" " + _vm._s(_vm.fa.NEW_VISA) + " ")
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-4 d-none model" }, [
-        _c("div", { staticClass: "card m-b-30" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "d-flex justify-content-between" }, [
-              _c("h5", { staticClass: "header-title" }, [
-                _vm._v(" " + _vm._s(_vm.fa.OTHER_PICTURES) + " ")
-              ]),
+      _c(
+        "div",
+        { staticClass: "card card-body", attrs: { id: "country-data" } },
+        [
+          _c("div", { staticClass: "row justify-content-center" }, [
+            _c("div", { staticClass: "col-md-3 form-group" }, [
+              _c("label", [_vm._v(" " + _vm._s(_vm.fa.COUNTRY_FA_NAME) + " ")]),
               _vm._v(" "),
-              _vm._m(0)
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "text", name: "fa_name", value: "" }
+              })
             ]),
             _vm._v(" "),
-            _c(
-              "label",
-              { staticClass: "mb-3", attrs: { for: "input-file-now" } },
-              [_vm._v(_vm._s(_vm.fa.PICTURE_NUMBER_X) + " "), _c("span")]
-            ),
+            _c("div", { staticClass: "col-md-3 form-group" }, [
+              _c("label", [
+                _vm._v(" " + _vm._s(_vm.fa.COUNTRY_LATIN_NAME) + " ")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "text", name: "latin_name", value: "" }
+              })
+            ]),
             _vm._v(" "),
-            _c("input", { attrs: { type: "file", name: "pictures[]" } })
+            _c("div", { staticClass: "col-md-3 form-group" }, [
+              _c("label", [_vm._v(" " + _vm._s(_vm.fa.ISO_CODE) + " ")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  name: "iso_code",
+                  value: "",
+                  maxlength: "2",
+                  dir: "ltr"
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3 form-group" }, [
+              _c("label", [_vm._v(" " + _vm._s(_vm.fa.COUNTRY_CODE) + " ")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  name: "country_code",
+                  value: "",
+                  dir: "ltr"
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3 form-group" }, [
+              _c("label", [_vm._v(" " + _vm._s(_vm.fa.LANG) + " ")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "text", name: "lang", value: "" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3 form-group" }, [
+              _c("label", [_vm._v(" " + _vm._s(_vm.fa.LOCAL_NAME) + " ")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "text", name: "local_name", value: "" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-12 form-group" }, [
+              _c("label", [_vm._v(" " + _vm._s(_vm.fa.BRIEF_INFO) + " ")]),
+              _vm._v(" "),
+              _c("textarea", {
+                staticClass: "form-control",
+                attrs: { name: "brief_info", rows: "3" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-12 form-group" }, [
+              _c("label", [_vm._v(" " + _vm._s(_vm.fa.FULL_INFO) + " ")]),
+              _vm._v(" "),
+              _c("textarea", {
+                staticClass: "form-control",
+                attrs: { name: "full_info", rows: "6" }
+              })
+            ])
           ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "sticky-top" }, [
-      _c("div", { staticClass: "card bg-info text-light" }, [
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "card bg-info text-light my-4" }, [
         _c("div", { staticClass: "card-body py-0" }, [
           _c(
             "div",
             { staticClass: "page-head d-flex justify-content-between" },
             [
-              _c("h4", [_vm._v(" " + _vm._s(_vm.fa.DEFINE_VISA_TYPE))]),
+              _c("h4", [_vm._v(" " + _vm._s(_vm.fa.UPLOAD_PICTURES))]),
               _vm._v(" "),
               _c(
                 "a",
                 {
                   staticClass: "btn btn-light btn-sm ml-3 cloner",
-                  attrs: { href: "javascript:void(0)", "data-target": "visas" }
+                  attrs: {
+                    href: "javascript:void(0)",
+                    "data-target": "upload-images"
+                  }
                 },
                 [
                   _c("i", { staticClass: "mdi mdi-plus" }),
                   _vm._v(
-                    " " + _vm._s(_vm.fa.ADD_NEW_VISA) + "\n                    "
+                    " " + _vm._s(_vm.fa.NEW_PICTURE) + "\n                "
                   )
                 ]
               )
             ]
           )
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { attrs: { id: "visas" } }, [
-      _c("div", { staticClass: "card my-3 model" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "row align-items-center" }, [
-            _c("div", { staticClass: "col-md-3 form-group" }, [
-              _c("label", [_vm._v(" " + _vm._s(_vm.fa.NAME) + " ")]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", name: "name", required: "", value: "" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3 form-group" }, [
-              _c("label", [_vm._v(" " + _vm._s(_vm.fa.LATIN_NAME) + " ")]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  name: "latin_name",
-                  required: "",
-                  value: ""
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3 form-group" }, [
-              _c("label", [_vm._v(" " + _vm._s(_vm.fa.VISA_TYPE) + " ")]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  name: "visa_type",
-                  required: "",
-                  value: ""
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3 form-group" }, [
-              _c("label", [_vm._v(" " + _vm._s(_vm.fa.CHOOSE_QUIZ) + " ")]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", name: "quiz", required: "", value: "" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3 form-group" }, [
-              _c("label", [_vm._v(" " + _vm._s(_vm.fa.FIRST_PICTURE) + " ")]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control form-control-sm",
-                attrs: {
-                  type: "file",
-                  name: "first_picture",
-                  required: "",
-                  value: ""
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-4 form-group" }, [
-              _c("label", [
-                _vm._v(" " + _vm._s(_vm.fa.AVAILABLE_COUNSELING) + " ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row", attrs: { id: "upload-images" } }, [
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card m-b-30" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("h5", { staticClass: "header-title" }, [
+                _vm._v(" " + _vm._s(_vm.fa.MAIN_PICTURE) + " ")
               ]),
               _vm._v(" "),
               _c(
-                "select",
-                {
-                  staticClass: "select2",
-                  attrs: {
-                    name: "counselings",
-                    multiple: "",
-                    required: "",
-                    dir: "rtl"
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "1" } }, [
-                    _vm._v(" " + _vm._s(_vm.fa.IN_TEXT) + " ")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "2" } }, [
-                    _vm._v(" " + _vm._s(_vm.fa.IN_TELEPHONE) + " ")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "3" } }, [
-                    _vm._v(" " + _vm._s(_vm.fa.IN_VIDEO) + " ")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "4" } }, [
-                    _vm._v(" " + _vm._s(_vm.fa.IN_PERSON) + " ")
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group col-md-2" }, [
-              _c("label", { staticClass: "cr-styled" }, [
-                _c("input", {
-                  attrs: { type: "hidden", name: "online_sopping", value: "0" }
-                }),
-                _vm._v(" "),
-                _c("input", {
-                  attrs: {
-                    type: "checkbox",
-                    name: "online_sopping",
-                    value: "1"
-                  }
-                }),
-                _vm._v(" "),
-                _c("i", { staticClass: "fa" }),
-                _vm._v(
-                  "\n                            " +
-                    _vm._s(_vm.fa.ONLINE_SOPPING) +
-                    "\n                        "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-12 form-group" }, [
-              _c("label", [_vm._v(" " + _vm._s(_vm.fa.DOCUMENTS) + " ")]),
+                "label",
+                { staticClass: "mb-3", attrs: { for: "input-file-now" } },
+                [_vm._v(_vm._s(_vm.fa.THIS_WILL_BE_YOUR_MAIN_PICTURE))]
+              ),
               _vm._v(" "),
-              _c("textarea", {
-                staticClass: "form-control",
-                attrs: { name: "documents", rows: "3", required: "" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-12 form-group" }, [
-              _c("label", [_vm._v(" " + _vm._s(_vm.fa.CONDITIONS) + " ")]),
-              _vm._v(" "),
-              _c("textarea", {
-                staticClass: "form-control",
-                attrs: { name: "conditions", rows: "3", required: "" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-12 form-group" }, [
-              _c("label", [_vm._v(" " + _vm._s(_vm.fa.ISSUANCE_TIME) + " ")]),
-              _vm._v(" "),
-              _c("textarea", {
-                staticClass: "form-control",
-                attrs: { name: "issuance_time", rows: "3", required: "" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-12 form-group" }, [
-              _c("label", [_vm._v(" " + _vm._s(_vm.fa.ISSUANCE_STEPS) + " ")]),
-              _vm._v(" "),
-              _c("textarea", {
-                staticClass: "form-control",
-                attrs: { name: "issuance_steps", rows: "3", required: "" }
+              _c("input", {
+                staticClass: "dropify",
+                attrs: { type: "file", name: "main_picture" }
               })
             ])
           ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-4 d-none model" }, [
+          _c("div", { staticClass: "card m-b-30" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "d-flex justify-content-between" }, [
+                _c("h5", { staticClass: "header-title" }, [
+                  _vm._v(" " + _vm._s(_vm.fa.OTHER_PICTURES) + " ")
+                ]),
+                _vm._v(" "),
+                _vm._m(0)
+              ]),
+              _vm._v(" "),
+              _c(
+                "label",
+                { staticClass: "mb-3", attrs: { for: "input-file-now" } },
+                [_vm._v(_vm._s(_vm.fa.PICTURE_NUMBER_X) + " "), _c("span")]
+              ),
+              _vm._v(" "),
+              _c("input", { attrs: { type: "file", name: "pictures[]" } })
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "sticky-top" }, [
+        _c("div", { staticClass: "card bg-info text-light" }, [
+          _c("div", { staticClass: "card-body py-0" }, [
+            _c(
+              "div",
+              { staticClass: "page-head d-flex justify-content-between" },
+              [
+                _c("h4", [_vm._v(" " + _vm._s(_vm.fa.DEFINE_VISA_TYPE))]),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-light btn-sm ml-3 cloner",
+                    attrs: {
+                      href: "javascript:void(0)",
+                      "data-target": "visas"
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "mdi mdi-plus" }),
+                    _vm._v(
+                      " " +
+                        _vm._s(_vm.fa.ADD_NEW_VISA) +
+                        "\n                    "
+                    )
+                  ]
+                )
+              ]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "visas" } }, [
+        _c("div", { staticClass: "card my-3 model" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "row align-items-center" }, [
+              _c("div", { staticClass: "col-md-3 form-group" }, [
+                _c("label", [_vm._v(" " + _vm._s(_vm.fa.NAME) + " ")]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "text", name: "name", value: "" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3 form-group" }, [
+                _c("label", [_vm._v(" " + _vm._s(_vm.fa.LATIN_NAME) + " ")]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "text", name: "latin_name", value: "" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3 form-group" }, [
+                _c("label", [_vm._v(" " + _vm._s(_vm.fa.VISA_TYPE) + " ")]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "text", name: "type", value: "" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3 form-group" }, [
+                _c("label", [_vm._v(" " + _vm._s(_vm.fa.CHOOSE_QUIZ) + " ")]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "text", name: "quiz", value: "" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3 form-group" }, [
+                _c("label", [_vm._v(" " + _vm._s(_vm.fa.FIRST_PICTURE) + " ")]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-control form-control-sm",
+                  attrs: { type: "file", name: "first_picture", value: "" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4 form-group" }, [
+                _c("label", [
+                  _vm._v(" " + _vm._s(_vm.fa.AVAILABLE_COUNSELING) + " ")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    staticClass: "select2",
+                    attrs: { name: "counselings", multiple: "", dir: "rtl" }
+                  },
+                  [
+                    _c("option", { attrs: { value: "1" } }, [
+                      _vm._v(" " + _vm._s(_vm.fa.IN_TEXT) + " ")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "2" } }, [
+                      _vm._v(" " + _vm._s(_vm.fa.IN_TELEPHONE) + " ")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "3" } }, [
+                      _vm._v(" " + _vm._s(_vm.fa.IN_VIDEO) + " ")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "4" } }, [
+                      _vm._v(" " + _vm._s(_vm.fa.IN_PERSON) + " ")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group col-md-2" }, [
+                _c("label", { staticClass: "cr-styled" }, [
+                  _c("input", {
+                    attrs: {
+                      type: "checkbox",
+                      name: "online_sopping",
+                      value: "1"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "fa" }),
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(_vm.fa.ONLINE_SOPPING) +
+                      "\n                        "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-12 form-group" }, [
+                _c("label", [_vm._v(" " + _vm._s(_vm.fa.DOCUMENTS) + " ")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  staticClass: "form-control",
+                  attrs: { name: "documents", rows: "3" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-12 form-group" }, [
+                _c("label", [_vm._v(" " + _vm._s(_vm.fa.CONDITIONS) + " ")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  staticClass: "form-control",
+                  attrs: { name: "conditions", rows: "3" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-12 form-group" }, [
+                _c("label", [_vm._v(" " + _vm._s(_vm.fa.ISSUANCE_TIME) + " ")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  staticClass: "form-control",
+                  attrs: { name: "issuance_time", rows: "3" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-12 form-group" }, [
+                _c("label", [
+                  _vm._v(" " + _vm._s(_vm.fa.ISSUANCE_STEPS) + " ")
+                ]),
+                _vm._v(" "),
+                _c("textarea", {
+                  staticClass: "form-control",
+                  attrs: { name: "issuance_steps", rows: "3" }
+                })
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row justify-content-center my-3" }, [
+        _c("div", { staticClass: "col-md-2" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary btn-block",
+              attrs: { type: "submit" }
+            },
+            [
+              _c("i", { staticClass: "mdi mdi-check" }),
+              _vm._v(" " + _vm._s(_vm.fa.CONFIRM) + " ")
+            ]
+          )
         ])
       ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row justify-content-center my-3" }, [
-      _c("div", { staticClass: "col-md-2" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-primary btn-block",
-            attrs: { type: "submit" }
-          },
-          [
-            _c("i", { staticClass: "mdi mdi-check" }),
-            _vm._v(" " + _vm._s(_vm.fa.CONFIRM) + " ")
-          ]
-        )
-      ])
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -36682,14 +36727,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************!*\
   !*** ./resources/js/components/NewVisa.vue ***!
   \*********************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _NewVisa_vue_vue_type_template_id_ff4a6a34_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NewVisa.vue?vue&type=template&id=ff4a6a34&scoped=true& */ "./resources/js/components/NewVisa.vue?vue&type=template&id=ff4a6a34&scoped=true&");
 /* harmony import */ var _NewVisa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NewVisa.vue?vue&type=script&lang=js& */ "./resources/js/components/NewVisa.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _NewVisa_vue_vue_type_style_index_0_id_ff4a6a34_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NewVisa.vue?vue&type=style&index=0&id=ff4a6a34&scoped=true&lang=css& */ "./resources/js/components/NewVisa.vue?vue&type=style&index=0&id=ff4a6a34&scoped=true&lang=css&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _NewVisa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _NewVisa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _NewVisa_vue_vue_type_style_index_0_id_ff4a6a34_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NewVisa.vue?vue&type=style&index=0&id=ff4a6a34&scoped=true&lang=css& */ "./resources/js/components/NewVisa.vue?vue&type=style&index=0&id=ff4a6a34&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -36721,7 +36767,7 @@ component.options.__file = "resources/js/components/NewVisa.vue"
 /*!**********************************************************************!*\
   !*** ./resources/js/components/NewVisa.vue?vue&type=script&lang=js& ***!
   \**********************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -36838,10 +36884,10 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************!*\
   !*** ./resources/lang/fa.json ***!
   \********************************/
-/*! exports provided: BRAND, LOGIN_TO_ACC, , USERNAME, USERNAME/EMAIL, PASSWORD, REMEMBER_ME, LOG_IN, FORGOT_PASSWORD, MANAGE_ACC, LOGOUT, MAIN_MENU, OTHER_SETTINGS, LOADING, RECENT_SHOP_LIST, NEW_VISA, VISA_LIST, CONFIRM, TODAY_SELL_COUNT, TODAY_INCOME, TODAY_COUNSELING_SESSIONS, ACTIVE_VISA_COUNT, DASHBOARD, MAIN_DASHBOARD, MANAGE_VISA, MANAGE_AGENCIES, USERS, COUNSELING_SESSIONS, BANK_TRANSACTIONS, FACTORS, CONTRACTS, QUIZ_MAKER, COUNTRY_FA_NAME, COUNTRY_EN_NAME, ISO_CODE, COUNTRY_CODE, BRIEF_INFO, MAIN_PICTURE, FULL_INFO, LANG, LOCAL_NAME, GALLERY_PHOTOS, UPLOAD_PICTURES, THIS_WILL_BE_YOUR_MAIN_PICTURE, OTHER_PICTURES, PICTURE_NUMBER_X, NOT_REQUIRED, NEW_PICTURE, DEFINE_VISA_TYPE, NAME, LATIN_NAME, CONDITIONS, DOCUMENTS, ONLINE_SOPPING, ISSUANCE_TIME, ISSUANCE_STEPS, FIRST_PICTURE, VISA_TYPE, CHOOSE_QUIZ, AVAILABLE_COUNSELING, IN_TEXT, IN_TELEPHONE, IN_VIDEO, IN_PERSON, ADD_NEW_VISA, default */
+/*! exports provided: BRAND, LOGIN_TO_ACC, , USERNAME, USERNAME/EMAIL, PASSWORD, REMEMBER_ME, LOG_IN, FORGOT_PASSWORD, MANAGE_ACC, LOGOUT, MAIN_MENU, OTHER_SETTINGS, LOADING, RECENT_SHOP_LIST, NEW_VISA, VISA_LIST, CONFIRM, TODAY_SELL_COUNT, TODAY_INCOME, TODAY_COUNSELING_SESSIONS, ACTIVE_VISA_COUNT, DASHBOARD, MAIN_DASHBOARD, MANAGE_VISA, MANAGE_AGENCIES, USERS, COUNSELING_SESSIONS, BANK_TRANSACTIONS, FACTORS, CONTRACTS, QUIZ_MAKER, COUNTRY_FA_NAME, COUNTRY_LATIN_NAME, ISO_CODE, COUNTRY_CODE, BRIEF_INFO, MAIN_PICTURE, FULL_INFO, LANG, LOCAL_NAME, GALLERY_PHOTOS, UPLOAD_PICTURES, THIS_WILL_BE_YOUR_MAIN_PICTURE, OTHER_PICTURES, PICTURE_NUMBER_X, NOT_REQUIRED, NEW_PICTURE, DEFINE_VISA_TYPE, NAME, LATIN_NAME, CONDITIONS, DOCUMENTS, ONLINE_SOPPING, ISSUANCE_TIME, ISSUANCE_STEPS, FIRST_PICTURE, VISA_TYPE, CHOOSE_QUIZ, AVAILABLE_COUNSELING, IN_TEXT, IN_TELEPHONE, IN_VIDEO, IN_PERSON, ADD_NEW_VISA, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"BRAND\":\"سفر به راه\",\"LOGIN_TO_ACC\":\"ورود به حساب کاربری\",\"\":\"\",\"USERNAME\":\"نام کاربری\",\"USERNAME/EMAIL\":\"نام کاربری یا ایمیل\",\"PASSWORD\":\"رمزعبور\",\"REMEMBER_ME\":\"مرا به خاطر بسپار\",\"LOG_IN\":\"ورود به حساب\",\"FORGOT_PASSWORD\":\"فراموشی رمزعبور\",\"MANAGE_ACC\":\"مدیریت حساب کاربری\",\"LOGOUT\":\"خروج\",\"MAIN_MENU\":\"منوی اصلی\",\"OTHER_SETTINGS\":\"سایر تنظیمات\",\"LOADING\":\"در حال بارگذاری...\",\"RECENT_SHOP_LIST\":\"لیست آخرین خرید ها\",\"NEW_VISA\":\"تعریف ویزا\",\"VISA_LIST\":\"لیست ویزا ها\",\"CONFIRM\":\"تایید\",\"TODAY_SELL_COUNT\":\"تعداد فروش امروز\",\"TODAY_INCOME\":\"دریافتی های امروز\",\"TODAY_COUNSELING_SESSIONS\":\"جلسات مشاوره امروز\",\"ACTIVE_VISA_COUNT\":\"تعداد ویزا های فعال\",\"DASHBOARD\":\"داشبورد\",\"MAIN_DASHBOARD\":\"داشبورد اصلی\",\"MANAGE_VISA\":\"مدیریت ویزا\",\"MANAGE_AGENCIES\":\"مدیریت آزانس ها\",\"USERS\":\"کاربران\",\"COUNSELING_SESSIONS\":\"جلسات مشاوره\",\"BANK_TRANSACTIONS\":\"تراکنش های بانکی\",\"FACTORS\":\"فاکتور ها\",\"CONTRACTS\":\"قرارداد ها\",\"QUIZ_MAKER\":\"آزمون ساز\",\"COUNTRY_FA_NAME\":\"نام کشور به فارسی\",\"COUNTRY_EN_NAME\":\"نام کشور به لاتین\",\"ISO_CODE\":\"کد دو حرفی ISO\",\"COUNTRY_CODE\":\"پیش شماره کشور\",\"BRIEF_INFO\":\"توضیحات مختصر\",\"MAIN_PICTURE\":\"تصویر اصلی\",\"FULL_INFO\":\"توضیحات کامل\",\"LANG\":\"زبان\",\"LOCAL_NAME\":\"نام محلی\",\"GALLERY_PHOTOS\":\"گالری تصاویر\",\"UPLOAD_PICTURES\":\"آپلود تصاویر\",\"THIS_WILL_BE_YOUR_MAIN_PICTURE\":\"این تصویر، تصویر اصلی شما خواهد بود\",\"OTHER_PICTURES\":\"سایر تصاویر\",\"PICTURE_NUMBER_X\":\"تصویر شماره \",\"NOT_REQUIRED\":\"اختیاری\",\"NEW_PICTURE\":\"اضافه کردن تصویر جدید\",\"DEFINE_VISA_TYPE\":\"تعریف انواع ویزا\",\"NAME\":\"نام\",\"LATIN_NAME\":\"نام لاتین\",\"CONDITIONS\":\"شرایط\",\"DOCUMENTS\":\"مدارک\",\"ONLINE_SOPPING\":\"خریدآنلاین\",\"ISSUANCE_TIME\":\"زمان صدور\",\"ISSUANCE_STEPS\":\"مراحل صدور\",\"FIRST_PICTURE\":\"تصویر اول\",\"VISA_TYPE\":\"نوع ویزا\",\"CHOOSE_QUIZ\":\"انتخاب آزمون\",\"AVAILABLE_COUNSELING\":\"نوع مشاوره های در دسترس\",\"IN_TEXT\":\"متنی\",\"IN_TELEPHONE\":\"تلفنی\",\"IN_VIDEO\":\"تصویری\",\"IN_PERSON\":\"حضوری\",\"ADD_NEW_VISA\":\"اضافه کردن ویزا جدید\"}");
+module.exports = JSON.parse("{\"BRAND\":\"سفر به راه\",\"LOGIN_TO_ACC\":\"ورود به حساب کاربری\",\"\":\"\",\"USERNAME\":\"نام کاربری\",\"USERNAME/EMAIL\":\"نام کاربری یا ایمیل\",\"PASSWORD\":\"رمزعبور\",\"REMEMBER_ME\":\"مرا به خاطر بسپار\",\"LOG_IN\":\"ورود به حساب\",\"FORGOT_PASSWORD\":\"فراموشی رمزعبور\",\"MANAGE_ACC\":\"مدیریت حساب کاربری\",\"LOGOUT\":\"خروج\",\"MAIN_MENU\":\"منوی اصلی\",\"OTHER_SETTINGS\":\"سایر تنظیمات\",\"LOADING\":\"در حال بارگذاری...\",\"RECENT_SHOP_LIST\":\"لیست آخرین خرید ها\",\"NEW_VISA\":\"تعریف ویزا\",\"VISA_LIST\":\"لیست ویزا ها\",\"CONFIRM\":\"تایید\",\"TODAY_SELL_COUNT\":\"تعداد فروش امروز\",\"TODAY_INCOME\":\"دریافتی های امروز\",\"TODAY_COUNSELING_SESSIONS\":\"جلسات مشاوره امروز\",\"ACTIVE_VISA_COUNT\":\"تعداد ویزا های فعال\",\"DASHBOARD\":\"داشبورد\",\"MAIN_DASHBOARD\":\"داشبورد اصلی\",\"MANAGE_VISA\":\"مدیریت ویزا\",\"MANAGE_AGENCIES\":\"مدیریت آزانس ها\",\"USERS\":\"کاربران\",\"COUNSELING_SESSIONS\":\"جلسات مشاوره\",\"BANK_TRANSACTIONS\":\"تراکنش های بانکی\",\"FACTORS\":\"فاکتور ها\",\"CONTRACTS\":\"قرارداد ها\",\"QUIZ_MAKER\":\"آزمون ساز\",\"COUNTRY_FA_NAME\":\"نام کشور به فارسی\",\"COUNTRY_LATIN_NAME\":\"نام کشور به لاتین\",\"ISO_CODE\":\"کد دو حرفی ISO\",\"COUNTRY_CODE\":\"پیش شماره کشور\",\"BRIEF_INFO\":\"توضیحات مختصر\",\"MAIN_PICTURE\":\"تصویر اصلی\",\"FULL_INFO\":\"توضیحات کامل\",\"LANG\":\"زبان\",\"LOCAL_NAME\":\"نام محلی\",\"GALLERY_PHOTOS\":\"گالری تصاویر\",\"UPLOAD_PICTURES\":\"آپلود تصاویر\",\"THIS_WILL_BE_YOUR_MAIN_PICTURE\":\"این تصویر، تصویر اصلی شما خواهد بود\",\"OTHER_PICTURES\":\"سایر تصاویر\",\"PICTURE_NUMBER_X\":\"تصویر شماره \",\"NOT_REQUIRED\":\"اختیاری\",\"NEW_PICTURE\":\"اضافه کردن تصویر جدید\",\"DEFINE_VISA_TYPE\":\"تعریف انواع ویزا\",\"NAME\":\"نام\",\"LATIN_NAME\":\"نام لاتین\",\"CONDITIONS\":\"شرایط\",\"DOCUMENTS\":\"مدارک\",\"ONLINE_SOPPING\":\"خریدآنلاین\",\"ISSUANCE_TIME\":\"زمان صدور\",\"ISSUANCE_STEPS\":\"مراحل صدور\",\"FIRST_PICTURE\":\"تصویر اول\",\"VISA_TYPE\":\"نوع ویزا\",\"CHOOSE_QUIZ\":\"انتخاب آزمون\",\"AVAILABLE_COUNSELING\":\"نوع مشاوره های در دسترس\",\"IN_TEXT\":\"متنی\",\"IN_TELEPHONE\":\"تلفنی\",\"IN_VIDEO\":\"تصویری\",\"IN_PERSON\":\"حضوری\",\"ADD_NEW_VISA\":\"اضافه کردن ویزا جدید\"}");
 
 /***/ }),
 

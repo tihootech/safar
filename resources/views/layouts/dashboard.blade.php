@@ -3,9 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="Mannat Themes">
-        <meta name="keyword" content="">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title> @yield('title', __('BRAND')) </title>
 
@@ -23,6 +21,7 @@
         <link href="{{asset('assets/plugins/select2/select2.min.css')}}" rel="stylesheet">
         <link href="{{asset('assets/plugins/morris-chart/morris.css')}}" rel="stylesheet">
         <link href="{{asset('assets/plugins/dropify/css/dropify.css')}}" rel="stylesheet" type="text/css">
+        <link href="{{asset('assets/plugins/sweet-alert/sweetalert2.min.css')}}" rel="stylesheet" type="text/css">
 
     </head>
 
@@ -48,9 +47,6 @@
 
         </section>
 
-        <!-- app vuejs -->
-        <script src="{{asset('js/app.js')}}"></script>
-
         <!-- jQuery -->
         <script src="{{asset('assets/js/jquery-3.2.1.min.js')}}"></script>
         <script src="{{asset('assets/js/popper.min.js')}}"></script>
@@ -59,6 +55,9 @@
         <script src="{{asset('assets/js/modernizr.min.js')}}"></script>
         <script src="{{asset('assets/js/jquery.slimscroll.min.js')}}"></script>
         <script src="{{asset('assets/js/slidebars.min.js')}}"></script>
+
+        <!-- app vuejs -->
+        <script src="{{asset('js/app.js')}}"></script>
 
         <!--plugins js-->
         <script src="{{asset('assets/plugins/counter/jquery.counterup.min.js')}}"></script>
@@ -71,6 +70,7 @@
         <script src="{{asset('assets/plugins/morris-chart/morris.js')}}"></script>
         <script src="{{asset('assets/plugins/dropify/js/dropify.min.js')}}"></script>
         <script src="{{asset('assets/plugins/select2/select2.min.js')}}"></script>
+        <script src="{{asset('assets/plugins/sweet-alert/sweetalert2.min.js')}}"></script>
 
 
         <!--app js-->

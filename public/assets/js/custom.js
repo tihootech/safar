@@ -1,4 +1,3 @@
-
 window.DROPIFY_OPTIONS = {
     messages: {
         default: 'برای آپلود یا کلیک کنید، یا فایل مورد نظر را اینجا درگ کنید',
@@ -58,3 +57,39 @@ $(document).on('click', '.remove-cloned', function () {
     $(this).parents('.cloned').remove();
 
 });
+
+
+function swalError(message = 'خطایی رخ داد...') {
+    swal('Oops...', message, 'error');
+}
+
+function swalValidationErrors(errors) {
+    var html = '<ul> ';
+    for (let error in errors) {
+        if (errors.hasOwnProperty(error)) {
+            html += '<li>'+errors[error]+'</li>'
+        }
+    }
+    html += '</ul> ';
+
+    swal({
+        title: 'اطلاعات وارد شده صحیح نیست',
+        type: 'error',
+        html: '<div class="alert alert-danger text-right mt-4">'+html+'</div>',
+        showConfirmButton: false,
+        showCancelButton: true,
+        cancelButtonClass: 'btn btn-danger',
+        cancelButtonText: 'باشه.'
+    });
+}
+
+function swalSuccess(message = 'تغییرات با موفقیت ذخیره شد') {
+    swal({
+        position: 'top-end',
+        icon: 'success',
+        title: message,
+        type: 'success',
+        showConfirmButton: false,
+        timer: 1500
+    });
+}

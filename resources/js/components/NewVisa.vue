@@ -1,43 +1,43 @@
 <template>
-    <form>
+    <form @submit.prevent="formSubmit" method="post">
 
         <!-- BASIC INPUTS -->
         <div class="page-head">
             <h4 class="mt-2 mb-2"> {{fa.NEW_VISA}} </h4>
         </div>
-        <div class="card card-body">
+        <div class="card card-body" id="country-data">
             <div class="row justify-content-center">
                 <div class="col-md-3 form-group">
                     <label> {{fa.COUNTRY_FA_NAME}} </label>
-                    <input type="text" class="form-control" name="fa_name" required value="">
+                    <input type="text" class="form-control" name="fa_name" value="">
                 </div>
                 <div class="col-md-3 form-group">
-                    <label> {{fa.COUNTRY_EN_NAME}} </label>
-                    <input type="text" class="form-control" name="en_name" required value="">
+                    <label> {{fa.COUNTRY_LATIN_NAME}} </label>
+                    <input type="text" class="form-control" name="latin_name" value="">
                 </div>
                 <div class="col-md-3 form-group">
                     <label> {{fa.ISO_CODE}} </label>
-                    <input type="text" class="form-control" name="iso_code" required value="" maxlength="2" dir="ltr">
+                    <input type="text" class="form-control" name="iso_code" value="" maxlength="2" dir="ltr">
                 </div>
                 <div class="col-md-3 form-group">
                     <label> {{fa.COUNTRY_CODE}} </label>
-                    <input type="text" class="form-control" name="country_code" required value="" dir="ltr">
+                    <input type="text" class="form-control" name="country_code" value="" dir="ltr">
                 </div>
                 <div class="col-md-3 form-group">
                     <label> {{fa.LANG}} </label>
-                    <input type="text" class="form-control" name="lang" required value="">
+                    <input type="text" class="form-control" name="lang" value="">
                 </div>
                 <div class="col-md-3 form-group">
                     <label> {{fa.LOCAL_NAME}} </label>
-                    <input type="text" class="form-control" name="local_name" required value="">
+                    <input type="text" class="form-control" name="local_name" value="">
                 </div>
                 <div class="col-md-12 form-group">
                     <label> {{fa.BRIEF_INFO}} </label>
-                    <textarea name="brief_info" rows="3" class="form-control" required></textarea>
+                    <textarea name="brief_info" rows="3" class="form-control"></textarea>
                 </div>
                 <div class="col-md-12 form-group">
                     <label> {{fa.FULL_INFO}} </label>
-                    <textarea name="full_info" rows="6" class="form-control" required></textarea>
+                    <textarea name="full_info" rows="6" class="form-control"></textarea>
                 </div>
 
             </div>
@@ -103,27 +103,27 @@
                     <div class="row align-items-center">
                         <div class="col-md-3 form-group">
                             <label> {{fa.NAME}} </label>
-                            <input type="text" class="form-control" name="name" required value="">
+                            <input type="text" class="form-control" name="name" value="">
                         </div>
                         <div class="col-md-3 form-group">
                             <label> {{fa.LATIN_NAME}} </label>
-                            <input type="text" class="form-control" name="latin_name" required value="">
+                            <input type="text" class="form-control" name="latin_name" value="">
                         </div>
                         <div class="col-md-3 form-group">
                             <label> {{fa.VISA_TYPE}} </label>
-                            <input type="text" class="form-control" name="visa_type" required value="">
+                            <input type="text" class="form-control" name="type" value="">
                         </div>
                         <div class="col-md-3 form-group">
                             <label> {{fa.CHOOSE_QUIZ}} </label>
-                            <input type="text" class="form-control" name="quiz" required value="">
+                            <input type="text" class="form-control" name="quiz" value="">
                         </div>
                         <div class="col-md-3 form-group">
                             <label> {{fa.FIRST_PICTURE}} </label>
-                            <input type="file" class="form-control form-control-sm" name="first_picture" required value="">
+                            <input type="file" class="form-control form-control-sm" name="first_picture" value="">
                         </div>
                         <div class="col-md-4 form-group">
                             <label> {{fa.AVAILABLE_COUNSELING}} </label>
-                            <select class="select2" name="counselings" multiple required dir="rtl">
+                            <select class="select2" name="counselings" multiple dir="rtl">
                                 <option value="1"> {{fa.IN_TEXT}} </option>
                                 <option value="2"> {{fa.IN_TELEPHONE}} </option>
                                 <option value="3"> {{fa.IN_VIDEO}} </option>
@@ -132,7 +132,6 @@
                         </div>
                         <div class="form-group col-md-2">
                             <label class="cr-styled">
-                                <input type="hidden" name="online_sopping" value="0">
                                 <input type="checkbox" name="online_sopping" value="1">
                                 <i class="fa"></i>
                                 {{fa.ONLINE_SOPPING}}
@@ -140,19 +139,19 @@
                         </div>
                         <div class="col-md-12 form-group">
                             <label> {{fa.DOCUMENTS}} </label>
-                            <textarea name="documents" rows="3" class="form-control" required></textarea>
+                            <textarea name="documents" rows="3" class="form-control"></textarea>
                         </div>
                         <div class="col-md-12 form-group">
                             <label> {{fa.CONDITIONS}} </label>
-                            <textarea name="conditions" rows="3" class="form-control" required></textarea>
+                            <textarea name="conditions" rows="3" class="form-control"></textarea>
                         </div>
                         <div class="col-md-12 form-group">
                             <label> {{fa.ISSUANCE_TIME}} </label>
-                            <textarea name="issuance_time" rows="3" class="form-control" required></textarea>
+                            <textarea name="issuance_time" rows="3" class="form-control"></textarea>
                         </div>
                         <div class="col-md-12 form-group">
                             <label> {{fa.ISSUANCE_STEPS}} </label>
-                            <textarea name="issuance_steps" rows="3" class="form-control" required></textarea>
+                            <textarea name="issuance_steps" rows="3" class="form-control"></textarea>
                         </div>
                     </div>
                 </div>
@@ -169,8 +168,46 @@
 </template>
 
 <script>
+
 export default {
     props : ['fa'],
+    methods : {
+        formSubmit : function () {
+            var countryData = {};
+            var visas = [];
+            $('#country-data input, textarea').each(function() {
+                var name = $(this).attr('name');
+                countryData[name] = $(this).val();
+            });
+            $('#visas > .card').each(function() {
+                var visaData = {};
+                $(this).find('input, select, textarea').each(function() {
+                    var type = $(this).attr('type');
+            		var name = $(this).attr('name');
+            		var value = type == 'checkbox' ? $(this).is(':checked') : $(this).val();
+            		visaData[name] = value;
+                });
+                visas.push(visaData);
+            });
+            var formData = {
+                country : countryData,
+                visas : visas
+            };
+            axios.post('/api/visa/store', formData).then( res => {
+                console.log(res);
+                if (res.status == 200 && res.data.success) {
+                    window.location.href = "/dashboard#/visa-list";
+                    swalSuccess();
+                }else {
+                    swalError();
+                }
+            }).catch( err => {
+                if (err.response.status == 422) { // validation error
+                    swalValidationErrors(err.response.data.errors);
+                }
+            });
+        }
+    },
     mounted: function() {
         $('.dropify').dropify(window.DROPIFY_OPTIONS);
         $('.select2').select2(window.SELECT2_OPTIONS);
