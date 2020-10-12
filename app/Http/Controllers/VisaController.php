@@ -23,10 +23,10 @@ class VisaController extends Controller
     {
         $this->authorize('manage', Visa::class);
         $request->validate([
-            'country.fa_name' => 'required',
-            'country.latin_name' => 'required',
-            'country.iso_code' => 'required|string|size:2',
-            'country.country_code' => 'required',
+            'country.fa_name' => 'required|unique:countries,fa_name',
+            'country.latin_name' => 'required|unique:countries,latin_name',
+            'country.iso_code' => 'required|string|size:2|unique:countries,iso_code',
+            'country.country_code' => 'required|unique:countries,country_code',
             'country.lang' => 'required',
             'country.local_name' => 'required',
             'country.brief_info' => 'nullable',
