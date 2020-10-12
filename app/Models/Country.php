@@ -9,5 +9,10 @@ class Country extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    
+
+    public function visas()
+    {
+        return $this->hasMany(Visa::class);
+    }
+
 }

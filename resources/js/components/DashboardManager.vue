@@ -7,7 +7,7 @@
 <script>
     import fa from '../../lang/fa.json'; // translate file
     import VueRouter from 'vue-router';
-    import Dashboard from './Dashboard.vue';
+    import Home from './Home.vue';
     import VisaList from './VisaList.vue';
     import NewVisa from './NewVisa.vue';
 
@@ -17,7 +17,7 @@
                 {
                     path : '/home',
                     name : 'home',
-                    component : Dashboard,
+                    component : Home,
                 },
                 {
                     path : '/',

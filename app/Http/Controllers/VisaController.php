@@ -9,6 +9,16 @@ use App\Models\Country;
 class VisaController extends Controller
 {
 
+    public function index()
+    {
+        return Country::all();
+    }
+
+    public function getVisas($cid)
+    {
+        return Visa::where('country_id', $cid)->get();
+    }
+
     public function store(Request $request)
     {
         $this->authorize('manage', Visa::class);

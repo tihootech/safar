@@ -23,6 +23,8 @@
         <link href="{{asset('assets/plugins/dropify/css/dropify.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('assets/plugins/sweet-alert/sweetalert2.min.css')}}" rel="stylesheet" type="text/css">
 
+        <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet">
+
     </head>
 
     <body class="sticky-header">

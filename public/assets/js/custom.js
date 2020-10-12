@@ -64,13 +64,13 @@ function swalError(message = 'خطایی رخ داد...') {
 }
 
 function swalValidationErrors(errors) {
-    var html = '<ul> ';
+    var html = '<ul>';
     for (let error in errors) {
         if (errors.hasOwnProperty(error)) {
             html += '<li>'+errors[error]+'</li>'
         }
     }
-    html += '</ul> ';
+    html += '</ul>';
 
     swal({
         title: 'اطلاعات وارد شده صحیح نیست',
@@ -85,7 +85,7 @@ function swalValidationErrors(errors) {
 
 function swalSuccess(message = 'تغییرات با موفقیت ذخیره شد') {
     swal({
-        position: 'top-end',
+        position: 'center',
         icon: 'success',
         title: message,
         type: 'success',

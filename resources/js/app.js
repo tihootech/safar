@@ -20,6 +20,9 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('dashboard-manager', require('./components/DashboardManager.vue').default);
+Vue.filter('boolIcon', function (value) {
+    return value ? '<i class="mdi mdi-check text-success">' : '<i class="mdi mdi-close text-danger">';
+});
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
