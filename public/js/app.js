@@ -2252,8 +2252,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['fa'],
   methods: {
@@ -2451,7 +2449,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.remove-cloned[data-v-ff4a6a34] {\n    font-size: 1.75em;\n}\n.sticky-top[data-v-ff4a6a34] {\n    padding-top: 60px;\n}\n.model .remove-cloned[data-v-ff4a6a34] {\n    display: none;\n}\n", ""]);
+exports.push([module.i, "\n.remove-cloned[data-v-ff4a6a34] {\n    font-size: 1.75em;\n}\n.sticky-top[data-v-ff4a6a34] {\n    padding-top: 60px;\n}\n.model .remove-cloned[data-v-ff4a6a34] {\n    display: none;\n}\n.excel-form[data-v-ff4a6a34] {\n    white-space: nowrap;\n    overflow-x: auto;\n}\n.excel-form thead th[data-v-ff4a6a34]:nth-child(1) { /* 1 */\n    min-width: 20px;\n}\n.excel-form thead th[data-v-ff4a6a34]:nth-child(n+2):nth-child(-n+5) { /* 2~5 */\n    min-width: 200px;\n}\n.excel-form thead th[data-v-ff4a6a34]:nth-child(6) { /* 6 */\n    min-width: 70px;\n}\n.excel-form thead th[data-v-ff4a6a34]:nth-child(7) { /* 7 */\n    min-width: 225px;\n}\n.excel-form thead th[data-v-ff4a6a34]:nth-child(8) { /* 8 */\n    min-width: 100px;\n}\n.excel-form thead th[data-v-ff4a6a34]:nth-child(n+9) { /* after 9 */\n    min-width: 300px;\n}\n.upload-hidden-image + i[data-v-ff4a6a34] {\n    display: none;\n}\n\n", ""]);
 
 // exports
 
@@ -21075,34 +21073,28 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "card bg-info text-light my-4" }, [
-        _c("div", { staticClass: "card-body py-0" }, [
+      _c(
+        "div",
+        { staticClass: "page-head d-flex justify-content-between my-2" },
+        [
+          _c("h4", [_vm._v(" " + _vm._s(_vm.fa.UPLOAD_PICTURES))]),
+          _vm._v(" "),
           _c(
-            "div",
-            { staticClass: "page-head d-flex justify-content-between" },
+            "a",
+            {
+              staticClass: "btn btn-info btn-sm ml-3 cloner",
+              attrs: {
+                href: "javascript:void(0)",
+                "data-target": "upload-images"
+              }
+            },
             [
-              _c("h4", [_vm._v(" " + _vm._s(_vm.fa.UPLOAD_PICTURES))]),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-light btn-sm ml-3 cloner",
-                  attrs: {
-                    href: "javascript:void(0)",
-                    "data-target": "upload-images"
-                  }
-                },
-                [
-                  _c("i", { staticClass: "mdi mdi-plus" }),
-                  _vm._v(
-                    " " + _vm._s(_vm.fa.NEW_PICTURE) + "\n                "
-                  )
-                ]
-              )
+              _c("i", { staticClass: "mdi mdi-plus" }),
+              _vm._v(" " + _vm._s(_vm.fa.NEW_PICTURE) + "\n        ")
             ]
           )
-        ])
-      ]),
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "row", attrs: { id: "upload-images" } }, [
         _c("div", { staticClass: "col-md-4" }, [
@@ -21149,176 +21141,129 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "sticky-top" }, [
-        _c("div", { staticClass: "card bg-info text-light" }, [
-          _c("div", { staticClass: "card-body py-0" }, [
-            _c(
-              "div",
-              { staticClass: "page-head d-flex justify-content-between" },
-              [
-                _c("h4", [_vm._v(" " + _vm._s(_vm.fa.DEFINE_VISA_TYPE))]),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "btn btn-light btn-sm ml-3 cloner",
-                    attrs: {
-                      href: "javascript:void(0)",
-                      "data-target": "visas"
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "mdi mdi-plus" }),
-                    _vm._v(
-                      " " +
-                        _vm._s(_vm.fa.ADD_NEW_VISA) +
-                        "\n                    "
-                    )
-                  ]
-                )
-              ]
-            )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { attrs: { id: "visas" } }, [
-        _c("div", { staticClass: "card my-3 model" }, [
-          _vm._m(1),
+      _c(
+        "div",
+        { staticClass: "page-head d-flex justify-content-between my-2" },
+        [
+          _c("h4", [_vm._v(" " + _vm._s(_vm.fa.DEFINE_VISA_TYPE))]),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "row align-items-center" }, [
-              _c("div", { staticClass: "col-md-3 form-group" }, [
-                _c("label", [_vm._v(" " + _vm._s(_vm.fa.NAME) + " ")]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { type: "text", name: "name", value: "" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3 form-group" }, [
-                _c("label", [_vm._v(" " + _vm._s(_vm.fa.LATIN_NAME) + " ")]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { type: "text", name: "latin_name", value: "" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3 form-group" }, [
-                _c("label", [_vm._v(" " + _vm._s(_vm.fa.VISA_TYPE) + " ")]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { type: "text", name: "type", value: "" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3 form-group" }, [
-                _c("label", [_vm._v(" " + _vm._s(_vm.fa.CHOOSE_QUIZ) + " ")]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { type: "text", name: "quiz", value: "" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3 form-group" }, [
-                _c("label", [_vm._v(" " + _vm._s(_vm.fa.FIRST_PICTURE) + " ")]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control form-control-sm",
-                  attrs: { type: "file", name: "first_picture", value: "" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-4 form-group" }, [
-                _c("label", [
-                  _vm._v(" " + _vm._s(_vm.fa.AVAILABLE_COUNSELING) + " ")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    staticClass: "select2",
-                    attrs: { name: "counselings", multiple: "", dir: "rtl" }
-                  },
-                  [
-                    _c("option", { attrs: { value: "1" } }, [
-                      _vm._v(" " + _vm._s(_vm.fa.IN_TEXT) + " ")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "2" } }, [
-                      _vm._v(" " + _vm._s(_vm.fa.IN_TELEPHONE) + " ")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "3" } }, [
-                      _vm._v(" " + _vm._s(_vm.fa.IN_VIDEO) + " ")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "4" } }, [
-                      _vm._v(" " + _vm._s(_vm.fa.IN_PERSON) + " ")
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group col-md-2" }, [
-                _c("label", { staticClass: "cr-styled" }, [
-                  _c("input", {
-                    attrs: {
-                      type: "checkbox",
-                      name: "online_sopping",
-                      value: "1"
-                    }
-                  }),
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-info btn-sm ml-3 cloner",
+              attrs: { href: "javascript:void(0)", "data-target": "visas" }
+            },
+            [
+              _c("i", { staticClass: "mdi mdi-plus" }),
+              _vm._v(" " + _vm._s(_vm.fa.ADD_NEW_VISA) + "\n        ")
+            ]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "card my-3 " }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "excel-form" }, [
+            _c("table", { staticClass: "table table-bordered" }, [
+              _c("thead", [
+                _c("tr", [
+                  _c("th", [_vm._v(" # ")]),
                   _vm._v(" "),
-                  _c("i", { staticClass: "fa" }),
-                  _vm._v(
-                    "\n                            " +
-                      _vm._s(_vm.fa.ONLINE_SOPPING) +
-                      "\n                        "
-                  )
+                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.NAME) + " ")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.LATIN_NAME) + " ")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.VISA_TYPE) + " ")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.CHOOSE_QUIZ) + " ")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.FIRST_PICTURE) + " ")]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(" " + _vm._s(_vm.fa.AVAILABLE_COUNSELING) + " ")
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.ONLINE_SOPPING) + " ")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.DOCUMENTS) + " ")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.CONDITIONS) + " ")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.ISSUANCE_TIME) + " ")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.ISSUANCE_STEPS) + " ")])
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-12 form-group" }, [
-                _c("label", [_vm._v(" " + _vm._s(_vm.fa.DOCUMENTS) + " ")]),
-                _vm._v(" "),
-                _c("textarea", {
-                  staticClass: "form-control",
-                  attrs: { name: "documents", rows: "3" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-12 form-group" }, [
-                _c("label", [_vm._v(" " + _vm._s(_vm.fa.CONDITIONS) + " ")]),
-                _vm._v(" "),
-                _c("textarea", {
-                  staticClass: "form-control",
-                  attrs: { name: "conditions", rows: "3" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-12 form-group" }, [
-                _c("label", [_vm._v(" " + _vm._s(_vm.fa.ISSUANCE_TIME) + " ")]),
-                _vm._v(" "),
-                _c("textarea", {
-                  staticClass: "form-control",
-                  attrs: { name: "issuance_time", rows: "3" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-12 form-group" }, [
-                _c("label", [
-                  _vm._v(" " + _vm._s(_vm.fa.ISSUANCE_STEPS) + " ")
-                ]),
-                _vm._v(" "),
-                _c("textarea", {
-                  staticClass: "form-control",
-                  attrs: { name: "issuance_steps", rows: "3" }
-                })
+              _c("tbody", { attrs: { id: "visas" } }, [
+                _c("tr", { staticClass: "model" }, [
+                  _c("th", { staticClass: "steper" }, [_vm._v(" 1 ")]),
+                  _vm._v(" "),
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _vm._m(4),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("label", { staticClass: "btn btn-link" }, [
+                      _vm._v(
+                        "\n                                    " +
+                          _vm._s(_vm.fa.UPLOAD) +
+                          "\n                                    "
+                      ),
+                      _c("input", {
+                        staticClass: "form-control upload-hidden-image d-none",
+                        attrs: {
+                          type: "file",
+                          name: "first_picture",
+                          value: ""
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("i", { staticClass: "mdi mdi-check-circle" })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "select",
+                      {
+                        staticClass: "select2",
+                        attrs: { name: "counselings", multiple: "", dir: "rtl" }
+                      },
+                      [
+                        _c("option", { attrs: { value: "1" } }, [
+                          _vm._v(" " + _vm._s(_vm.fa.IN_TEXT) + " ")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "2" } }, [
+                          _vm._v(" " + _vm._s(_vm.fa.IN_TELEPHONE) + " ")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "3" } }, [
+                          _vm._v(" " + _vm._s(_vm.fa.IN_VIDEO) + " ")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "4" } }, [
+                          _vm._v(" " + _vm._s(_vm.fa.IN_PERSON) + " ")
+                        ])
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(5),
+                  _vm._v(" "),
+                  _vm._m(6),
+                  _vm._v(" "),
+                  _vm._m(7),
+                  _vm._v(" "),
+                  _vm._m(8),
+                  _vm._v(" "),
+                  _vm._m(9)
+                ])
               ])
             ])
           ])
@@ -21358,19 +21303,102 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("div", { staticClass: "d-flex justify-content-between" }, [
-        _c("h5", [_vm._v(" ویزا شماره "), _c("span", [_vm._v("1")])]),
+    return _c("td", [
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", name: "name", value: "" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", name: "latin_name", value: "" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", name: "type", value: "" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", name: "quiz", value: "" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "text-center" }, [
+      _c("label", { staticClass: "cr-styled" }, [
+        _c("input", {
+          attrs: { type: "checkbox", name: "online_sopping", value: "1" }
+        }),
         _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "remove-cloned",
-            attrs: { href: "javascript:void(0)" }
-          },
-          [_c("i", { staticClass: "mdi mdi-delete text-danger" })]
-        )
+        _c("i", { staticClass: "fa" })
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("textarea", {
+        staticClass: "form-control",
+        attrs: { name: "documents", rows: "1" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("textarea", {
+        staticClass: "form-control",
+        attrs: { name: "conditions", rows: "1" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("textarea", {
+        staticClass: "form-control",
+        attrs: { name: "issuance_time", rows: "1" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("textarea", {
+        staticClass: "form-control",
+        attrs: { name: "issuance_steps", rows: "1" }
+      })
     ])
   }
 ]
@@ -37270,10 +37298,10 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************!*\
   !*** ./resources/lang/fa.json ***!
   \********************************/
-/*! exports provided: BRAND, LOGIN_TO_ACC, , USERNAME, USERNAME/EMAIL, PASSWORD, REMEMBER_ME, LOG_IN, FORGOT_PASSWORD, MANAGE_ACC, LOGOUT, MAIN_MENU, OTHER_SETTINGS, LOADING, RECENT_SHOP_LIST, NEW_VISA, VISA_LIST, CONFIRM, ACTIONS, EDIT, DELETE, TODAY_SELL_COUNT, TODAY_INCOME, TODAY_COUNSELING_SESSIONS, ACTIVE_VISA_COUNT, DASHBOARD, MAIN_DASHBOARD, MANAGE_VISA, MANAGE_AGENCIES, USERS, COUNSELING_SESSIONS, BANK_TRANSACTIONS, FACTORS, CONTRACTS, QUIZ_MAKER, COUNTRY_FA_NAME, COUNTRY_LATIN_NAME, ISO_CODE, COUNTRY_CODE, BRIEF_INFO, MAIN_PICTURE, FULL_INFO, LANG, LOCAL_NAME, GALLERY_PHOTOS, UPLOAD_PICTURES, THIS_WILL_BE_YOUR_MAIN_PICTURE, OTHER_PICTURES, PICTURE_NUMBER_X, NOT_REQUIRED, NEW_PICTURE, DEFINE_VISA_TYPE, NAME, LATIN_NAME, CONDITIONS, DOCUMENTS, ONLINE_SOPPING, ISSUANCE_TIME, ISSUANCE_STEPS, FIRST_PICTURE, VISA_TYPE, CHOOSE_QUIZ, QUIZ, AVAILABLE_COUNSELING, IN_TEXT, IN_TELEPHONE, IN_VIDEO, IN_PERSON, ADD_NEW_VISA, default */
+/*! exports provided: BRAND, LOGIN_TO_ACC, , USERNAME, USERNAME/EMAIL, PASSWORD, REMEMBER_ME, LOG_IN, FORGOT_PASSWORD, MANAGE_ACC, LOGOUT, MAIN_MENU, OTHER_SETTINGS, LOADING, RECENT_SHOP_LIST, NEW_VISA, VISA_LIST, CONFIRM, ACTIONS, EDIT, DELETE, UPLOAD, TODAY_SELL_COUNT, TODAY_INCOME, TODAY_COUNSELING_SESSIONS, ACTIVE_VISA_COUNT, DASHBOARD, MAIN_DASHBOARD, MANAGE_VISA, MANAGE_AGENCIES, USERS, COUNSELING_SESSIONS, BANK_TRANSACTIONS, FACTORS, CONTRACTS, QUIZ_MAKER, COUNTRY_FA_NAME, COUNTRY_LATIN_NAME, ISO_CODE, COUNTRY_CODE, BRIEF_INFO, MAIN_PICTURE, FULL_INFO, LANG, LOCAL_NAME, GALLERY_PHOTOS, UPLOAD_PICTURES, THIS_WILL_BE_YOUR_MAIN_PICTURE, OTHER_PICTURES, PICTURE_NUMBER_X, NOT_REQUIRED, NEW_PICTURE, DEFINE_VISA_TYPE, NAME, LATIN_NAME, CONDITIONS, DOCUMENTS, ONLINE_SOPPING, ISSUANCE_TIME, ISSUANCE_STEPS, FIRST_PICTURE, VISA_TYPE, CHOOSE_QUIZ, QUIZ, AVAILABLE_COUNSELING, IN_TEXT, IN_TELEPHONE, IN_VIDEO, IN_PERSON, ADD_NEW_VISA, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"BRAND\":\"سفر به راه\",\"LOGIN_TO_ACC\":\"ورود به حساب کاربری\",\"\":\"\",\"USERNAME\":\"نام کاربری\",\"USERNAME/EMAIL\":\"نام کاربری یا ایمیل\",\"PASSWORD\":\"رمزعبور\",\"REMEMBER_ME\":\"مرا به خاطر بسپار\",\"LOG_IN\":\"ورود به حساب\",\"FORGOT_PASSWORD\":\"فراموشی رمزعبور\",\"MANAGE_ACC\":\"مدیریت حساب کاربری\",\"LOGOUT\":\"خروج\",\"MAIN_MENU\":\"منوی اصلی\",\"OTHER_SETTINGS\":\"سایر تنظیمات\",\"LOADING\":\"در حال بارگذاری...\",\"RECENT_SHOP_LIST\":\"لیست آخرین خرید ها\",\"NEW_VISA\":\"تعریف ویزا\",\"VISA_LIST\":\"لیست ویزا ها\",\"CONFIRM\":\"تایید\",\"ACTIONS\":\"عملیات\",\"EDIT\":\"ویرایش\",\"DELETE\":\"حذف\",\"TODAY_SELL_COUNT\":\"تعداد فروش امروز\",\"TODAY_INCOME\":\"دریافتی های امروز\",\"TODAY_COUNSELING_SESSIONS\":\"جلسات مشاوره امروز\",\"ACTIVE_VISA_COUNT\":\"تعداد ویزا های فعال\",\"DASHBOARD\":\"داشبورد\",\"MAIN_DASHBOARD\":\"داشبورد اصلی\",\"MANAGE_VISA\":\"مدیریت ویزا\",\"MANAGE_AGENCIES\":\"مدیریت آژانس ها\",\"USERS\":\"کاربران\",\"COUNSELING_SESSIONS\":\"جلسات مشاوره\",\"BANK_TRANSACTIONS\":\"تراکنش های بانکی\",\"FACTORS\":\"فاکتور ها\",\"CONTRACTS\":\"قرارداد ها\",\"QUIZ_MAKER\":\"آزمون ساز\",\"COUNTRY_FA_NAME\":\"نام کشور به فارسی\",\"COUNTRY_LATIN_NAME\":\"نام کشور به لاتین\",\"ISO_CODE\":\"کد دو حرفی ISO\",\"COUNTRY_CODE\":\"پیش شماره کشور\",\"BRIEF_INFO\":\"توضیحات مختصر\",\"MAIN_PICTURE\":\"تصویر اصلی\",\"FULL_INFO\":\"توضیحات کامل\",\"LANG\":\"زبان\",\"LOCAL_NAME\":\"نام محلی\",\"GALLERY_PHOTOS\":\"گالری تصاویر\",\"UPLOAD_PICTURES\":\"آپلود تصاویر\",\"THIS_WILL_BE_YOUR_MAIN_PICTURE\":\"این تصویر، تصویر اصلی شما خواهد بود\",\"OTHER_PICTURES\":\"سایر تصاویر\",\"PICTURE_NUMBER_X\":\"تصویر شماره \",\"NOT_REQUIRED\":\"اختیاری\",\"NEW_PICTURE\":\"اضافه کردن تصویر جدید\",\"DEFINE_VISA_TYPE\":\"تعریف انواع ویزا\",\"NAME\":\"نام\",\"LATIN_NAME\":\"نام لاتین\",\"CONDITIONS\":\"شرایط\",\"DOCUMENTS\":\"مدارک\",\"ONLINE_SOPPING\":\"خریدآنلاین\",\"ISSUANCE_TIME\":\"زمان صدور\",\"ISSUANCE_STEPS\":\"مراحل صدور\",\"FIRST_PICTURE\":\"تصویر اول\",\"VISA_TYPE\":\"نوع ویزا\",\"CHOOSE_QUIZ\":\"انتخاب آزمون\",\"QUIZ\":\"آزمون\",\"AVAILABLE_COUNSELING\":\"نوع مشاوره های در دسترس\",\"IN_TEXT\":\"متنی\",\"IN_TELEPHONE\":\"تلفنی\",\"IN_VIDEO\":\"تصویری\",\"IN_PERSON\":\"حضوری\",\"ADD_NEW_VISA\":\"اضافه کردن ویزا جدید\"}");
+module.exports = JSON.parse("{\"BRAND\":\"سفر به راه\",\"LOGIN_TO_ACC\":\"ورود به حساب کاربری\",\"\":\"\",\"USERNAME\":\"نام کاربری\",\"USERNAME/EMAIL\":\"نام کاربری یا ایمیل\",\"PASSWORD\":\"رمزعبور\",\"REMEMBER_ME\":\"مرا به خاطر بسپار\",\"LOG_IN\":\"ورود به حساب\",\"FORGOT_PASSWORD\":\"فراموشی رمزعبور\",\"MANAGE_ACC\":\"مدیریت حساب کاربری\",\"LOGOUT\":\"خروج\",\"MAIN_MENU\":\"منوی اصلی\",\"OTHER_SETTINGS\":\"سایر تنظیمات\",\"LOADING\":\"در حال بارگذاری...\",\"RECENT_SHOP_LIST\":\"لیست آخرین خرید ها\",\"NEW_VISA\":\"تعریف ویزا\",\"VISA_LIST\":\"لیست ویزا ها\",\"CONFIRM\":\"تایید\",\"ACTIONS\":\"عملیات\",\"EDIT\":\"ویرایش\",\"DELETE\":\"حذف\",\"UPLOAD\":\"آپلود\",\"TODAY_SELL_COUNT\":\"تعداد فروش امروز\",\"TODAY_INCOME\":\"دریافتی های امروز\",\"TODAY_COUNSELING_SESSIONS\":\"جلسات مشاوره امروز\",\"ACTIVE_VISA_COUNT\":\"تعداد ویزا های فعال\",\"DASHBOARD\":\"داشبورد\",\"MAIN_DASHBOARD\":\"داشبورد اصلی\",\"MANAGE_VISA\":\"مدیریت ویزا\",\"MANAGE_AGENCIES\":\"مدیریت آژانس ها\",\"USERS\":\"کاربران\",\"COUNSELING_SESSIONS\":\"جلسات مشاوره\",\"BANK_TRANSACTIONS\":\"تراکنش های بانکی\",\"FACTORS\":\"فاکتور ها\",\"CONTRACTS\":\"قرارداد ها\",\"QUIZ_MAKER\":\"آزمون ساز\",\"COUNTRY_FA_NAME\":\"نام کشور به فارسی\",\"COUNTRY_LATIN_NAME\":\"نام کشور به لاتین\",\"ISO_CODE\":\"کد دو حرفی ISO\",\"COUNTRY_CODE\":\"پیش شماره کشور\",\"BRIEF_INFO\":\"توضیحات مختصر\",\"MAIN_PICTURE\":\"تصویر اصلی\",\"FULL_INFO\":\"توضیحات کامل\",\"LANG\":\"زبان\",\"LOCAL_NAME\":\"نام محلی\",\"GALLERY_PHOTOS\":\"گالری تصاویر\",\"UPLOAD_PICTURES\":\"آپلود تصاویر\",\"THIS_WILL_BE_YOUR_MAIN_PICTURE\":\"این تصویر، تصویر اصلی شما خواهد بود\",\"OTHER_PICTURES\":\"سایر تصاویر\",\"PICTURE_NUMBER_X\":\"تصویر شماره \",\"NOT_REQUIRED\":\"اختیاری\",\"NEW_PICTURE\":\"اضافه کردن تصویر جدید\",\"DEFINE_VISA_TYPE\":\"تعریف انواع ویزا\",\"NAME\":\"نام\",\"LATIN_NAME\":\"نام لاتین\",\"CONDITIONS\":\"شرایط\",\"DOCUMENTS\":\"مدارک\",\"ONLINE_SOPPING\":\"خریدآنلاین\",\"ISSUANCE_TIME\":\"زمان صدور\",\"ISSUANCE_STEPS\":\"مراحل صدور\",\"FIRST_PICTURE\":\"تصویر اول\",\"VISA_TYPE\":\"نوع ویزا\",\"CHOOSE_QUIZ\":\"انتخاب آزمون\",\"QUIZ\":\"آزمون\",\"AVAILABLE_COUNSELING\":\"نوع مشاوره های در دسترس\",\"IN_TEXT\":\"متنی\",\"IN_TELEPHONE\":\"تلفنی\",\"IN_VIDEO\":\"تصویری\",\"IN_PERSON\":\"حضوری\",\"ADD_NEW_VISA\":\"اضافه کردن ویزا جدید\"}");
 
 /***/ }),
 

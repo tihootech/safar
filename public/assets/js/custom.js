@@ -25,6 +25,10 @@ $(document).ready(function($) {
 });
 
 
+$(document).on('change', '.upload-hidden-image', function () {
+    $(this).siblings('i').fadeIn();
+});
+
 // .cloner, .clone, data-target on cloner
 $(document).on('click', '.cloner', function () {
 
@@ -38,7 +42,7 @@ $(document).on('click', '.cloner', function () {
     cloned.find('input, textarea').val(null);
 
     if (target == 'visas') {
-        cloned.find('.card-header span').text($('#'+target+' > div').length + 1);
+        cloned.find('.steper').text($('.steper').length + 1);
     }
 
     if (target == 'upload-images') {

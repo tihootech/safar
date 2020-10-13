@@ -44,15 +44,11 @@
         </div>
 
         <!-- UPLOAD PICTURES -->
-        <div class="card bg-info text-light my-4">
-            <div class="card-body py-0">
-                <div class="page-head d-flex justify-content-between">
-                    <h4> {{fa.UPLOAD_PICTURES}}</h4>
-                    <a href="javascript:void(0)" class="btn btn-light btn-sm ml-3 cloner" data-target="upload-images">
-                        <i class="mdi mdi-plus"></i> {{fa.NEW_PICTURE}}
-                    </a>
-                </div>
-            </div>
+        <div class="page-head d-flex justify-content-between my-2">
+            <h4> {{fa.UPLOAD_PICTURES}}</h4>
+            <a href="javascript:void(0)" class="btn btn-info btn-sm ml-3 cloner" data-target="upload-images">
+                <i class="mdi mdi-plus"></i> {{fa.NEW_PICTURE}}
+            </a>
         </div>
         <div class="row" id="upload-images">
             <div class="col-md-4">
@@ -79,81 +75,83 @@
         </div>
 
         <!-- VISA TYPES -->
-        <div class="sticky-top">
-            <div class="card bg-info text-light">
-                <div class="card-body py-0">
-                    <div class="page-head d-flex justify-content-between">
-                        <h4> {{fa.DEFINE_VISA_TYPE}}</h4>
-                        <a href="javascript:void(0)" class="btn btn-light btn-sm ml-3 cloner" data-target="visas">
-                            <i class="mdi mdi-plus"></i> {{fa.ADD_NEW_VISA}}
-                        </a>
-                    </div>
-                </div>
-            </div>
+        <div class="page-head d-flex justify-content-between my-2">
+            <h4> {{fa.DEFINE_VISA_TYPE}}</h4>
+            <a href="javascript:void(0)" class="btn btn-info btn-sm ml-3 cloner" data-target="visas">
+                <i class="mdi mdi-plus"></i> {{fa.ADD_NEW_VISA}}
+            </a>
         </div>
-        <div id="visas">
-            <div class="card my-3 model">
-                <div class="card-header">
-                    <div class="d-flex justify-content-between">
-                        <h5> ویزا شماره <span>1</span> </h5>
-                        <a href="javascript:void(0)" class="remove-cloned"> <i class="mdi mdi-delete text-danger"></i> </a>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-md-3 form-group">
-                            <label> {{fa.NAME}} </label>
-                            <input type="text" class="form-control" name="name" value="">
-                        </div>
-                        <div class="col-md-3 form-group">
-                            <label> {{fa.LATIN_NAME}} </label>
-                            <input type="text" class="form-control" name="latin_name" value="">
-                        </div>
-                        <div class="col-md-3 form-group">
-                            <label> {{fa.VISA_TYPE}} </label>
-                            <input type="text" class="form-control" name="type" value="">
-                        </div>
-                        <div class="col-md-3 form-group">
-                            <label> {{fa.CHOOSE_QUIZ}} </label>
-                            <input type="text" class="form-control" name="quiz" value="">
-                        </div>
-                        <div class="col-md-3 form-group">
-                            <label> {{fa.FIRST_PICTURE}} </label>
-                            <input type="file" class="form-control form-control-sm" name="first_picture" value="">
-                        </div>
-                        <div class="col-md-4 form-group">
-                            <label> {{fa.AVAILABLE_COUNSELING}} </label>
-                            <select class="select2" name="counselings" multiple dir="rtl">
-                                <option value="1"> {{fa.IN_TEXT}} </option>
-                                <option value="2"> {{fa.IN_TELEPHONE}} </option>
-                                <option value="3"> {{fa.IN_VIDEO}} </option>
-                                <option value="4"> {{fa.IN_PERSON}} </option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label class="cr-styled">
-                                <input type="checkbox" name="online_sopping" value="1">
-                                <i class="fa"></i>
-                                {{fa.ONLINE_SOPPING}}
-                            </label>
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <label> {{fa.DOCUMENTS}} </label>
-                            <textarea name="documents" rows="3" class="form-control"></textarea>
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <label> {{fa.CONDITIONS}} </label>
-                            <textarea name="conditions" rows="3" class="form-control"></textarea>
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <label> {{fa.ISSUANCE_TIME}} </label>
-                            <textarea name="issuance_time" rows="3" class="form-control"></textarea>
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <label> {{fa.ISSUANCE_STEPS}} </label>
-                            <textarea name="issuance_steps" rows="3" class="form-control"></textarea>
-                        </div>
-                    </div>
+        <div class="card my-3 ">
+            <div class="card-body">
+                <div class="excel-form">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th> # </th>
+                                <th> {{fa.NAME}} </th>
+                                <th> {{fa.LATIN_NAME}} </th>
+                                <th> {{fa.VISA_TYPE}} </th>
+                                <th> {{fa.CHOOSE_QUIZ}} </th>
+                                <th> {{fa.FIRST_PICTURE}} </th>
+                                <th> {{fa.AVAILABLE_COUNSELING}} </th>
+                                <th> {{fa.ONLINE_SOPPING}} </th>
+                                <th> {{fa.DOCUMENTS}} </th>
+                                <th> {{fa.CONDITIONS}} </th>
+                                <th> {{fa.ISSUANCE_TIME}} </th>
+                                <th> {{fa.ISSUANCE_STEPS}} </th>
+                            </tr>
+                        </thead>
+                        <tbody id="visas">
+                            <tr class="model">
+                                <th class="steper"> 1 </th>
+                                <td>
+                                    <input type="text" class="form-control" name="name" value="">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="latin_name" value="">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="type" value="">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="quiz" value="">
+                                </td>
+                                <td>
+                                    <label class="btn btn-link">
+                                        {{fa.UPLOAD}}
+                                        <input type="file" class="form-control upload-hidden-image d-none" name="first_picture" value="">
+                                        <i class="mdi mdi-check-circle"></i>
+                                    </label>
+                                </td>
+                                <td>
+                                    <select class="select2" name="counselings" multiple dir="rtl">
+                                        <option value="1"> {{fa.IN_TEXT}} </option>
+                                        <option value="2"> {{fa.IN_TELEPHONE}} </option>
+                                        <option value="3"> {{fa.IN_VIDEO}} </option>
+                                        <option value="4"> {{fa.IN_PERSON}} </option>
+                                    </select>
+                                </td>
+                                <td class="text-center">
+                                    <label class="cr-styled">
+                                        <input type="checkbox" name="online_sopping" value="1">
+                                        <i class="fa"></i>
+                                    </label>
+                                </td>
+                                <td>
+                                    <textarea name="documents" rows="1" class="form-control"></textarea>
+                                </td>
+                                <td>
+                                    <textarea name="conditions" rows="1" class="form-control"></textarea>
+                                </td>
+                                <td>
+                                    <textarea name="issuance_time" rows="1" class="form-control"></textarea>
+                                </td>
+                                <td>
+                                    <textarea name="issuance_steps" rows="1" class="form-control"></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -227,4 +225,38 @@ export default {
     .model .remove-cloned {
         display: none;
     }
+
+    .excel-form {
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+
+    .excel-form thead th:nth-child(1) { /* 1 */
+        min-width: 20px;
+    }
+
+    .excel-form thead th:nth-child(n+2):nth-child(-n+5) { /* 2~5 */
+        min-width: 200px;
+    }
+
+    .excel-form thead th:nth-child(6) { /* 6 */
+        min-width: 70px;
+    }
+
+    .excel-form thead th:nth-child(7) { /* 7 */
+        min-width: 225px;
+    }
+
+    .excel-form thead th:nth-child(8) { /* 8 */
+        min-width: 100px;
+    }
+
+    .excel-form thead th:nth-child(n+9) { /* after 9 */
+        min-width: 300px;
+    }
+
+    .upload-hidden-image + i {
+        display: none;
+    }
+
 </style>
