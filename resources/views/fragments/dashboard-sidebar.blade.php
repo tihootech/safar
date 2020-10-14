@@ -26,7 +26,7 @@
                     <span>  @lang('MANAGE_VISA') </span>
                 </a>
                 <ul class="child-list">
-                    <li><a href="#/new-visa"> <i class="mdi mdi-plus"></i> @lang('NEW_VISA') </a></li>
+                    <li><a href="#/visa"> <i class="mdi mdi-plus"></i> @lang('NEW_VISA') </a></li>
                     <li><a href="#/visa-list"> <i class="mdi mdi-format-list-bulleted"></i> @lang('VISA_LIST') </a></li>
                 </ul>
             </li>

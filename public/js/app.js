@@ -1912,8 +1912,8 @@ __webpack_require__.r(__webpack_exports__);
 var _lang_fa_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../../lang/fa.json */ "./resources/lang/fa.json", 1);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _Home_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Home.vue */ "./resources/js/components/Home.vue");
-/* harmony import */ var _VisaList_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./VisaList.vue */ "./resources/js/components/VisaList.vue");
-/* harmony import */ var _NewVisa_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NewVisa.vue */ "./resources/js/components/NewVisa.vue");
+/* harmony import */ var _visas_VisaList_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./visas/VisaList.vue */ "./resources/js/components/visas/VisaList.vue");
+/* harmony import */ var _visas_VisaForm_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./visas/VisaForm.vue */ "./resources/js/components/visas/VisaForm.vue");
 //
 //
 //
@@ -1939,11 +1939,11 @@ var _lang_fa_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
       }
     }, {
       path: '/visa-list',
-      component: _VisaList_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+      component: _visas_VisaList_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
       name: 'visa-list'
     }, {
-      path: '/new-visa',
-      component: _NewVisa_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+      path: '/visa/:cid?',
+      component: _visas_VisaForm_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
     }]
   }),
   data: function data() {
@@ -2076,15 +2076,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewVisa.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NewVisa.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/visas/VisaForm.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/visas/VisaForm.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -2254,33 +2255,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['fa'],
+  data: function data() {
+    return {
+      country: {
+        id: 0,
+        visas: [{}]
+      }
+    };
+  },
   methods: {
     formSubmit: function formSubmit() {
-      var countryData = {};
-      var visas = [];
-      $('#country-data input, textarea').each(function () {
-        var name = $(this).attr('name');
-        countryData[name] = $(this).val();
-      });
-      $('#visas > .card').each(function () {
-        var visaData = {};
-        $(this).find('input, select, textarea').each(function () {
-          var type = $(this).attr('type');
-          var name = $(this).attr('name');
-          var value = type == 'checkbox' ? $(this).is(':checked') : $(this).val();
-          visaData[name] = value;
-        });
-        visas.push(visaData);
-      });
       var formData = {
-        country: countryData,
-        visas: visas
+        country: this.country,
+        visas: this.country.visas
       };
-      axios.post('/api/visa/store', formData).then(function (res) {
-        console.log(res);
-
+      axios.post('/api/visa/upsert', formData).then(function (res) {
         if (res.status == 200 && res.data.success) {
-          window.location.href = "/dashboard#/visa-list";
+          redirect("/dashboard#/visa-list");
           swalSuccess();
         } else {
           swalError();
@@ -2291,25 +2282,40 @@ __webpack_require__.r(__webpack_exports__);
           swalValidationErrors(err.response.data.errors);
         }
       });
+    },
+    addNewVisa: function addNewVisa() {
+      this.country.visas.push({});
     }
   },
   mounted: function mounted() {
-    $('.dropify').dropify(window.DROPIFY_OPTIONS);
+    var _this = this;
+
     $('.select2').select2(window.SELECT2_OPTIONS);
+    $('.dropify').dropify(window.DROPIFY_OPTIONS); // find object in db if country id is provided
+
+    var cid = this.$route.params.cid;
+
+    if (cid) {
+      axios.get("api/country/get/".concat(cid)).then(function (res) {
+        _this.country = res.data;
+      });
+    }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/VisaList.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/VisaList.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/visas/VisaList.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/visas/VisaList.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -2431,25 +2437,47 @@ __webpack_require__.r(__webpack_exports__);
     },
     displayCounselings: function displayCounselings(str) {
       return str.replace("1", this.fa.IN_TEXT).replace("2", this.fa.IN_TELEPHONE).replace("3", this.fa.IN_VIDEO).replace("4", this.fa.IN_PERSON).replace(',', '،');
+    },
+    destroy: function destroy(index) {
+      var countries = this.countries;
+      var cid = countries[index].id;
+      swal({
+        title: this.fa.ARE_YOU_SURE,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonClass: 'btn btn-danger',
+        cancelButtonClass: 'btn btn-secondary',
+        confirmButtonText: this.fa.YES,
+        cancelButtonText: this.fa.CANCEL
+      }).then(function () {
+        countries.splice(index);
+        axios["delete"]("/api/visa/".concat(cid)).then(function (res) {
+          console.log(res.data);
+
+          if (res.data.success) {
+            swalSuccess(fa.ITEM_DELETED);
+          }
+        });
+      });
     }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewVisa.vue?vue&type=style&index=0&id=ff4a6a34&scoped=true&lang=css&":
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NewVisa.vue?vue&type=style&index=0&id=ff4a6a34&scoped=true&lang=css& ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/visas/VisaForm.vue?vue&type=style&index=0&id=84c45026&scoped=true&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/visas/VisaForm.vue?vue&type=style&index=0&id=84c45026&scoped=true&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
 
 
 // module
-exports.push([module.i, "\n.remove-cloned[data-v-ff4a6a34] {\n    font-size: 1.75em;\n}\n.sticky-top[data-v-ff4a6a34] {\n    padding-top: 60px;\n}\n.model .remove-cloned[data-v-ff4a6a34] {\n    display: none;\n}\n.excel-form[data-v-ff4a6a34] {\n    white-space: nowrap;\n    overflow-x: auto;\n}\n.excel-form thead th[data-v-ff4a6a34]:nth-child(1) { /* 1 */\n    min-width: 20px;\n}\n.excel-form thead th[data-v-ff4a6a34]:nth-child(n+2):nth-child(-n+5) { /* 2~5 */\n    min-width: 200px;\n}\n.excel-form thead th[data-v-ff4a6a34]:nth-child(6) { /* 6 */\n    min-width: 70px;\n}\n.excel-form thead th[data-v-ff4a6a34]:nth-child(7) { /* 7 */\n    min-width: 225px;\n}\n.excel-form thead th[data-v-ff4a6a34]:nth-child(8) { /* 8 */\n    min-width: 100px;\n}\n.excel-form thead th[data-v-ff4a6a34]:nth-child(n+9) { /* after 9 */\n    min-width: 300px;\n}\n.upload-hidden-image + i[data-v-ff4a6a34] {\n    display: none;\n}\n\n", ""]);
+exports.push([module.i, "\n.remove-cloned[data-v-84c45026] {\n    font-size: 1.75em;\n}\n.sticky-top[data-v-84c45026] {\n    padding-top: 60px;\n}\n.model .remove-cloned[data-v-84c45026] {\n    display: none;\n}\n.excel-form[data-v-84c45026] {\n    white-space: nowrap;\n    overflow-x: auto;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(1) { /* 1 */\n    min-width: 20px;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(n+2):nth-child(-n+5) { /* 2~5 */\n    min-width: 200px;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(6) { /* 6 */\n    min-width: 70px;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(7) { /* 7 */\n    min-width: 225px;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(8) { /* 8 */\n    min-width: 100px;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(n+9) { /* after 9 */\n    min-width: 300px;\n}\n.upload-hidden-image + i[data-v-84c45026] {\n    display: none;\n}\n\n", ""]);
 
 // exports
 
@@ -20101,15 +20129,15 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewVisa.vue?vue&type=style&index=0&id=ff4a6a34&scoped=true&lang=css&":
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NewVisa.vue?vue&type=style&index=0&id=ff4a6a34&scoped=true&lang=css& ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/visas/VisaForm.vue?vue&type=style&index=0&id=84c45026&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/visas/VisaForm.vue?vue&type=style&index=0&id=84c45026&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./NewVisa.vue?vue&type=style&index=0&id=ff4a6a34&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewVisa.vue?vue&type=style&index=0&id=ff4a6a34&scoped=true&lang=css&");
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./VisaForm.vue?vue&type=style&index=0&id=84c45026&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/visas/VisaForm.vue?vue&type=style&index=0&id=84c45026&scoped=true&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -20123,7 +20151,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -20947,10 +20975,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewVisa.vue?vue&type=template&id=ff4a6a34&scoped=true&":
-/*!**********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NewVisa.vue?vue&type=template&id=ff4a6a34&scoped=true& ***!
-  \**********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/visas/VisaForm.vue?vue&type=template&id=84c45026&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/visas/VisaForm.vue?vue&type=template&id=84c45026&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -20989,8 +21017,25 @@ var render = function() {
               _c("label", [_vm._v(" " + _vm._s(_vm.fa.COUNTRY_FA_NAME) + " ")]),
               _vm._v(" "),
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.country.fa_name,
+                    expression: "country.fa_name"
+                  }
+                ],
                 staticClass: "form-control",
-                attrs: { type: "text", name: "fa_name", value: "" }
+                attrs: { type: "text", name: "fa_name" },
+                domProps: { value: _vm.country.fa_name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.country, "fa_name", $event.target.value)
+                  }
+                }
               })
             ]),
             _vm._v(" "),
@@ -21000,8 +21045,25 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.country.latin_name,
+                    expression: "country.latin_name"
+                  }
+                ],
                 staticClass: "form-control",
-                attrs: { type: "text", name: "latin_name", value: "" }
+                attrs: { type: "text", name: "latin_name" },
+                domProps: { value: _vm.country.latin_name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.country, "latin_name", $event.target.value)
+                  }
+                }
               })
             ]),
             _vm._v(" "),
@@ -21009,13 +21071,29 @@ var render = function() {
               _c("label", [_vm._v(" " + _vm._s(_vm.fa.ISO_CODE) + " ")]),
               _vm._v(" "),
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.country.iso_code,
+                    expression: "country.iso_code"
+                  }
+                ],
                 staticClass: "form-control",
                 attrs: {
                   type: "text",
                   name: "iso_code",
-                  value: "",
                   maxlength: "2",
                   dir: "ltr"
+                },
+                domProps: { value: _vm.country.iso_code },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.country, "iso_code", $event.target.value)
+                  }
                 }
               })
             ]),
@@ -21024,12 +21102,24 @@ var render = function() {
               _c("label", [_vm._v(" " + _vm._s(_vm.fa.COUNTRY_CODE) + " ")]),
               _vm._v(" "),
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.country.country_code,
+                    expression: "country.country_code"
+                  }
+                ],
                 staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  name: "country_code",
-                  value: "",
-                  dir: "ltr"
+                attrs: { type: "text", name: "country_code", dir: "ltr" },
+                domProps: { value: _vm.country.country_code },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.country, "country_code", $event.target.value)
+                  }
                 }
               })
             ]),
@@ -21038,8 +21128,25 @@ var render = function() {
               _c("label", [_vm._v(" " + _vm._s(_vm.fa.LANG) + " ")]),
               _vm._v(" "),
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.country.lang,
+                    expression: "country.lang"
+                  }
+                ],
                 staticClass: "form-control",
-                attrs: { type: "text", name: "lang", value: "" }
+                attrs: { type: "text", name: "lang" },
+                domProps: { value: _vm.country.lang },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.country, "lang", $event.target.value)
+                  }
+                }
               })
             ]),
             _vm._v(" "),
@@ -21047,8 +21154,25 @@ var render = function() {
               _c("label", [_vm._v(" " + _vm._s(_vm.fa.LOCAL_NAME) + " ")]),
               _vm._v(" "),
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.country.local_name,
+                    expression: "country.local_name"
+                  }
+                ],
                 staticClass: "form-control",
-                attrs: { type: "text", name: "local_name", value: "" }
+                attrs: { type: "text", name: "local_name" },
+                domProps: { value: _vm.country.local_name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.country, "local_name", $event.target.value)
+                  }
+                }
               })
             ]),
             _vm._v(" "),
@@ -21056,8 +21180,25 @@ var render = function() {
               _c("label", [_vm._v(" " + _vm._s(_vm.fa.BRIEF_INFO) + " ")]),
               _vm._v(" "),
               _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.country.brief_info,
+                    expression: "country.brief_info"
+                  }
+                ],
                 staticClass: "form-control",
-                attrs: { name: "brief_info", rows: "3" }
+                attrs: { name: "brief_info", rows: "3" },
+                domProps: { value: _vm.country.brief_info },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.country, "brief_info", $event.target.value)
+                  }
+                }
               })
             ]),
             _vm._v(" "),
@@ -21065,8 +21206,25 @@ var render = function() {
               _c("label", [_vm._v(" " + _vm._s(_vm.fa.FULL_INFO) + " ")]),
               _vm._v(" "),
               _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.country.full_info,
+                    expression: "country.full_info"
+                  }
+                ],
                 staticClass: "form-control",
-                attrs: { name: "full_info", rows: "6" }
+                attrs: { name: "full_info", rows: "6" },
+                domProps: { value: _vm.country.full_info },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.country, "full_info", $event.target.value)
+                  }
+                }
               })
             ])
           ])
@@ -21150,8 +21308,9 @@ var render = function() {
           _c(
             "a",
             {
-              staticClass: "btn btn-info btn-sm ml-3 cloner",
-              attrs: { href: "javascript:void(0)", "data-target": "visas" }
+              staticClass: "btn btn-info btn-sm ml-3",
+              attrs: { href: "javascript:void(0)" },
+              on: { click: _vm.addNewVisa }
             },
             [
               _c("i", { staticClass: "mdi mdi-plus" }),
@@ -21195,76 +21354,348 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("tbody", { attrs: { id: "visas" } }, [
-                _c("tr", { staticClass: "model" }, [
-                  _c("th", { staticClass: "steper" }, [_vm._v(" 1 ")]),
-                  _vm._v(" "),
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _vm._m(3),
-                  _vm._v(" "),
-                  _vm._m(4),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("label", { staticClass: "btn btn-link" }, [
-                      _vm._v(
-                        "\n                                    " +
-                          _vm._s(_vm.fa.UPLOAD) +
-                          "\n                                    "
-                      ),
-                      _c("input", {
-                        staticClass: "form-control upload-hidden-image d-none",
-                        attrs: {
-                          type: "file",
-                          name: "first_picture",
-                          value: ""
+              _c(
+                "tbody",
+                _vm._l(_vm.country.visas, function(v, i) {
+                  return _c("tr", { staticClass: "model" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: v.id,
+                          expression: "v.id"
                         }
-                      }),
-                      _vm._v(" "),
-                      _c("i", { staticClass: "mdi mdi-check-circle" })
+                      ],
+                      attrs: { type: "hidden", name: "id" },
+                      domProps: { value: v.id },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(v, "id", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "steper" }, [
+                      _vm._v(" " + _vm._s(i + 1) + " ")
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: v.name,
+                            expression: "v.name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", name: "name" },
+                        domProps: { value: v.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(v, "name", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: v.latin_name,
+                            expression: "v.latin_name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", name: "latin_name" },
+                        domProps: { value: v.latin_name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(v, "latin_name", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: v.type,
+                            expression: "v.type"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", name: "type" },
+                        domProps: { value: v.type },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(v, "type", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: v.quiz,
+                            expression: "v.quiz"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", name: "quiz" },
+                        domProps: { value: v.quiz },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(v, "quiz", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("label", { staticClass: "btn btn-link" }, [
+                        _vm._v(
+                          "\n                                    " +
+                            _vm._s(_vm.fa.UPLOAD) +
+                            "\n                                    "
+                        ),
+                        _c("input", {
+                          staticClass:
+                            "form-control upload-hidden-image d-none",
+                          attrs: { type: "file", name: "first_picture" }
+                        }),
+                        _vm._v(" "),
+                        _c("i", { staticClass: "mdi mdi-check-circle" })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: v.counselings,
+                              expression: "v.counselings"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { name: "counselings", dir: "rtl" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                v,
+                                "counselings",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              attrs: { value: "1" },
+                              domProps: {
+                                selected:
+                                  v.counselings && v.counselings.includes("1")
+                              }
+                            },
+                            [_vm._v(" " + _vm._s(_vm.fa.IN_TEXT) + " ")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "option",
+                            {
+                              attrs: { value: "2" },
+                              domProps: {
+                                selected:
+                                  v.counselings && v.counselings.includes("2")
+                              }
+                            },
+                            [_vm._v(" " + _vm._s(_vm.fa.IN_TELEPHONE) + " ")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "option",
+                            {
+                              attrs: { value: "3" },
+                              domProps: {
+                                selected:
+                                  v.counselings && v.counselings.includes("3")
+                              }
+                            },
+                            [_vm._v(" " + _vm._s(_vm.fa.IN_VIDEO) + " ")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "option",
+                            {
+                              attrs: { value: "4" },
+                              domProps: {
+                                selected:
+                                  v.counselings && v.counselings.includes("4")
+                              }
+                            },
+                            [_vm._v(" " + _vm._s(_vm.fa.IN_PERSON) + " ")]
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-center" }, [
+                      _c("label", { staticClass: "cr-styled" }, [
+                        _c("input", {
+                          attrs: {
+                            type: "checkbox",
+                            name: "online_sopping",
+                            value: "1"
+                          },
+                          domProps: { checked: v.online_sopping }
+                        }),
+                        _vm._v(" "),
+                        _c("i", { staticClass: "fa" })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: v.documents,
+                            expression: "v.documents"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "documents", rows: "1" },
+                        domProps: { value: v.documents },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(v, "documents", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: v.conditions,
+                            expression: "v.conditions"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "conditions", rows: "1" },
+                        domProps: { value: v.conditions },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(v, "conditions", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: v.issuance_time,
+                            expression: "v.issuance_time"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "issuance_time", rows: "1" },
+                        domProps: { value: v.issuance_time },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(v, "issuance_time", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: v.issuance_steps,
+                            expression: "v.issuance_steps"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "issuance_steps", rows: "1" },
+                        domProps: { value: v.issuance_steps },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(v, "issuance_steps", $event.target.value)
+                          }
+                        }
+                      })
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "select",
-                      {
-                        staticClass: "select2",
-                        attrs: { name: "counselings", multiple: "", dir: "rtl" }
-                      },
-                      [
-                        _c("option", { attrs: { value: "1" } }, [
-                          _vm._v(" " + _vm._s(_vm.fa.IN_TEXT) + " ")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "2" } }, [
-                          _vm._v(" " + _vm._s(_vm.fa.IN_TELEPHONE) + " ")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "3" } }, [
-                          _vm._v(" " + _vm._s(_vm.fa.IN_VIDEO) + " ")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "4" } }, [
-                          _vm._v(" " + _vm._s(_vm.fa.IN_PERSON) + " ")
-                        ])
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(5),
-                  _vm._v(" "),
-                  _vm._m(6),
-                  _vm._v(" "),
-                  _vm._m(7),
-                  _vm._v(" "),
-                  _vm._m(8),
-                  _vm._v(" "),
-                  _vm._m(9)
-                ])
-              ])
+                  ])
+                }),
+                0
+              )
             ])
           ])
         ])
@@ -21298,108 +21729,6 @@ var staticRenderFns = [
       { staticClass: "remove-cloned", attrs: { href: "javascript:void(0)" } },
       [_c("i", { staticClass: "mdi mdi-delete text-danger" })]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", name: "name", value: "" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", name: "latin_name", value: "" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", name: "type", value: "" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", name: "quiz", value: "" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "text-center" }, [
-      _c("label", { staticClass: "cr-styled" }, [
-        _c("input", {
-          attrs: { type: "checkbox", name: "online_sopping", value: "1" }
-        }),
-        _vm._v(" "),
-        _c("i", { staticClass: "fa" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("textarea", {
-        staticClass: "form-control",
-        attrs: { name: "documents", rows: "1" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("textarea", {
-        staticClass: "form-control",
-        attrs: { name: "conditions", rows: "1" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("textarea", {
-        staticClass: "form-control",
-        attrs: { name: "issuance_time", rows: "1" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("textarea", {
-        staticClass: "form-control",
-        attrs: { name: "issuance_steps", rows: "1" }
-      })
-    ])
   }
 ]
 render._withStripped = true
@@ -21408,10 +21737,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/VisaList.vue?vue&type=template&id=124bd32c&scoped=true&":
-/*!***********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/VisaList.vue?vue&type=template&id=124bd32c&scoped=true& ***!
-  \***********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/visas/VisaList.vue?vue&type=template&id=1cd20272&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/visas/VisaList.vue?vue&type=template&id=1cd20272&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -21430,117 +21759,123 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-body" }, [
-        _c(
-          "table",
-          {
-            staticClass:
-              "table table-bordered table-striped table-hovered table-responsive-lg"
-          },
-          [
-            _c("thead", [
-              _c("tr", [
-                _c("th", [_vm._v(" # ")]),
-                _vm._v(" "),
-                _c("th", [_vm._v(" " + _vm._s(_vm.fa.COUNTRY_FA_NAME) + " ")]),
-                _vm._v(" "),
-                _c("th", [
-                  _vm._v(" " + _vm._s(_vm.fa.COUNTRY_LATIN_NAME) + " ")
-                ]),
-                _vm._v(" "),
-                _c("th", [_vm._v(" " + _vm._s(_vm.fa.ISO_CODE) + " ")]),
-                _vm._v(" "),
-                _c("th", [_vm._v(" " + _vm._s(_vm.fa.COUNTRY_CODE) + " ")]),
-                _vm._v(" "),
-                _c("th", { attrs: { colspan: "3" } }, [
-                  _vm._v(" " + _vm._s(_vm.fa.ACTIONS) + " ")
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.countries, function(c, i) {
-                return _c("tr", [
-                  _c("th", [_vm._v(" " + _vm._s(i + 1) + " ")]),
+        _c("div", { staticClass: "table-responsive" }, [
+          _c(
+            "table",
+            { staticClass: "table table-bordered table-striped table-hovered" },
+            [
+              _c("thead", [
+                _c("tr", [
+                  _c("th", [_vm._v(" # ")]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(" " + _vm._s(c.fa_name) + " ")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(" " + _vm._s(c.latin_name) + " ")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(" " + _vm._s(c.iso_code) + " ")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(" " + _vm._s(c.country_code) + " ")]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "text-center" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-info btn-sm",
-                        attrs: {
-                          href: "#",
-                          "data-toggle": "modal",
-                          "data-target": "#visa-list"
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.getVisas(c.id)
-                          }
-                        }
-                      },
-                      [
-                        _c("i", {
-                          staticClass: "mdi mdi-format-list-bulleted ml-1"
-                        }),
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(_vm.fa.VISA_LIST) +
-                            "\n                            "
-                        )
-                      ]
-                    )
+                  _c("th", [
+                    _vm._v(" " + _vm._s(_vm.fa.COUNTRY_FA_NAME) + " ")
                   ]),
                   _vm._v(" "),
-                  _c("td", { staticClass: "text-center" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-success btn-sm",
-                        attrs: { href: "#" }
-                      },
-                      [
-                        _c("i", { staticClass: "mdi mdi-pencil ml-1" }),
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(_vm.fa.EDIT) +
-                            "\n                            "
-                        )
-                      ]
-                    )
+                  _c("th", [
+                    _vm._v(" " + _vm._s(_vm.fa.COUNTRY_LATIN_NAME) + " ")
                   ]),
                   _vm._v(" "),
-                  _c("td", { staticClass: "text-center" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-danger btn-sm",
-                        attrs: { href: "#" }
-                      },
-                      [
-                        _c("i", { staticClass: "mdi mdi-delete ml-1" }),
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(_vm.fa.DELETE) +
-                            "\n                            "
-                        )
-                      ]
-                    )
+                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.ISO_CODE) + " ")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.COUNTRY_CODE) + " ")]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { colspan: "3" } }, [
+                    _vm._v(" " + _vm._s(_vm.fa.ACTIONS) + " ")
                   ])
                 ])
-              }),
-              0
-            )
-          ]
-        )
+              ]),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.countries, function(c, i) {
+                  return _c("tr", [
+                    _c("td", [_vm._v(" " + _vm._s(i + 1) + " ")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(" " + _vm._s(c.fa_name) + " ")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(" " + _vm._s(c.latin_name) + " ")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(" " + _vm._s(c.iso_code) + " ")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(" " + _vm._s(c.country_code) + " ")]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-center" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-info btn-sm",
+                          attrs: {
+                            href: "#",
+                            "data-toggle": "modal",
+                            "data-target": "#visa-list"
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.getVisas(c.id)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "mdi mdi-format-list-bulleted ml-1"
+                          }),
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(_vm.fa.VISA_LIST) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-center" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-success btn-sm",
+                          attrs: { href: "#/visa/" + c.id }
+                        },
+                        [
+                          _c("i", { staticClass: "mdi mdi-pencil ml-1" }),
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(_vm.fa.EDIT) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-center" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-danger btn-sm",
+                          attrs: { href: "javascript:void(0)" },
+                          on: {
+                            click: function($event) {
+                              return _vm.destroy(i)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "mdi mdi-delete ml-1" }),
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(_vm.fa.DELETE) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                }),
+                0
+              )
+            ]
+          )
+        ])
       ])
     ]),
     _vm._v(" "),
@@ -37138,19 +37473,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/NewVisa.vue":
-/*!*********************************************!*\
-  !*** ./resources/js/components/NewVisa.vue ***!
-  \*********************************************/
+/***/ "./resources/js/components/visas/VisaForm.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/visas/VisaForm.vue ***!
+  \****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _NewVisa_vue_vue_type_template_id_ff4a6a34_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NewVisa.vue?vue&type=template&id=ff4a6a34&scoped=true& */ "./resources/js/components/NewVisa.vue?vue&type=template&id=ff4a6a34&scoped=true&");
-/* harmony import */ var _NewVisa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NewVisa.vue?vue&type=script&lang=js& */ "./resources/js/components/NewVisa.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _NewVisa_vue_vue_type_style_index_0_id_ff4a6a34_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NewVisa.vue?vue&type=style&index=0&id=ff4a6a34&scoped=true&lang=css& */ "./resources/js/components/NewVisa.vue?vue&type=style&index=0&id=ff4a6a34&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _VisaForm_vue_vue_type_template_id_84c45026_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VisaForm.vue?vue&type=template&id=84c45026&scoped=true& */ "./resources/js/components/visas/VisaForm.vue?vue&type=template&id=84c45026&scoped=true&");
+/* harmony import */ var _VisaForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VisaForm.vue?vue&type=script&lang=js& */ "./resources/js/components/visas/VisaForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _VisaForm_vue_vue_type_style_index_0_id_84c45026_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./VisaForm.vue?vue&type=style&index=0&id=84c45026&scoped=true&lang=css& */ "./resources/js/components/visas/VisaForm.vue?vue&type=style&index=0&id=84c45026&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -37160,83 +37495,83 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _NewVisa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _NewVisa_vue_vue_type_template_id_ff4a6a34_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _NewVisa_vue_vue_type_template_id_ff4a6a34_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _VisaForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _VisaForm_vue_vue_type_template_id_84c45026_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _VisaForm_vue_vue_type_template_id_84c45026_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "ff4a6a34",
+  "84c45026",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/NewVisa.vue"
+component.options.__file = "resources/js/components/visas/VisaForm.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/NewVisa.vue?vue&type=script&lang=js&":
-/*!**********************************************************************!*\
-  !*** ./resources/js/components/NewVisa.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************/
+/***/ "./resources/js/components/visas/VisaForm.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/visas/VisaForm.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NewVisa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./NewVisa.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewVisa.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NewVisa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./VisaForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/visas/VisaForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/NewVisa.vue?vue&type=style&index=0&id=ff4a6a34&scoped=true&lang=css&":
-/*!******************************************************************************************************!*\
-  !*** ./resources/js/components/NewVisa.vue?vue&type=style&index=0&id=ff4a6a34&scoped=true&lang=css& ***!
-  \******************************************************************************************************/
+/***/ "./resources/js/components/visas/VisaForm.vue?vue&type=style&index=0&id=84c45026&scoped=true&lang=css&":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/components/visas/VisaForm.vue?vue&type=style&index=0&id=84c45026&scoped=true&lang=css& ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_NewVisa_vue_vue_type_style_index_0_id_ff4a6a34_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./NewVisa.vue?vue&type=style&index=0&id=ff4a6a34&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewVisa.vue?vue&type=style&index=0&id=ff4a6a34&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_NewVisa_vue_vue_type_style_index_0_id_ff4a6a34_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_NewVisa_vue_vue_type_style_index_0_id_ff4a6a34_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_NewVisa_vue_vue_type_style_index_0_id_ff4a6a34_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_NewVisa_vue_vue_type_style_index_0_id_ff4a6a34_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_NewVisa_vue_vue_type_style_index_0_id_ff4a6a34_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaForm_vue_vue_type_style_index_0_id_84c45026_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./VisaForm.vue?vue&type=style&index=0&id=84c45026&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/visas/VisaForm.vue?vue&type=style&index=0&id=84c45026&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaForm_vue_vue_type_style_index_0_id_84c45026_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaForm_vue_vue_type_style_index_0_id_84c45026_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaForm_vue_vue_type_style_index_0_id_84c45026_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaForm_vue_vue_type_style_index_0_id_84c45026_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaForm_vue_vue_type_style_index_0_id_84c45026_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ "./resources/js/components/NewVisa.vue?vue&type=template&id=ff4a6a34&scoped=true&":
-/*!****************************************************************************************!*\
-  !*** ./resources/js/components/NewVisa.vue?vue&type=template&id=ff4a6a34&scoped=true& ***!
-  \****************************************************************************************/
+/***/ "./resources/js/components/visas/VisaForm.vue?vue&type=template&id=84c45026&scoped=true&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/visas/VisaForm.vue?vue&type=template&id=84c45026&scoped=true& ***!
+  \***********************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewVisa_vue_vue_type_template_id_ff4a6a34_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./NewVisa.vue?vue&type=template&id=ff4a6a34&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewVisa.vue?vue&type=template&id=ff4a6a34&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewVisa_vue_vue_type_template_id_ff4a6a34_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaForm_vue_vue_type_template_id_84c45026_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./VisaForm.vue?vue&type=template&id=84c45026&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/visas/VisaForm.vue?vue&type=template&id=84c45026&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaForm_vue_vue_type_template_id_84c45026_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewVisa_vue_vue_type_template_id_ff4a6a34_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaForm_vue_vue_type_template_id_84c45026_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
 /***/ }),
 
-/***/ "./resources/js/components/VisaList.vue":
-/*!**********************************************!*\
-  !*** ./resources/js/components/VisaList.vue ***!
-  \**********************************************/
+/***/ "./resources/js/components/visas/VisaList.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/visas/VisaList.vue ***!
+  \****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _VisaList_vue_vue_type_template_id_124bd32c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VisaList.vue?vue&type=template&id=124bd32c&scoped=true& */ "./resources/js/components/VisaList.vue?vue&type=template&id=124bd32c&scoped=true&");
-/* harmony import */ var _VisaList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VisaList.vue?vue&type=script&lang=js& */ "./resources/js/components/VisaList.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _VisaList_vue_vue_type_template_id_1cd20272_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VisaList.vue?vue&type=template&id=1cd20272&scoped=true& */ "./resources/js/components/visas/VisaList.vue?vue&type=template&id=1cd20272&scoped=true&");
+/* harmony import */ var _VisaList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VisaList.vue?vue&type=script&lang=js& */ "./resources/js/components/visas/VisaList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -37246,49 +37581,49 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _VisaList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _VisaList_vue_vue_type_template_id_124bd32c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _VisaList_vue_vue_type_template_id_124bd32c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _VisaList_vue_vue_type_template_id_1cd20272_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _VisaList_vue_vue_type_template_id_1cd20272_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "124bd32c",
+  "1cd20272",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/VisaList.vue"
+component.options.__file = "resources/js/components/visas/VisaList.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/VisaList.vue?vue&type=script&lang=js&":
-/*!***********************************************************************!*\
-  !*** ./resources/js/components/VisaList.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************/
+/***/ "./resources/js/components/visas/VisaList.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/visas/VisaList.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./VisaList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/VisaList.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./VisaList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/visas/VisaList.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/VisaList.vue?vue&type=template&id=124bd32c&scoped=true&":
-/*!*****************************************************************************************!*\
-  !*** ./resources/js/components/VisaList.vue?vue&type=template&id=124bd32c&scoped=true& ***!
-  \*****************************************************************************************/
+/***/ "./resources/js/components/visas/VisaList.vue?vue&type=template&id=1cd20272&scoped=true&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/visas/VisaList.vue?vue&type=template&id=1cd20272&scoped=true& ***!
+  \***********************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaList_vue_vue_type_template_id_124bd32c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./VisaList.vue?vue&type=template&id=124bd32c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/VisaList.vue?vue&type=template&id=124bd32c&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaList_vue_vue_type_template_id_124bd32c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaList_vue_vue_type_template_id_1cd20272_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./VisaList.vue?vue&type=template&id=1cd20272&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/visas/VisaList.vue?vue&type=template&id=1cd20272&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaList_vue_vue_type_template_id_1cd20272_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaList_vue_vue_type_template_id_124bd32c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaList_vue_vue_type_template_id_1cd20272_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -37298,10 +37633,10 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************!*\
   !*** ./resources/lang/fa.json ***!
   \********************************/
-/*! exports provided: BRAND, LOGIN_TO_ACC, , USERNAME, USERNAME/EMAIL, PASSWORD, REMEMBER_ME, LOG_IN, FORGOT_PASSWORD, MANAGE_ACC, LOGOUT, MAIN_MENU, OTHER_SETTINGS, LOADING, RECENT_SHOP_LIST, NEW_VISA, VISA_LIST, CONFIRM, ACTIONS, EDIT, DELETE, UPLOAD, TODAY_SELL_COUNT, TODAY_INCOME, TODAY_COUNSELING_SESSIONS, ACTIVE_VISA_COUNT, DASHBOARD, MAIN_DASHBOARD, MANAGE_VISA, MANAGE_AGENCIES, USERS, COUNSELING_SESSIONS, BANK_TRANSACTIONS, FACTORS, CONTRACTS, QUIZ_MAKER, COUNTRY_FA_NAME, COUNTRY_LATIN_NAME, ISO_CODE, COUNTRY_CODE, BRIEF_INFO, MAIN_PICTURE, FULL_INFO, LANG, LOCAL_NAME, GALLERY_PHOTOS, UPLOAD_PICTURES, THIS_WILL_BE_YOUR_MAIN_PICTURE, OTHER_PICTURES, PICTURE_NUMBER_X, NOT_REQUIRED, NEW_PICTURE, DEFINE_VISA_TYPE, NAME, LATIN_NAME, CONDITIONS, DOCUMENTS, ONLINE_SOPPING, ISSUANCE_TIME, ISSUANCE_STEPS, FIRST_PICTURE, VISA_TYPE, CHOOSE_QUIZ, QUIZ, AVAILABLE_COUNSELING, IN_TEXT, IN_TELEPHONE, IN_VIDEO, IN_PERSON, ADD_NEW_VISA, default */
+/*! exports provided: BRAND, LOGIN_TO_ACC, , USERNAME, USERNAME/EMAIL, PASSWORD, REMEMBER_ME, LOG_IN, FORGOT_PASSWORD, MANAGE_ACC, ARE_YOU_SURE, ITEM_DELETED, LOGOUT, MAIN_MENU, OTHER_SETTINGS, LOADING, RECENT_SHOP_LIST, NEW_VISA, VISA_LIST, CONFIRM, ACTIONS, EDIT, DELETE, UPLOAD, YES, CANCEL, TODAY_SELL_COUNT, TODAY_INCOME, TODAY_COUNSELING_SESSIONS, ACTIVE_VISA_COUNT, DASHBOARD, MAIN_DASHBOARD, MANAGE_VISA, MANAGE_AGENCIES, USERS, COUNSELING_SESSIONS, BANK_TRANSACTIONS, FACTORS, CONTRACTS, QUIZ_MAKER, COUNTRY_FA_NAME, COUNTRY_LATIN_NAME, ISO_CODE, COUNTRY_CODE, BRIEF_INFO, MAIN_PICTURE, FULL_INFO, LANG, LOCAL_NAME, GALLERY_PHOTOS, UPLOAD_PICTURES, THIS_WILL_BE_YOUR_MAIN_PICTURE, OTHER_PICTURES, PICTURE_NUMBER_X, NOT_REQUIRED, NEW_PICTURE, DEFINE_VISA_TYPE, NAME, LATIN_NAME, CONDITIONS, DOCUMENTS, ONLINE_SOPPING, ISSUANCE_TIME, ISSUANCE_STEPS, FIRST_PICTURE, VISA_TYPE, CHOOSE_QUIZ, QUIZ, AVAILABLE_COUNSELING, IN_TEXT, IN_TELEPHONE, IN_VIDEO, IN_PERSON, ADD_NEW_VISA, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"BRAND\":\"سفر به راه\",\"LOGIN_TO_ACC\":\"ورود به حساب کاربری\",\"\":\"\",\"USERNAME\":\"نام کاربری\",\"USERNAME/EMAIL\":\"نام کاربری یا ایمیل\",\"PASSWORD\":\"رمزعبور\",\"REMEMBER_ME\":\"مرا به خاطر بسپار\",\"LOG_IN\":\"ورود به حساب\",\"FORGOT_PASSWORD\":\"فراموشی رمزعبور\",\"MANAGE_ACC\":\"مدیریت حساب کاربری\",\"LOGOUT\":\"خروج\",\"MAIN_MENU\":\"منوی اصلی\",\"OTHER_SETTINGS\":\"سایر تنظیمات\",\"LOADING\":\"در حال بارگذاری...\",\"RECENT_SHOP_LIST\":\"لیست آخرین خرید ها\",\"NEW_VISA\":\"تعریف ویزا\",\"VISA_LIST\":\"لیست ویزا ها\",\"CONFIRM\":\"تایید\",\"ACTIONS\":\"عملیات\",\"EDIT\":\"ویرایش\",\"DELETE\":\"حذف\",\"UPLOAD\":\"آپلود\",\"TODAY_SELL_COUNT\":\"تعداد فروش امروز\",\"TODAY_INCOME\":\"دریافتی های امروز\",\"TODAY_COUNSELING_SESSIONS\":\"جلسات مشاوره امروز\",\"ACTIVE_VISA_COUNT\":\"تعداد ویزا های فعال\",\"DASHBOARD\":\"داشبورد\",\"MAIN_DASHBOARD\":\"داشبورد اصلی\",\"MANAGE_VISA\":\"مدیریت ویزا\",\"MANAGE_AGENCIES\":\"مدیریت آژانس ها\",\"USERS\":\"کاربران\",\"COUNSELING_SESSIONS\":\"جلسات مشاوره\",\"BANK_TRANSACTIONS\":\"تراکنش های بانکی\",\"FACTORS\":\"فاکتور ها\",\"CONTRACTS\":\"قرارداد ها\",\"QUIZ_MAKER\":\"آزمون ساز\",\"COUNTRY_FA_NAME\":\"نام کشور به فارسی\",\"COUNTRY_LATIN_NAME\":\"نام کشور به لاتین\",\"ISO_CODE\":\"کد دو حرفی ISO\",\"COUNTRY_CODE\":\"پیش شماره کشور\",\"BRIEF_INFO\":\"توضیحات مختصر\",\"MAIN_PICTURE\":\"تصویر اصلی\",\"FULL_INFO\":\"توضیحات کامل\",\"LANG\":\"زبان\",\"LOCAL_NAME\":\"نام محلی\",\"GALLERY_PHOTOS\":\"گالری تصاویر\",\"UPLOAD_PICTURES\":\"آپلود تصاویر\",\"THIS_WILL_BE_YOUR_MAIN_PICTURE\":\"این تصویر، تصویر اصلی شما خواهد بود\",\"OTHER_PICTURES\":\"سایر تصاویر\",\"PICTURE_NUMBER_X\":\"تصویر شماره \",\"NOT_REQUIRED\":\"اختیاری\",\"NEW_PICTURE\":\"اضافه کردن تصویر جدید\",\"DEFINE_VISA_TYPE\":\"تعریف انواع ویزا\",\"NAME\":\"نام\",\"LATIN_NAME\":\"نام لاتین\",\"CONDITIONS\":\"شرایط\",\"DOCUMENTS\":\"مدارک\",\"ONLINE_SOPPING\":\"خریدآنلاین\",\"ISSUANCE_TIME\":\"زمان صدور\",\"ISSUANCE_STEPS\":\"مراحل صدور\",\"FIRST_PICTURE\":\"تصویر اول\",\"VISA_TYPE\":\"نوع ویزا\",\"CHOOSE_QUIZ\":\"انتخاب آزمون\",\"QUIZ\":\"آزمون\",\"AVAILABLE_COUNSELING\":\"نوع مشاوره های در دسترس\",\"IN_TEXT\":\"متنی\",\"IN_TELEPHONE\":\"تلفنی\",\"IN_VIDEO\":\"تصویری\",\"IN_PERSON\":\"حضوری\",\"ADD_NEW_VISA\":\"اضافه کردن ویزا جدید\"}");
+module.exports = JSON.parse("{\"BRAND\":\"سفر به راه\",\"LOGIN_TO_ACC\":\"ورود به حساب کاربری\",\"\":\"\",\"USERNAME\":\"نام کاربری\",\"USERNAME/EMAIL\":\"نام کاربری یا ایمیل\",\"PASSWORD\":\"رمزعبور\",\"REMEMBER_ME\":\"مرا به خاطر بسپار\",\"LOG_IN\":\"ورود به حساب\",\"FORGOT_PASSWORD\":\"فراموشی رمزعبور\",\"MANAGE_ACC\":\"مدیریت حساب کاربری\",\"ARE_YOU_SURE\":\"آیا مطمئن هستید\",\"ITEM_DELETED\":\"آیتم مورد نظر با موفقیت حذف شد.\",\"LOGOUT\":\"خروج\",\"MAIN_MENU\":\"منوی اصلی\",\"OTHER_SETTINGS\":\"سایر تنظیمات\",\"LOADING\":\"در حال بارگذاری...\",\"RECENT_SHOP_LIST\":\"لیست آخرین خرید ها\",\"NEW_VISA\":\"تعریف ویزا\",\"VISA_LIST\":\"لیست ویزا ها\",\"CONFIRM\":\"تایید\",\"ACTIONS\":\"عملیات\",\"EDIT\":\"ویرایش\",\"DELETE\":\"حذف\",\"UPLOAD\":\"آپلود\",\"YES\":\"بله\",\"CANCEL\":\"انصراف\",\"TODAY_SELL_COUNT\":\"تعداد فروش امروز\",\"TODAY_INCOME\":\"دریافتی های امروز\",\"TODAY_COUNSELING_SESSIONS\":\"جلسات مشاوره امروز\",\"ACTIVE_VISA_COUNT\":\"تعداد ویزا های فعال\",\"DASHBOARD\":\"داشبورد\",\"MAIN_DASHBOARD\":\"داشبورد اصلی\",\"MANAGE_VISA\":\"مدیریت ویزا\",\"MANAGE_AGENCIES\":\"مدیریت آژانس ها\",\"USERS\":\"کاربران\",\"COUNSELING_SESSIONS\":\"جلسات مشاوره\",\"BANK_TRANSACTIONS\":\"تراکنش های بانکی\",\"FACTORS\":\"فاکتور ها\",\"CONTRACTS\":\"قرارداد ها\",\"QUIZ_MAKER\":\"آزمون ساز\",\"COUNTRY_FA_NAME\":\"نام کشور به فارسی\",\"COUNTRY_LATIN_NAME\":\"نام کشور به لاتین\",\"ISO_CODE\":\"کد دو حرفی ISO\",\"COUNTRY_CODE\":\"پیش شماره کشور\",\"BRIEF_INFO\":\"توضیحات مختصر\",\"MAIN_PICTURE\":\"تصویر اصلی\",\"FULL_INFO\":\"توضیحات کامل\",\"LANG\":\"زبان\",\"LOCAL_NAME\":\"نام محلی\",\"GALLERY_PHOTOS\":\"گالری تصاویر\",\"UPLOAD_PICTURES\":\"آپلود تصاویر\",\"THIS_WILL_BE_YOUR_MAIN_PICTURE\":\"این تصویر، تصویر اصلی شما خواهد بود\",\"OTHER_PICTURES\":\"سایر تصاویر\",\"PICTURE_NUMBER_X\":\"تصویر شماره \",\"NOT_REQUIRED\":\"اختیاری\",\"NEW_PICTURE\":\"اضافه کردن تصویر جدید\",\"DEFINE_VISA_TYPE\":\"تعریف انواع ویزا\",\"NAME\":\"نام\",\"LATIN_NAME\":\"نام لاتین\",\"CONDITIONS\":\"شرایط\",\"DOCUMENTS\":\"مدارک\",\"ONLINE_SOPPING\":\"خریدآنلاین\",\"ISSUANCE_TIME\":\"زمان صدور\",\"ISSUANCE_STEPS\":\"مراحل صدور\",\"FIRST_PICTURE\":\"تصویر اول\",\"VISA_TYPE\":\"نوع ویزا\",\"CHOOSE_QUIZ\":\"انتخاب آزمون\",\"QUIZ\":\"آزمون\",\"AVAILABLE_COUNSELING\":\"نوع مشاوره های در دسترس\",\"IN_TEXT\":\"متنی\",\"IN_TELEPHONE\":\"تلفنی\",\"IN_VIDEO\":\"تصویری\",\"IN_PERSON\":\"حضوری\",\"ADD_NEW_VISA\":\"اضافه کردن ویزا جدید\"}");
 
 /***/ }),
 

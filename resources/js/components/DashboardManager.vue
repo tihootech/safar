@@ -8,8 +8,8 @@
     import fa from '../../lang/fa.json'; // translate file
     import VueRouter from 'vue-router';
     import Home from './Home.vue';
-    import VisaList from './VisaList.vue';
-    import NewVisa from './NewVisa.vue';
+    import VisaList from './visas/VisaList.vue';
+    import VisaForm from './visas/VisaForm.vue';
 
     export default {
         router : new VueRouter ({
@@ -29,8 +29,8 @@
                     name : 'visa-list',
                 },
                 {
-                    path : '/new-visa',
-                    component : NewVisa,
+                    path : '/visa/:cid?',
+                    component : VisaForm,
                 }
             ]
         }),

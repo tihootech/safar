@@ -5,45 +5,47 @@
       </div>
       <div class="card">
           <div class="card-body">
-              <table class="table table-bordered table-striped table-hovered table-responsive-lg">
-                  <thead>
-                      <tr>
-                          <th> # </th>
-                          <th> {{fa.COUNTRY_FA_NAME}} </th>
-                          <th> {{fa.COUNTRY_LATIN_NAME}} </th>
-                          <th> {{fa.ISO_CODE}} </th>
-                          <th> {{fa.COUNTRY_CODE}} </th>
-                          <th colspan="3"> {{fa.ACTIONS}} </th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr v-for="c, i in countries">
-                          <th> {{i+1}} </th>
-                          <td> {{c.fa_name}} </td>
-                          <td> {{c.latin_name}} </td>
-                          <td> {{c.iso_code}} </td>
-                          <td> {{c.country_code}} </td>
-                          <td class="text-center">
-                              <a href="#" data-toggle="modal" class="btn btn-info btn-sm" data-target="#visa-list" @click="getVisas(c.id)">
-                                  <i class="mdi mdi-format-list-bulleted ml-1"></i>
-                                  {{fa.VISA_LIST}}
-                              </a>
-                          </td>
-                          <td class="text-center">
-                              <a href="#" class="btn btn-success btn-sm">
-                                  <i class="mdi mdi-pencil ml-1"></i>
-                                  {{fa.EDIT}}
-                              </a>
-                          </td>
-                          <td class="text-center">
-                              <a href="#" class="btn btn-danger btn-sm">
-                                  <i class="mdi mdi-delete ml-1"></i>
-                                  {{fa.DELETE}}
-                              </a>
-                          </td>
-                      </tr>
-                  </tbody>
-              </table>
+              <div class="table-responsive">
+                  <table class="table table-bordered table-striped table-hovered">
+                      <thead>
+                          <tr>
+                              <th> # </th>
+                              <th> {{fa.COUNTRY_FA_NAME}} </th>
+                              <th> {{fa.COUNTRY_LATIN_NAME}} </th>
+                              <th> {{fa.ISO_CODE}} </th>
+                              <th> {{fa.COUNTRY_CODE}} </th>
+                              <th colspan="3"> {{fa.ACTIONS}} </th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr v-for="c, i in countries">
+                              <td> {{i+1}} </td>
+                              <td> {{c.fa_name}} </td>
+                              <td> {{c.latin_name}} </td>
+                              <td> {{c.iso_code}} </td>
+                              <td> {{c.country_code}} </td>
+                              <td class="text-center">
+                                  <a href="#" data-toggle="modal" class="btn btn-info btn-sm" data-target="#visa-list" @click="getVisas(c.id)">
+                                      <i class="mdi mdi-format-list-bulleted ml-1"></i>
+                                      {{fa.VISA_LIST}}
+                                  </a>
+                              </td>
+                              <td class="text-center">
+                                  <a :href="`#/visa/${c.id}`" class="btn btn-success btn-sm">
+                                      <i class="mdi mdi-pencil ml-1"></i>
+                                      {{fa.EDIT}}
+                                  </a>
+                              </td>
+                              <td class="text-center">
+                                  <a href="javascript:void(0)" class="btn btn-danger btn-sm" @click="destroy(i)">
+                                      <i class="mdi mdi-delete ml-1"></i>
+                                      {{fa.DELETE}}
+                                  </a>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
           </div>
       </div>
 
@@ -113,6 +115,27 @@ export default {
         },
         displayCounselings : function (str) {
             return str.replace("1", this.fa.IN_TEXT).replace("2", this.fa.IN_TELEPHONE).replace("3", this.fa.IN_VIDEO).replace("4", this.fa.IN_PERSON).replace(',', '،');
+        },
+        destroy : function (index) {
+            var countries = this.countries;
+            var cid = countries[index].id;
+            swal({
+                title: this.fa.ARE_YOU_SURE,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonClass: 'btn btn-danger',
+                cancelButtonClass: 'btn btn-secondary',
+                confirmButtonText: this.fa.YES,
+                cancelButtonText: this.fa.CANCEL,
+            }).then(function () {
+                countries.splice(index);
+                axios.delete(`/api/visa/${cid}`).then( res => {
+                    console.log(res.data);
+                    if (res.data.success) {
+                        swalSuccess(fa.ITEM_DELETED);
+                    }
+                });
+            });
         }
     }
 }

@@ -22,6 +22,9 @@
         <link href="{{asset('assets/plugins/morris-chart/morris.css')}}" rel="stylesheet">
         <link href="{{asset('assets/plugins/dropify/css/dropify.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('assets/plugins/sweet-alert/sweetalert2.min.css')}}" rel="stylesheet" type="text/css">
+        <link href="{{asset('assets/plugins/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('assets/plugins/datatables/buttons.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('assets/plugins/datatables/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
 
         <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet">
 
@@ -58,9 +61,6 @@
         <script src="{{asset('assets/js/jquery.slimscroll.min.js')}}"></script>
         <script src="{{asset('assets/js/slidebars.min.js')}}"></script>
 
-        <!-- app vuejs -->
-        <script src="{{asset('js/app.js')}}"></script>
-
         <!--plugins js-->
         <script src="{{asset('assets/plugins/counter/jquery.counterup.min.js')}}"></script>
         <script src="{{asset('assets/plugins/waypoints/jquery.waypoints.min.js')}}"></script>
@@ -74,10 +74,15 @@
         <script src="{{asset('assets/plugins/select2/select2.min.js')}}"></script>
         <script src="{{asset('assets/plugins/sweet-alert/sweetalert2.min.js')}}"></script>
 
+        <!--data table-->
+        <script src="{{asset('assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+        <script src="{{asset('assets/plugins/datatables/dataTables.bootstrap4.min.js')}}"></script>
+        <script src="{{asset('assets/plugins/datatables/dataTables.responsive.min.js')}}"></script>
+        <script src="{{asset('assets/plugins/datatables/responsive.bootstrap4.min.js')}}"></script>
 
-        <!--app js-->
-        <script src="{{asset('assets/js/jquery.app.js')}}"></script>
         <script src="{{asset('assets/js/custom.js')}}"></script>
+        <script src="{{asset('js/app.js')}}"></script>
+        <script src="{{asset('assets/js/jquery.app.js')}}"></script>
 
     </body>
 </html>
