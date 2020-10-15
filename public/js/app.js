@@ -2068,10 +2068,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['fa'],
-  mounted: function mounted() {
-    $('.counter').counterUp(window.COUNTER_OPTIONS);
-  }
+  props: ['fa']
 });
 
 /***/ }),
@@ -21069,7 +21066,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-lg-9 col-sm-12" }, [
       _c("div", { staticClass: "card m-b-30" }, [
         _c("div", { staticClass: "card-body" }, [
-          _vm._v("\n                    تقویم ...\n                ")
+          _vm._v("\n                    تقویم ......\n                ")
         ])
       ])
     ])

@@ -55,7 +55,6 @@
         <script src="{{asset('assets/js/slidebars.min.js')}}"></script>
 
         <!--plugins js-->
-        <script src="{{asset('assets/plugins/counter/jquery.counterup.min.js')}}"></script>
         <script src="{{asset('assets/plugins/sweet-alert/sweetalert2.min.js')}}"></script>
 
         <script src="{{asset('assets/js/custom.js')}}?v=1.1"></script>

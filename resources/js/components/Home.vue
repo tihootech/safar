@@ -91,7 +91,7 @@
             <div class="col-lg-9 col-sm-12">
                 <div class="card m-b-30">
                     <div class="card-body">
-                        تقویم ...
+                        تقویم ......
                     </div>
                 </div>
             </div>
@@ -102,9 +102,6 @@
 
 <script>
     export default {
-        props : ['fa'],
-        mounted: function() {
-            $('.counter').counterUp(window.COUNTER_OPTIONS);
-        }
+        props : ['fa']
     }
 </script>
