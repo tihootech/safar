@@ -20,8 +20,8 @@ class CreateVisasTable extends Migration
             $table->string('latin_name');
             $table->string('type');
             $table->string('quiz');
-            $table->string('first_picture');
             $table->string('counselings');
+            $table->string('first_picture')->nullable();
             $table->boolean('online_sopping')->default(0);
             $table->text('documents')->nullable();
             $table->text('conditions')->nullable();

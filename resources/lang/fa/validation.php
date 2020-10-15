@@ -119,5 +119,6 @@ return array(
         "visas.*.type" => "نوع ویزا",
         "visas.*.quiz" => "انتخاب آزمون",
         "visas.*.counselings" => "نوع مشاوره های در دسترس",
+        "visas.*.first_picture" => "تصویر اول",
     ],
 );

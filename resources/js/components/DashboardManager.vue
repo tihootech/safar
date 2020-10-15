@@ -17,7 +17,7 @@
                 {
                     path : '/home',
                     name : 'home',
-                    component : Home,
+                    component : Home
                 },
                 {
                     path : '/',
@@ -26,11 +26,12 @@
                 {
                     path : '/visa-list',
                     component : VisaList,
-                    name : 'visa-list',
+                    name : 'visa-list'
                 },
                 {
                     path : '/visa/:cid?',
                     component : VisaForm,
+                    name : 'visa-form'
                 }
             ]
         }),

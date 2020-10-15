@@ -119,18 +119,18 @@ export default {
         destroy : function (index) {
             var countries = this.countries;
             var cid = countries[index].id;
+            var fa = this.fa;
             swal({
                 title: this.fa.ARE_YOU_SURE,
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonClass: 'btn btn-danger',
                 cancelButtonClass: 'btn btn-secondary',
-                confirmButtonText: this.fa.YES,
-                cancelButtonText: this.fa.CANCEL,
+                confirmButtonText: fa.YES,
+                cancelButtonText: fa.CANCEL,
             }).then(function () {
                 countries.splice(index);
                 axios.delete(`/api/visa/${cid}`).then( res => {
-                    console.log(res.data);
                     if (res.data.success) {
                         swalSuccess(fa.ITEM_DELETED);
                     }

@@ -11,7 +11,7 @@
                                     <div class="text-center"><i class="ti ti-money ti-1"></i></div>
                                 </div>
                                 <div class="col-8">
-                                    <div class="dynamicbar">{{fa.LOADING}}</div>
+                                    <div class="dynamicbar">{{fa.LAST_WEEK_CHART}}</div>
                                 </div>
                                 <hr class="col-10">
                                 <div class="col-12">
@@ -29,7 +29,7 @@
                                     <div class="text-center"><i class="ti ti-wallet ti-2"></i></div>
                                 </div>
                                 <div class="col-8">
-                                    <div class="dynamicbar">{{fa.LOADING}}</div>
+                                    <div class="dynamicbar">{{fa.LAST_WEEK_CHART}}</div>
                                 </div>
                                 <hr class="col-10">
                                 <div class="col-12">
@@ -47,7 +47,7 @@
                                     <div class="text-center"><i class="ti ti-calendar ti-3"></i></div>
                                 </div>
                                 <div class="col-8">
-                                    <div class="inlinesparkline">{{fa.LOADING}}</div>
+                                    <div class="inlinesparkline">{{fa.LAST_WEEK_CHART}}</div>
                                 </div>
                                 <hr class="col-10">
                                 <div class="col-12">
@@ -65,7 +65,7 @@
                                     <div class="text-center"><i class="ti ti-id-badge ti-4"></i></div>
                                 </div>
                                 <div class="col-8">
-                                    <div class="inlinesparkline">{{fa.LOADING}}</div>
+                                    <div class="inlinesparkline">{{fa.LAST_WEEK_CHART}}</div>
                                 </div>
                                 <hr class="col-10">
                                 <div class="col-12">
@@ -105,7 +105,6 @@
         props : ['fa'],
         mounted: function() {
             $('.counter').counterUp(window.COUNTER_OPTIONS);
-            $.Sparkline.init();
         }
     }
 </script>

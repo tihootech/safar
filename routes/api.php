@@ -8,3 +8,6 @@ Route::get('/visa/index', 'VisaController@index');
 Route::get('/visa/get/{cid}', 'VisaController@getVisas');
 Route::delete('/visa/{country}', 'VisaController@destroy');
 Route::get('/country/get/{cid}', 'VisaController@getCountry');
+
+Route::post('gallery/upload', 'GalleryController@upload');
+Route::post('gallery/delete', 'GalleryController@clearFile');

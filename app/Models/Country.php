@@ -15,4 +15,9 @@ class Country extends Model
         return $this->hasMany(Visa::class);
     }
 
+    public function gallery()
+    {
+        return $this->morphMany(Gallery::class, 'owner');
+    }
+
 }

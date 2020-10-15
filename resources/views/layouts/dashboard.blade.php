@@ -17,14 +17,7 @@
         <link href="{{asset('assets/css/icons.css')}}" rel="stylesheet">
         <link href="{{asset('assets/css/menu.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
-
-        <link href="{{asset('assets/plugins/select2/select2.min.css')}}" rel="stylesheet">
-        <link href="{{asset('assets/plugins/morris-chart/morris.css')}}" rel="stylesheet">
-        <link href="{{asset('assets/plugins/dropify/css/dropify.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('assets/plugins/sweet-alert/sweetalert2.min.css')}}" rel="stylesheet" type="text/css">
-        <link href="{{asset('assets/plugins/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('assets/plugins/datatables/buttons.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('assets/plugins/datatables/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
 
         <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet">
 
@@ -63,22 +56,7 @@
 
         <!--plugins js-->
         <script src="{{asset('assets/plugins/counter/jquery.counterup.min.js')}}"></script>
-        <script src="{{asset('assets/plugins/waypoints/jquery.waypoints.min.js')}}"></script>
-        <script src="{{asset('assets/plugins/sparkline-chart/jquery.sparkline.min.js')}}"></script>
-        <script src="{{asset('assets/pages/jquery.sparkline.init.js')}}"></script>
-
-        <script src="{{asset('assets/plugins/chart-js/Chart.bundle.js')}}"></script>
-        <script src="{{asset('assets/plugins/morris-chart/raphael-min.js')}}"></script>
-        <script src="{{asset('assets/plugins/morris-chart/morris.js')}}"></script>
-        <script src="{{asset('assets/plugins/dropify/js/dropify.min.js')}}"></script>
-        <script src="{{asset('assets/plugins/select2/select2.min.js')}}"></script>
         <script src="{{asset('assets/plugins/sweet-alert/sweetalert2.min.js')}}"></script>
-
-        <!--data table-->
-        <script src="{{asset('assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
-        <script src="{{asset('assets/plugins/datatables/dataTables.bootstrap4.min.js')}}"></script>
-        <script src="{{asset('assets/plugins/datatables/dataTables.responsive.min.js')}}"></script>
-        <script src="{{asset('assets/plugins/datatables/responsive.bootstrap4.min.js')}}"></script>
 
         <script src="{{asset('assets/js/custom.js')}}"></script>
         <script src="{{asset('js/app.js')}}"></script>

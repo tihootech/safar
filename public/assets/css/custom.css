@@ -1,3 +1,24 @@
 .modal-header .close {
     margin: -1rem auto -1rem -1rem;
 }
+
+.dz-default.dz-message > span, .dropzone  {
+    font-family: 'Dirooz' !important;
+}
+.dz-remove {
+    font-weight: normal !important;
+}
+
+.vue-dropzone>.dz-preview .dz-remove {
+    margin-right: 15px;
+    margin-left: 0;
+}
+
+.dropzone .dz-preview .dz-remove:hover {
+    text-decoration: none !important;
+}
+
+.dropzone {
+    border: 2px dashed rgba(0, 0, 0, 0.3) !important;
+    border-radius: 5px;
+}

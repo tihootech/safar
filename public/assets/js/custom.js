@@ -20,6 +20,16 @@ function redirect(path) {
     window.location.href = path;
 }
 
+function removeItem(array, item){
+    for(var i in array){
+        if(array[i]==item){
+            array.splice(i,1);
+            break;
+        }
+    }
+    return array;
+}
+
 
 function swalError(message = 'خطایی رخ داد...') {
     swal('Oops...', message, 'error');

@@ -46,31 +46,19 @@
         <!-- UPLOAD PICTURES -->
         <div class="page-head d-flex justify-content-between my-2">
             <h4> {{fa.UPLOAD_PICTURES}}</h4>
-            <a href="javascript:void(0)" class="btn btn-info btn-sm ml-3 cloner" data-target="upload-images">
-                <i class="mdi mdi-plus"></i> {{fa.NEW_PICTURE}}
-            </a>
         </div>
         <div class="row" id="upload-images">
-            <div class="col-md-4">
-                <div class="card m-b-30">
-                    <div class="card-body">
-                        <h5 class="header-title"> {{fa.MAIN_PICTURE}} </h5>
-                        <label for="input-file-now" class="mb-3">{{fa.THIS_WILL_BE_YOUR_MAIN_PICTURE}}</label>
-                        <input type="file" name="main_picture" class="dropify" />
-                    </div>
-                </div>
+            <div class="col-md-3">
+                <h5> {{fa.MAIN_PICTURE}} </h5>
+                <p> {{fa.UPLOAD_A_FILE_AS_MAIN}} </p>
+                <hr>
+                <vue-dropzone ref="mainDropzone" id="main-dropzone" :options="dropzoneOptions"></vue-dropzone>
             </div>
-            <div class="col-md-4 d-none model">
-                <div class="card m-b-30">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="header-title"> {{fa.OTHER_PICTURES}} </h5>
-                            <a href="javascript:void(0)" class="remove-cloned"> <i class="mdi mdi-delete text-danger"></i> </a>
-                        </div>
-                        <label for="input-file-now" class="mb-3">{{fa.PICTURE_NUMBER_X}} <span></span> </label>
-                        <input type="file" name="pictures[]"/>
-                    </div>
-                </div>
+            <div class="col-md-9">
+                <h5> {{fa.OTHER_PICTURES}} </h5>
+                <p> {{fa.DZ_HELP}} </p>
+                <hr>
+                <vue-dropzone ref="otherDropzone" id="other-dropzone" :options="dropzoneOptions"></vue-dropzone>
             </div>
         </div>
 
@@ -102,14 +90,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="v, i in country.visas" class="model">
+                            <tr v-for="v, i in country.visas">
                                 <input type="hidden" name="id" v-model="v.id">
                                 <th class="steper"> {{i+1}} </th>
                                 <td>
                                     <input type="text" class="form-control" name="name" v-model="v.name">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" name="latin_name" v-model="v.latin_name">
+                                    <input type="text" class="form-control" name="latin_name" v-model="v.latin_name" dir="ltr">
                                 </td>
                                 <td>
                                     <input type="text" class="form-control" name="type" v-model="v.type">
@@ -124,18 +112,33 @@
                                         <i class="mdi mdi-check-circle"></i>
                                     </label>
                                 </td>
-                                <td>
-                                    <select class="form-control" name="counselings" dir="rtl" v-model="v.counselings">
-                                        <option value="1" :selected="v.counselings && v.counselings.includes('1')"> {{fa.IN_TEXT}} </option>
-                                        <option value="2" :selected="v.counselings && v.counselings.includes('2')"> {{fa.IN_TELEPHONE}} </option>
-                                        <option value="3" :selected="v.counselings && v.counselings.includes('3')"> {{fa.IN_VIDEO}} </option>
-                                        <option value="4" :selected="v.counselings && v.counselings.includes('4')"> {{fa.IN_PERSON}} </option>
-                                    </select>
+                                <td class="counseling-checkboxes">
+                                    <label class="cr-styled">
+                                        <input type="checkbox" name="counselings" value="1" :checked="v.counselings && v.counselings.includes(1)">
+                                        <i class="fa"></i>
+                                        {{fa.IN_TEXT}}
+                                    </label>
+                                    <label class="cr-styled">
+                                        <input type="checkbox" name="counselings" value="2" :checked="v.counselings && v.counselings.includes(2)">
+                                        <i class="fa"></i>
+                                        {{fa.IN_TELEPHONE}}
+                                    </label>
+                                    <label class="cr-styled">
+                                        <input type="checkbox" name="counselings" value="3" :checked="v.counselings && v.counselings.includes(3)">
+                                        <i class="fa"></i>
+                                        {{fa.IN_VIDEO}}
+                                    </label>
+                                    <label class="cr-styled">
+                                        <input type="checkbox" name="counselings" value="4" :checked="v.counselings && v.counselings.includes(4)">
+                                        <i class="fa"></i>
+                                        {{fa.IN_PERSON}}
+                                    </label>
                                 </td>
                                 <td class="text-center">
                                     <label class="cr-styled">
-                                        <input type="checkbox" name="online_sopping" :checked="v.online_sopping" value="1">
+                                        <input type="checkbox" name="online_sopping" v-model="v.online_sopping" value="1">
                                         <i class="fa"></i>
+                                        {{fa.YES}}
                                     </label>
                                 </td>
                                 <td>
@@ -168,22 +171,86 @@
 
 <script>
 
+import vue2Dropzone from 'vue2-dropzone';
+import 'vue2-dropzone/dist/vue2Dropzone.min.css';
+
+
 export default {
+    components: {
+        'vueDropzone': vue2Dropzone
+    },
     props : ['fa'],
     data() {
         return {
             country: {
-                id: 0,
-                visas: [{}]
+                visas : [{}],
+                gallery : [{}],
+            },
+            dropzoneOptions: {
+                url: '/api/gallery/upload',
+                maxFilesize: 2,
+                acceptedFiles : 'image/*',
+                addRemoveLinks: true,
+                dictDefaultMessage : this.fa.DZ_MESSAGE,
+                dictRemoveFile : this.fa.REMOVE_FILE,
+                headers : { 'X-CSRF-TOKEN' : document.head.querySelector('meta[name="csrf-token"]').content },
+                success (file, res) {
+                    file.filename = res;
+                },
+                removedfile(file) {
+                    if (this.$refs.vueDropzone.dropzone.disabled !== true) {
+                        // clear the image from db
+                        let path = '/storage/images/'+file.name;
+                        axios.post('/api/gallery/delete', {path:path});
+                        // clear the image from display
+                        var _ref;
+                        return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+                    }
+                }
             }
         }
     },
     methods : {
         formSubmit : function () {
+
             var formData = {
                 country : this.country,
                 visas : this.country.visas,
+                gallery: []
             }
+
+            // sending the path of main uploaded file to back-end
+            let mainImage = this.$refs.mainDropzone.getAcceptedFiles();
+            if (mainImage.length > 0 && mainImage[0].filename) {
+                formData.gallery.push({
+                    main : 1,
+                    path : mainImage[0].filename
+                });
+            }
+
+            // sending the path of other uploaded files to back-end
+            let otherImages = this.$refs.otherDropzone.getAcceptedFiles();
+            if (otherImages.length > 0) {
+                for (var i = 0; i < otherImages.length; i++) {
+                    if (otherImages[i].filename) {
+                        formData.gallery.push({
+                            main : 0,
+                            path : otherImages[i].filename
+                        });
+                    }
+                }
+            }
+
+            // read counseling checkboxes and send to back-end
+            $('.counseling-checkboxes').each(function(index, el) {
+                var list = [];
+                $(this).find('input[type=checkbox]:checked').each(function() {
+                    list.push($(this).val());
+                });
+                formData.visas[index].counselings = list;
+            });
+
+
             axios.post('/api/visa/upsert', formData).then( res => {
                 if (res.status == 200 && res.data.success) {
                     redirect("/dashboard#/visa-list");
@@ -203,14 +270,23 @@ export default {
     },
     mounted: function() {
 
-        $('.select2').select2(window.SELECT2_OPTIONS);
-        $('.dropify').dropify(window.DROPIFY_OPTIONS);
-
         // find object in db if country id is provided
         var cid = this.$route.params.cid;
         if (cid) {
             axios.get(`api/country/get/${cid}`).then( res => {
                 this.country = res.data;
+                let gallry = res.data.gallery;
+                if (gallry.length) {
+                    for (var i = 0; i < gallry.length; i++) {
+                        var file = { size: 0, name: gallry[i].path.replace('/storage/images/',''), type: "image/png" };
+                        var url = gallry[i].path;
+                        if (gallry[i].main) {
+                            this.$refs.mainDropzone.manuallyAddFile(file, url);
+                        }else {
+                            this.$refs.otherDropzone.manuallyAddFile(file, url);
+                        }
+                    }
+                }
             });
         }
 
