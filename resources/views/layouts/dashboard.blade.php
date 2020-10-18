@@ -19,17 +19,17 @@
         <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
         <link href="{{asset('assets/plugins/sweet-alert/sweetalert2.min.css')}}" rel="stylesheet" type="text/css">
 
-        <link href="{{asset('assets/css/custom.css')}}?v=1.1" rel="stylesheet">
+        <link href="{{asset('assets/css/custom.css')}}?v=1.2" rel="stylesheet">
 
     </head>
 
     <body class="sticky-header">
 
-        <section id="vue-app">
+        <section>
 
             @include('fragments.dashboard-sidebar')
 
-            <div class="body-content">
+            <div class="body-content" id="vue-app">
 
                 @include('fragments.dashboard-header')
 
@@ -57,9 +57,9 @@
         <!--plugins js-->
         <script src="{{asset('assets/plugins/sweet-alert/sweetalert2.min.js')}}"></script>
 
-        <script src="{{asset('assets/js/custom.js')}}?v=1.1"></script>
-        <script src="{{asset('js/app.js')}}?v=1.1"></script>
-        <script src="{{asset('assets/js/jquery.app.js')}}?v=1.1"></script>
+        <script src="{{asset('assets/js/custom.js')}}?v=1.2"></script>
+        <script src="{{asset('js/app.js')}}?v=1.2"></script>
+        <script src="{{asset('assets/js/jquery.app.js')}}?v=1.2"></script>
 
     </body>
 </html>

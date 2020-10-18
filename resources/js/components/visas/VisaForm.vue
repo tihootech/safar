@@ -295,17 +295,6 @@ export default {
 </script>
 
 <style scoped>
-    .remove-cloned {
-        font-size: 1.75em;
-    }
-
-    .sticky-top {
-        padding-top: 60px;
-    }
-
-    .model .remove-cloned {
-        display: none;
-    }
 
     .excel-form {
         white-space: nowrap;

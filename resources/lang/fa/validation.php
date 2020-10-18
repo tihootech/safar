@@ -106,6 +106,7 @@ return array(
     |
     */
     'attributes' => [
+
         "country.fa_name" => "نام کشور به فارسی",
         "country.latin_name" => "نام کشور به لاتین",
         "country.iso_code" => "کد دو حرفی ISO",
@@ -120,5 +121,12 @@ return array(
         "visas.*.quiz" => "انتخاب آزمون",
         "visas.*.counselings" => "نوع مشاوره های در دسترس",
         "visas.*.first_picture" => "تصویر اول",
+
+        'agency.name' => 'نام آژانس',
+        'agency.latin_name' => 'نام آژانس به لاتین',
+        'employees.*.first_name' => 'نام کاربر',
+        'employees.*.last_name' => 'نام خانوادگی کاربر',
+        'employees.*.rate' => 'ارزیابی کاربر',
+        '' => '',
     ],
 );

@@ -10,6 +10,12 @@ use App\Models\Gallery;
 class VisaController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+
     public function index()
     {
         return Country::all();
@@ -22,14 +28,11 @@ class VisaController extends Controller
 
     public function getCountry($cid)
     {
-        return Country::where('id', $cid)->with('visas')->with('gallery')->first();
+        return Country::where('id', $cid)->with('visas', 'gallery')->first();
     }
 
     public function upsert(Request $request)
     {
-        // check policy
-        $this->authorize('manage', Visa::class);
-
         // validate incoming data
         $cid = $request->country['id'] ?? 0;
         $request->validate([

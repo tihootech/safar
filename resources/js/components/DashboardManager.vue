@@ -10,6 +10,8 @@
     import Home from './Home.vue';
     import VisaList from './visas/VisaList.vue';
     import VisaForm from './visas/VisaForm.vue';
+    import AgencyList from './agencies/AgencyList.vue';
+    import AgencyForm from './agencies/AgencyForm.vue';
 
     export default {
         router : new VueRouter ({
@@ -32,7 +34,17 @@
                     path : '/visa/:cid?',
                     component : VisaForm,
                     name : 'visa-form'
-                }
+                },
+                {
+                    path : '/agency-list',
+                    component : AgencyList,
+                    name : 'agency-list'
+                },
+                {
+                    path : '/agency/:aid?',
+                    component : AgencyForm,
+                    name : 'agency-form'
+                },
             ]
         }),
         data(){

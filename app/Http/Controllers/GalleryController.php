@@ -7,6 +7,13 @@ use App\Models\Gallery;
 
 class GalleryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+    
     public function upload(Request $request)
     {
         $file = $request->file('file');

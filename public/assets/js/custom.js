@@ -35,6 +35,10 @@ function swalError(message = 'خطایی رخ داد...') {
     swal('Oops...', message, 'error');
 }
 
+function swalWarning(message = 'خطایی رخ داد...') {
+    swal('خطا!', message, 'warning');
+}
+
 function swalValidationErrors(errors) {
     var html = '<ul>';
     for (let error in errors) {

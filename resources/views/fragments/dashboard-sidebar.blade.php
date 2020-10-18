@@ -36,10 +36,8 @@
                     <span>  @lang('MANAGE_AGENCIES') </span>
                 </a>
                 <ul class="child-list">
-                    <li><a href="#"> Item 1 </a></li>
-                    <li><a href="#"> Item 2 </a></li>
-                    <li><a href="#"> Item 3 </a></li>
-                    <li><a href="#"> Item 4 </a></li>
+                    <li><a href="#/agency"> <i class="mdi mdi-plus"></i> @lang('NEW_AGENCY') </a></li>
+                    <li><a href="#/agency-list"> <i class="mdi mdi-format-list-bulleted"></i> @lang('AGENCY_LIST') </a></li>
                 </ul>
             </li>
             <li class="menu-list">

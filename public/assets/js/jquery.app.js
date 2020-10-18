@@ -9,7 +9,7 @@
    jQuery('.menu-list > a').click(function() {
 
       var parent = jQuery(this).parent();
-      var sub = parent.find('> ul');
+      var sub = parent.find('ul');
 
       if(!jQuery('body').hasClass('sidebar-collapsed')) {
          if(sub.is(':visible')) {
@@ -20,6 +20,7 @@
          } else {
             visibleSubMenuClose();
             parent.addClass('nav-active');
+            sub.slideDown(300);
          }
       }
       return false;
