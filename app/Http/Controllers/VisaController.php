@@ -59,7 +59,6 @@ class VisaController extends Controller
         // create or update visas
         foreach ($request->visas as $visaData) {
             $visaData['country_id'] = $country->id;
-            $visaData['counselings'] = implode(',', $visaData['counselings']);
             Visa::updateOrCreate(['id' => $visaData['id'] ?? 0], $visaData);
         }
 
@@ -68,8 +67,14 @@ class VisaController extends Controller
             foreach ($request->gallery as $galleryData) {
                 $galleryData['owner_type'] = Country::class;
                 $galleryData['owner_id'] = $country->id;
+                $galleryData['name'] = $galleryData['name'] ?? null;
                 Gallery::create($galleryData);
             }
+        }
+
+        // delete those in delete list
+        if ($request->deletelist && count($request->deletelist)) {
+            Visa::WhereIn('id', $request->deletelist)->delete();
         }
 
         return ['success' => true];

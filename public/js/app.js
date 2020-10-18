@@ -2269,6 +2269,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2279,6 +2283,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       phonelist: [''],
+      deletelist: [],
       agency: {
         employees: [{}]
       },
@@ -2316,7 +2321,8 @@ __webpack_require__.r(__webpack_exports__);
       var formData = {
         agency: this.agency,
         employees: this.agency.employees,
-        gallery: []
+        gallery: [],
+        deletelist: this.deletelist
       }; // sending the path of main uploaded file and logo to back-end
 
       var mainImage = this.$refs.mainDropzone.getAcceptedFiles();
@@ -2372,6 +2378,19 @@ __webpack_require__.r(__webpack_exports__);
         swalWarning(this.fa.CANT_DELETE_ALL);
       } else {
         this.phonelist.splice(index, 1);
+      }
+    },
+    deleteRow: function deleteRow(index, id) {
+      var employees = this.agency.employees;
+
+      if (employees.length < 2) {
+        swalWarning(this.fa.CANT_DELETE_ALL);
+      } else {
+        employees.splice(index, 1);
+
+        if (id) {
+          this.deletelist.push(id);
+        }
       }
     }
   },
@@ -2748,6 +2767,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2761,6 +2784,7 @@ __webpack_require__.r(__webpack_exports__);
         visas: [{}],
         gallery: [{}]
       },
+      deletelist: [],
       dropzoneOptions: {
         url: '/api/gallery/upload',
         maxFilesize: 2,
@@ -2795,6 +2819,7 @@ __webpack_require__.r(__webpack_exports__);
       var formData = {
         country: this.country,
         visas: this.country.visas,
+        deletelist: this.deletelist,
         gallery: []
       }; // sending the path of main uploaded file to back-end
 
@@ -2827,7 +2852,7 @@ __webpack_require__.r(__webpack_exports__);
         $(this).find('input[type=checkbox]:checked').each(function () {
           list.push($(this).val());
         });
-        formData.visas[index].counselings = list;
+        formData.visas[index].counselings = list.join(',');
       });
       axios.post('/api/visa/upsert', formData).then(function (res) {
         if (res.status == 200 && res.data.success) {
@@ -2845,6 +2870,19 @@ __webpack_require__.r(__webpack_exports__);
     },
     addNewVisa: function addNewVisa() {
       this.country.visas.push({});
+    },
+    deleteRow: function deleteRow(index, id) {
+      var visas = this.country.visas;
+
+      if (visas.length < 2) {
+        swalWarning(this.fa.CANT_DELETE_ALL);
+      } else {
+        visas.splice(index, 1);
+
+        if (id) {
+          this.deletelist.push(id);
+        }
+      }
     }
   },
   mounted: function mounted() {
@@ -3090,7 +3128,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.excel-form[data-v-84c45026] {\n    white-space: nowrap;\n    overflow-x: auto;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(1) { /* 1 */\n    min-width: 20px;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(n+2):nth-child(-n+5) { /* 2~5 */\n    min-width: 200px;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(6) { /* 6 */\n    min-width: 70px;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(7) { /* 7 */\n    min-width: 225px;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(8) { /* 8 */\n    min-width: 100px;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(n+9) { /* after 9 */\n    min-width: 300px;\n}\n.upload-hidden-image + i[data-v-84c45026] {\n    display: none;\n}\n\n", ""]);
+exports.push([module.i, "\n.excel-form[data-v-84c45026] {\n    white-space: nowrap;\n    overflow-x: auto;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(-n+2) { /* 1 & 2 */\n    min-width: 20px;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(n+3):nth-child(-n+6) { /* 3~6 */\n    min-width: 200px;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(7) { /* 7 */\n    min-width: 70px;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(8) { /* 8 */\n    min-width: 225px;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(9) { /* 9 */\n    min-width: 100px;\n}\n.excel-form thead th[data-v-84c45026]:nth-child(n+10) { /* after 10 */\n    min-width: 300px;\n}\n.upload-hidden-image + i[data-v-84c45026] {\n    display: none;\n}\n\n", ""]);
 
 // exports
 
@@ -22113,6 +22151,8 @@ var render = function() {
                 _c("tr", [
                   _c("th", [_vm._v(" # ")]),
                   _vm._v(" "),
+                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.DELETE) + " ")]),
+                  _vm._v(" "),
                   _c("th", [_vm._v(" " + _vm._s(_vm.fa.NAME) + " ")]),
                   _vm._v(" "),
                   _c("th", [_vm._v(" " + _vm._s(_vm.fa.LAST_NAME) + " ")]),
@@ -22162,6 +22202,21 @@ var render = function() {
                     _vm._v(" "),
                     _c("th", { staticClass: "steper" }, [
                       _vm._v(" " + _vm._s(i + 1) + " ")
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { attrs: { align: "center" } }, [
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "javascript:void(0)" },
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteRow(i, e.id)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "mdi mdi-delete text-danger" })]
+                      )
                     ]),
                     _vm._v(" "),
                     _c("td", [
@@ -22997,6 +23052,8 @@ var render = function() {
                 _c("tr", [
                   _c("th", [_vm._v(" # ")]),
                   _vm._v(" "),
+                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.DELETE) + " ")]),
+                  _vm._v(" "),
                   _c("th", [_vm._v(" " + _vm._s(_vm.fa.NAME) + " ")]),
                   _vm._v(" "),
                   _c("th", [_vm._v(" " + _vm._s(_vm.fa.LATIN_NAME) + " ")]),
@@ -23050,6 +23107,21 @@ var render = function() {
                     _vm._v(" "),
                     _c("th", { staticClass: "steper" }, [
                       _vm._v(" " + _vm._s(i + 1) + " ")
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { attrs: { align: "center" } }, [
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "javascript:void(0)" },
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteRow(i, v.id)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "mdi mdi-delete text-danger" })]
+                      )
                     ]),
                     _vm._v(" "),
                     _c("td", [
@@ -39221,15 +39293,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************!*\
   !*** ./resources/js/components/agencies/AgencyForm.vue ***!
   \*********************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AgencyForm_vue_vue_type_template_id_28dd783a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AgencyForm.vue?vue&type=template&id=28dd783a&scoped=true& */ "./resources/js/components/agencies/AgencyForm.vue?vue&type=template&id=28dd783a&scoped=true&");
 /* harmony import */ var _AgencyForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AgencyForm.vue?vue&type=script&lang=js& */ "./resources/js/components/agencies/AgencyForm.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _AgencyForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _AgencyForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _AgencyForm_vue_vue_type_style_index_0_id_28dd783a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AgencyForm.vue?vue&type=style&index=0&id=28dd783a&scoped=true&lang=css& */ "./resources/js/components/agencies/AgencyForm.vue?vue&type=style&index=0&id=28dd783a&scoped=true&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _AgencyForm_vue_vue_type_style_index_0_id_28dd783a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AgencyForm.vue?vue&type=style&index=0&id=28dd783a&scoped=true&lang=css& */ "./resources/js/components/agencies/AgencyForm.vue?vue&type=style&index=0&id=28dd783a&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -39261,7 +39332,7 @@ component.options.__file = "resources/js/components/agencies/AgencyForm.vue"
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/agencies/AgencyForm.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

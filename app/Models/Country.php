@@ -12,7 +12,7 @@ class Country extends Model
 
     public function visas()
     {
-        return $this->hasMany(Visa::class);
+        return $this->hasMany(Visa::class)->with('first_picture');
     }
 
     public function gallery()

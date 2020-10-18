@@ -76,6 +76,7 @@
                         <thead>
                             <tr>
                                 <th> # </th>
+                                <th> {{fa.DELETE}} </th>
                                 <th> {{fa.NAME}} </th>
                                 <th> {{fa.LATIN_NAME}} </th>
                                 <th> {{fa.VISA_TYPE}} </th>
@@ -93,6 +94,9 @@
                             <tr v-for="v, i in country.visas">
                                 <input type="hidden" name="id" v-model="v.id">
                                 <th class="steper"> {{i+1}} </th>
+                                <td align="center">
+                                    <a href="javascript:void(0)" @click="deleteRow(i, v.id)"> <i class="mdi mdi-delete text-danger"></i> </a>
+                                </td>
                                 <td>
                                     <input type="text" class="form-control" name="name" v-model="v.name">
                                 </td>
@@ -186,6 +190,7 @@ export default {
                 visas : [{}],
                 gallery : [{}],
             },
+            deletelist : [],
             dropzoneOptions: {
                 url: '/api/gallery/upload',
                 maxFilesize: 2,
@@ -216,6 +221,7 @@ export default {
             var formData = {
                 country : this.country,
                 visas : this.country.visas,
+                deletelist : this.deletelist,
                 gallery: []
             }
 
@@ -247,7 +253,7 @@ export default {
                 $(this).find('input[type=checkbox]:checked').each(function() {
                     list.push($(this).val());
                 });
-                formData.visas[index].counselings = list;
+                formData.visas[index].counselings = list.join(',');
             });
 
 
@@ -266,10 +272,20 @@ export default {
         },
         addNewVisa : function () {
             this.country.visas.push({});
+        },
+        deleteRow : function (index, id) {
+            let visas = this.country.visas;
+            if (visas.length < 2) {
+                swalWarning(this.fa.CANT_DELETE_ALL);
+            }else {
+                visas.splice(index, 1);
+                if (id) {
+                    this.deletelist.push(id);
+                }
+            }
         }
     },
     mounted: function() {
-
         // find object in db if country id is provided
         var cid = this.$route.params.cid;
         if (cid) {
@@ -301,27 +317,27 @@ export default {
         overflow-x: auto;
     }
 
-    .excel-form thead th:nth-child(1) { /* 1 */
+    .excel-form thead th:nth-child(-n+2) { /* 1 & 2 */
         min-width: 20px;
     }
 
-    .excel-form thead th:nth-child(n+2):nth-child(-n+5) { /* 2~5 */
+    .excel-form thead th:nth-child(n+3):nth-child(-n+6) { /* 3~6 */
         min-width: 200px;
     }
 
-    .excel-form thead th:nth-child(6) { /* 6 */
+    .excel-form thead th:nth-child(7) { /* 7 */
         min-width: 70px;
     }
 
-    .excel-form thead th:nth-child(7) { /* 7 */
+    .excel-form thead th:nth-child(8) { /* 8 */
         min-width: 225px;
     }
 
-    .excel-form thead th:nth-child(8) { /* 8 */
+    .excel-form thead th:nth-child(9) { /* 9 */
         min-width: 100px;
     }
 
-    .excel-form thead th:nth-child(n+9) { /* after 9 */
+    .excel-form thead th:nth-child(n+10) { /* after 10 */
         min-width: 300px;
     }
 

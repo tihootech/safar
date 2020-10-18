@@ -111,6 +111,7 @@
                         <thead>
                             <tr>
                                 <th> # </th>
+                                <th> {{fa.DELETE}} </th>
                                 <th> {{fa.NAME}} </th>
                                 <th> {{fa.LAST_NAME}} </th>
                                 <th> {{fa.NATIONAL_CODE}} </th>
@@ -126,6 +127,9 @@
                             <tr v-for="e, i in agency.employees">
                                 <input type="hidden" name="id" v-model="e.id">
                                 <th class="steper"> {{i+1}} </th>
+                                <td align="center">
+                                    <a href="javascript:void(0)" @click="deleteRow(i, e.id)"> <i class="mdi mdi-delete text-danger"></i> </a>
+                                </td>
                                 <td>
                                     <input type="text" class="form-control" name="first_name" v-model="e.first_name">
                                 </td>
@@ -183,6 +187,7 @@ export default {
     data() {
         return {
             phonelist : [''],
+            deletelist : [],
             agency: {
                 employees : [{}],
             },
@@ -216,7 +221,8 @@ export default {
             var formData = {
                 agency : this.agency,
                 employees : this.agency.employees,
-                gallery: []
+                gallery: [],
+                deletelist : this.deletelist
             }
 
             // sending the path of main uploaded file and logo to back-end
@@ -269,6 +275,17 @@ export default {
                 swalWarning(this.fa.CANT_DELETE_ALL);
             }else {
                 this.phonelist.splice(index, 1);
+            }
+        },
+        deleteRow : function (index, id) {
+            let employees = this.agency.employees;
+            if (employees.length < 2) {
+                swalWarning(this.fa.CANT_DELETE_ALL);
+            }else {
+                employees.splice(index, 1);
+                if (id) {
+                    this.deletelist.push(id);
+                }
             }
         }
     },
