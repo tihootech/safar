@@ -73,9 +73,10 @@ class VisaController extends Controller
         }
 
         // delete those in delete list
-        if ($request->deletelist && count($request->deletelist)) {
-            Visa::WhereIn('id', $request->deletelist)->delete();
-        }
+        parent::deleteRows($request, Visa::class);
+
+        // delete files from db and storage
+        parent::deleteFiles($request);
 
         return ['success' => true];
     }

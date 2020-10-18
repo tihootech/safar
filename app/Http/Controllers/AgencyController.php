@@ -85,9 +85,10 @@ class AgencyController extends Controller
         }
 
         // delete those in delete list
-        if ($request->deletelist && count($request->deletelist)) {
-            Employee::WhereIn('id', $request->deletelist)->delete();
-        }
+        parent::deleteRows($request, Employee::class);
+
+        // delete files from db and storage
+        parent::deleteFiles($request);
 
         return ['success' => true];
     }

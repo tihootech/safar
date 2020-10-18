@@ -2299,24 +2299,27 @@ __webpack_require__.r(__webpack_exports__);
         },
         success: function success(file, res) {
           file.filename = res;
-        },
-        removedfile: function removedfile(file) {
-          if (this.$refs.vueDropzone.dropzone.disabled !== true) {
-            // clear the image from db
-            var path = '/storage/images/' + file.name;
-            axios.post('/api/gallery/delete', {
-              path: path
-            }); // clear the image from display
-
-            var _ref;
-
-            return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
-          }
         }
       }
     };
   },
   methods: {
+    dzRemoveLogo: function dzRemoveLogo(file) {
+      if (this.$refs.logoDropzone.dropzone.disabled !== true) {
+        var path = '/storage/images/' + file.name;
+        axios.post('/api/gallery/delete', {
+          path: path
+        });
+      }
+    },
+    dzRemoveMain: function dzRemoveMain(file) {
+      if (this.$refs.mainDropzone.dropzone.disabled !== true) {
+        var path = '/storage/images/' + file.name;
+        axios.post('/api/gallery/delete', {
+          path: path
+        });
+      }
+    },
     formSubmit: function formSubmit() {
       var formData = {
         agency: this.agency,
@@ -2344,15 +2347,7 @@ __webpack_require__.r(__webpack_exports__);
       } // take care of phones and prepare them
 
 
-      var finalPhoneList = [];
-      $('[name=phonelist]').each(function () {
-        var val = $(this).val();
-
-        if (val) {
-          finalPhoneList.push(val);
-        }
-      });
-      formData.agency.phones = finalPhoneList.join(',');
+      formData.agency.phones = this.phonelist.join(',');
       axios.post('/api/agency/upsert', formData).then(function (res) {
         if (res.status == 200 && res.data.success) {
           redirect("/dashboard#/agency-list");
@@ -2379,6 +2374,13 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.phonelist.splice(index, 1);
       }
+    },
+    updatePhoneList: function updatePhoneList() {
+      var list = [];
+      $('[name=phonelist]').each(function (i) {
+        list[i] = $(this).val();
+      });
+      this.phonelist = list;
     },
     deleteRow: function deleteRow(index, id) {
       var employees = this.agency.employees;
@@ -2797,24 +2799,27 @@ __webpack_require__.r(__webpack_exports__);
         },
         success: function success(file, res) {
           file.filename = res;
-        },
-        removedfile: function removedfile(file) {
-          if (this.$refs.vueDropzone.dropzone.disabled !== true) {
-            // clear the image from db
-            var path = '/storage/images/' + file.name;
-            axios.post('/api/gallery/delete', {
-              path: path
-            }); // clear the image from display
-
-            var _ref;
-
-            return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
-          }
         }
       }
     };
   },
   methods: {
+    dzRemoveOther: function dzRemoveOther(file) {
+      if (this.$refs.otherDropzone.dropzone.disabled !== true) {
+        var path = '/storage/images/' + file.name;
+        axios.post('/api/gallery/delete', {
+          path: path
+        });
+      }
+    },
+    dzRemoveMain: function dzRemoveMain(file) {
+      if (this.$refs.mainDropzone.dropzone.disabled !== true) {
+        var path = '/storage/images/' + file.name;
+        axios.post('/api/gallery/delete', {
+          path: path
+        });
+      }
+    },
     formSubmit: function formSubmit() {
       var formData = {
         country: this.country,
@@ -22015,7 +22020,8 @@ var render = function() {
                     _c("input", {
                       staticClass: "form-control",
                       attrs: { type: "text", name: "phonelist" },
-                      domProps: { value: phone }
+                      domProps: { value: phone },
+                      on: { change: _vm.updatePhoneList }
                     })
                   ])
                 }),
@@ -22097,7 +22103,8 @@ var render = function() {
             _vm._v(" "),
             _c("vue-dropzone", {
               ref: "mainDropzone",
-              attrs: { id: "main-dropzone", options: _vm.dropzoneOptions }
+              attrs: { id: "main-dropzone", options: _vm.dropzoneOptions },
+              on: { "vdropzone-removed-file": _vm.dzRemoveMain }
             })
           ],
           1
@@ -22115,7 +22122,8 @@ var render = function() {
             _vm._v(" "),
             _c("vue-dropzone", {
               ref: "logoDropzone",
-              attrs: { id: "logo-dropzone", options: _vm.dropzoneOptions }
+              attrs: { id: "logo-dropzone", options: _vm.dropzoneOptions },
+              on: { "vdropzone-removed-file": _vm.dzRemoveLogo }
             })
           ],
           1
@@ -22998,7 +23006,8 @@ var render = function() {
             _vm._v(" "),
             _c("vue-dropzone", {
               ref: "mainDropzone",
-              attrs: { id: "main-dropzone", options: _vm.dropzoneOptions }
+              attrs: { id: "main-dropzone", options: _vm.dropzoneOptions },
+              on: { "vdropzone-removed-file": _vm.dzRemoveMain }
             })
           ],
           1
@@ -23016,7 +23025,8 @@ var render = function() {
             _vm._v(" "),
             _c("vue-dropzone", {
               ref: "otherDropzone",
-              attrs: { id: "other-dropzone", options: _vm.dropzoneOptions }
+              attrs: { id: "other-dropzone", options: _vm.dropzoneOptions },
+              on: { "vdropzone-removed-file": _vm.dzRemoveOther }
             })
           ],
           1
@@ -39293,14 +39303,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************!*\
   !*** ./resources/js/components/agencies/AgencyForm.vue ***!
   \*********************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AgencyForm_vue_vue_type_template_id_28dd783a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AgencyForm.vue?vue&type=template&id=28dd783a&scoped=true& */ "./resources/js/components/agencies/AgencyForm.vue?vue&type=template&id=28dd783a&scoped=true&");
 /* harmony import */ var _AgencyForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AgencyForm.vue?vue&type=script&lang=js& */ "./resources/js/components/agencies/AgencyForm.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _AgencyForm_vue_vue_type_style_index_0_id_28dd783a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AgencyForm.vue?vue&type=style&index=0&id=28dd783a&scoped=true&lang=css& */ "./resources/js/components/agencies/AgencyForm.vue?vue&type=style&index=0&id=28dd783a&scoped=true&lang=css&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _AgencyForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _AgencyForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _AgencyForm_vue_vue_type_style_index_0_id_28dd783a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AgencyForm.vue?vue&type=style&index=0&id=28dd783a&scoped=true&lang=css& */ "./resources/js/components/agencies/AgencyForm.vue?vue&type=style&index=0&id=28dd783a&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -39332,7 +39343,7 @@ component.options.__file = "resources/js/components/agencies/AgencyForm.vue"
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/agencies/AgencyForm.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

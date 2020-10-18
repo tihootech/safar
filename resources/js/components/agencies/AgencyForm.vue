@@ -62,7 +62,7 @@
                                     <i class="mdi mdi-delete text-danger"></i>
                                 </button>
                             </label>
-                            <input type="text" class="form-control" name="phonelist" :value="phone">
+                            <input type="text" class="form-control" name="phonelist" :value="phone" @change="updatePhoneList">
                         </div>
                     </div>
                 </div>
@@ -87,13 +87,13 @@
                 <h5> {{fa.MAIN_PICTURE}} </h5>
                 <p> {{fa.UPLOAD_A_FILE_AS_MAIN}} </p>
                 <hr>
-                <vue-dropzone ref="mainDropzone" id="main-dropzone" :options="dropzoneOptions"></vue-dropzone>
+                <vue-dropzone ref="mainDropzone" @vdropzone-removed-file="dzRemoveMain" id="main-dropzone" :options="dropzoneOptions"></vue-dropzone>
             </div>
             <div class="col-md-3">
                 <h5> {{fa.UPLOAD_LOGO}} </h5>
                 <p> {{fa.UPLOAD_A_FILE_AS_LOGO}} </p>
                 <hr>
-                <vue-dropzone ref="logoDropzone" id="logo-dropzone" :options="dropzoneOptions"></vue-dropzone>
+                <vue-dropzone ref="logoDropzone" @vdropzone-removed-file="dzRemoveLogo" id="logo-dropzone" :options="dropzoneOptions"></vue-dropzone>
             </div>
         </div>
 
@@ -201,21 +201,23 @@ export default {
                 headers : { 'X-CSRF-TOKEN' : document.head.querySelector('meta[name="csrf-token"]').content },
                 success (file, res) {
                     file.filename = res;
-                },
-                removedfile(file) {
-                    if (this.$refs.vueDropzone.dropzone.disabled !== true) {
-                        // clear the image from db
-                        let path = '/storage/images/'+file.name;
-                        axios.post('/api/gallery/delete', {path:path});
-                        // clear the image from display
-                        var _ref;
-                        return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
-                    }
                 }
             }
         }
     },
     methods : {
+        dzRemoveLogo : function (file) {
+            if (this.$refs.logoDropzone.dropzone.disabled !== true) {
+                let path = '/storage/images/'+file.name;
+                axios.post('/api/gallery/delete', {path:path});
+            }
+        },
+        dzRemoveMain : function (file) {
+            if (this.$refs.mainDropzone.dropzone.disabled !== true) {
+                let path = '/storage/images/'+file.name;
+                axios.post('/api/gallery/delete', {path:path});
+            }
+        },
         formSubmit : function () {
 
             var formData = {
@@ -242,14 +244,7 @@ export default {
             }
 
             // take care of phones and prepare them
-            var finalPhoneList = [];
-            $('[name=phonelist]').each(function() {
-                let val = $(this).val()
-                if (val) {
-                    finalPhoneList.push(val);
-                }
-            });
-            formData.agency.phones = finalPhoneList.join(',');
+            formData.agency.phones = this.phonelist.join(',');
 
             axios.post('/api/agency/upsert', formData).then( res => {
                 if (res.status == 200 && res.data.success) {
@@ -276,6 +271,13 @@ export default {
             }else {
                 this.phonelist.splice(index, 1);
             }
+        },
+        updatePhoneList : function () {
+            var list = [];
+            $('[name=phonelist]').each(function (i) {
+                list[i] = $(this).val();
+            });
+            this.phonelist = list;
         },
         deleteRow : function (index, id) {
             let employees = this.agency.employees;

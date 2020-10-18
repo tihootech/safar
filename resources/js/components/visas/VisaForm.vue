@@ -52,13 +52,13 @@
                 <h5> {{fa.MAIN_PICTURE}} </h5>
                 <p> {{fa.UPLOAD_A_FILE_AS_MAIN}} </p>
                 <hr>
-                <vue-dropzone ref="mainDropzone" id="main-dropzone" :options="dropzoneOptions"></vue-dropzone>
+                <vue-dropzone ref="mainDropzone" @vdropzone-removed-file="dzRemoveMain" id="main-dropzone" :options="dropzoneOptions"></vue-dropzone>
             </div>
             <div class="col-md-9">
                 <h5> {{fa.OTHER_PICTURES}} </h5>
                 <p> {{fa.DZ_HELP}} </p>
                 <hr>
-                <vue-dropzone ref="otherDropzone" id="other-dropzone" :options="dropzoneOptions"></vue-dropzone>
+                <vue-dropzone ref="otherDropzone" @vdropzone-removed-file="dzRemoveOther" id="other-dropzone" :options="dropzoneOptions"></vue-dropzone>
             </div>
         </div>
 
@@ -201,21 +201,23 @@ export default {
                 headers : { 'X-CSRF-TOKEN' : document.head.querySelector('meta[name="csrf-token"]').content },
                 success (file, res) {
                     file.filename = res;
-                },
-                removedfile(file) {
-                    if (this.$refs.vueDropzone.dropzone.disabled !== true) {
-                        // clear the image from db
-                        let path = '/storage/images/'+file.name;
-                        axios.post('/api/gallery/delete', {path:path});
-                        // clear the image from display
-                        var _ref;
-                        return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
-                    }
                 }
             }
         }
     },
     methods : {
+        dzRemoveOther : function (file) {
+            if (this.$refs.otherDropzone.dropzone.disabled !== true) {
+                let path = '/storage/images/'+file.name;
+                axios.post('/api/gallery/delete', {path:path});
+            }
+        },
+        dzRemoveMain : function (file) {
+            if (this.$refs.mainDropzone.dropzone.disabled !== true) {
+                let path = '/storage/images/'+file.name;
+                axios.post('/api/gallery/delete', {path:path});
+            }
+        },
         formSubmit : function () {
 
             var formData = {
