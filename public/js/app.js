@@ -2273,6 +2273,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2282,6 +2319,8 @@ __webpack_require__.r(__webpack_exports__);
   props: ['fa'],
   data: function data() {
     return {
+      weekDays: [this.fa.SATURDAY, this.fa.SUNDAY, this.fa.MONDAY, this.fa.TUESDAY, this.fa.WEDNESDAY, this.fa.THRSDAY, this.fa.FRIDAY],
+      dayHours: ['6~7', '7~8', '8~9', '9~10', '10~11', '11~12', '12~13', '13~14', '14~15', '15~16', '16~17', '17~18', '18~19', '19~20'],
       phonelist: [''],
       deletelist: [],
       agency: {
@@ -2319,6 +2358,20 @@ __webpack_require__.r(__webpack_exports__);
           path: path
         });
       }
+    },
+    setHour: function setHour(day, range, employeeIndex) {
+      var employee = this.agency.employees[employeeIndex];
+      var hoursList = employee.hours ? employee.hours : [];
+      var format = "".concat(day, ",").concat(range);
+      var foundIndex = hoursList.indexOf(format);
+
+      if (foundIndex == -1) {
+        hoursList.push(format);
+      } else {
+        hoursList.splice(foundIndex, 1);
+      }
+
+      this.agency.employees[employeeIndex].hours = hoursList;
     },
     formSubmit: function formSubmit() {
       var formData = {
@@ -2407,7 +2460,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.agency = res.data;
         var first_picture = res.data.first_picture;
         var logo = res.data.logo;
-        var phones = res.data.phones;
+        var phones = res.data.phones; // load pictures
 
         if (first_picture) {
           var file = {
@@ -2429,11 +2482,22 @@ __webpack_require__.r(__webpack_exports__);
           var url = logo.path;
 
           _this.$refs.logoDropzone.manuallyAddFile(file, url);
-        }
+        } // display phones
+
 
         if (phones) {
           _this.phonelist = phones.split(',');
+        } // display employee schedule
+
+
+        var employees = res.data.employees;
+
+        for (var i = 0; i < employees.length; i++) {
+          var e = employees[i];
+          e.hours = e.schedule ? e.schedule.split('&') : [];
         }
+
+        _this.agency.employees = employees;
       });
     }
   }
@@ -3114,7 +3178,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.excel-form[data-v-28dd783a] {\n    white-space: nowrap;\n    overflow-x: auto;\n}\n\n", ""]);
+exports.push([module.i, "\n.excel-form[data-v-28dd783a] {\n    white-space: nowrap;\n    overflow-x: auto;\n}\n.schedule[data-v-28dd783a] {\n    display: flex;\n}\n.schedule > div[data-v-28dd783a] {\n    text-align: center;\n    border: 1px solid #000;\n    padding: 10px;\n    width: 6.66%;\n}\n.schedule > div[data-v-28dd783a]:not(:first-child) {\n    cursor: pointer;\n    direction: ltr;\n}\n\n", ""]);
 
 // exports
 
@@ -22179,7 +22243,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("th", [_vm._v(" " + _vm._s(_vm.fa.EMAIL) + " ")]),
                   _vm._v(" "),
-                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.ABOUT_COUNSELER) + " ")])
+                  _c("th", [
+                    _vm._v(" " + _vm._s(_vm.fa.ABOUT_COUNSELER) + " ")
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.ACTIONS) + " ")])
                 ])
               ]),
               _vm._v(" "),
@@ -22454,6 +22522,27 @@ var render = function() {
                           }
                         }
                       })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-info btn-sm",
+                          attrs: {
+                            type: "button",
+                            "data-toggle": "modal",
+                            "data-target": "#set-hours-" + i
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(_vm.fa.COUNSELING_HOURS) +
+                              "\n                                "
+                          )
+                        ]
+                      )
                     ])
                   ])
                 }),
@@ -22463,6 +22552,124 @@ var render = function() {
           ])
         ])
       ]),
+      _vm._v(" "),
+      _c(
+        "section",
+        { attrs: { id: "modals" } },
+        _vm._l(_vm.agency.employees, function(e, i) {
+          return _c("div", [
+            _c(
+              "div",
+              {
+                staticClass: "modal fade",
+                attrs: { id: "set-hours-" + i, tabindex: "-1", role: "dialog" }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "modal-dialog modal-xl",
+                    attrs: { role: "document" }
+                  },
+                  [
+                    _c("div", { staticClass: "modal-content" }, [
+                      _c("div", { staticClass: "modal-header" }, [
+                        _c("h5", { staticClass: "modal-title" }, [
+                          _vm._v(_vm._s(_vm.fa.SET_COUNSELING_HOURS))
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(0, true)
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "modal-body" },
+                        [
+                          e.first_name && e.last_name
+                            ? _c("h5", { staticClass: "mb-3" }, [
+                                _c("i", { staticClass: "mdi mdi-person ml-1" }),
+                                _vm._v(
+                                  " " +
+                                    _vm._s(e.first_name + " " + e.last_name) +
+                                    " "
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm._l(_vm.weekDays, function(day, dayNumber) {
+                            return _c(
+                              "div",
+                              { staticClass: "schedule" },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "bg-info text-light" },
+                                  [
+                                    _vm._v(
+                                      "\n                                    " +
+                                        _vm._s(day) +
+                                        "\n                                "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.dayHours, function(range) {
+                                  return _c(
+                                    "div",
+                                    {
+                                      class: {
+                                        "bg-success text-light":
+                                          e.hours &&
+                                          e.hours.includes(
+                                            dayNumber + "," + range
+                                          )
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.setHour(
+                                            dayNumber,
+                                            range,
+                                            i
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(range) +
+                                          "\n                                "
+                                      )
+                                    ]
+                                  )
+                                })
+                              ],
+                              2
+                            )
+                          })
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "modal-footer" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button", "data-dismiss": "modal" }
+                          },
+                          [_vm._v(" " + _vm._s(_vm.fa.CONFIRM) + " ")]
+                        )
+                      ])
+                    ])
+                  ]
+                )
+              ]
+            )
+          ])
+        }),
+        0
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "row justify-content-center my-3" }, [
         _c("div", { staticClass: "col-md-2" }, [
@@ -22482,7 +22689,25 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -39616,10 +39841,10 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************!*\
   !*** ./resources/lang/fa.json ***!
   \********************************/
-/*! exports provided: BRAND, LOGIN_TO_ACC, , USERNAME, USERNAME/EMAIL, PASSWORD, REMEMBER_ME, LOG_IN, FORGOT_PASSWORD, MANAGE_ACC, ARE_YOU_SURE, ITEM_DELETED, LAST_WEEK_CHART, LOGOUT, MAIN_MENU, OTHER_SETTINGS, LOADING, RECENT_SHOP_LIST, NEW_VISA, VISA_LIST, NEW_AGENCY, AGENCY_LIST, CONFIRM, ACTIONS, EDIT, DELETE, UPLOAD, YES, CANCEL, TODAY_SELL_COUNT, TODAY_INCOME, TODAY_COUNSELING_SESSIONS, ACTIVE_VISA_COUNT, DASHBOARD, MAIN_DASHBOARD, MANAGE_VISA, MANAGE_AGENCIES, USERS, COUNSELING_SESSIONS, BANK_TRANSACTIONS, FACTORS, CONTRACTS, QUIZ_MAKER, COUNTRY_FA_NAME, COUNTRY_LATIN_NAME, ISO_CODE, COUNTRY_CODE, BRIEF_INFO, MAIN_PICTURE, FULL_INFO, LANG, LOCAL_NAME, GALLERY_PHOTOS, UPLOAD_PICTURES, THIS_WILL_BE_YOUR_MAIN_PICTURE, OTHER_PICTURES, PICTURE_NUMBER_X, NOT_REQUIRED, NEW_PICTURE, DEFINE_VISA_TYPE, NAME, LATIN_NAME, CONDITIONS, DOCUMENTS, ONLINE_SOPPING, ISSUANCE_TIME, ISSUANCE_STEPS, FIRST_PICTURE, VISA_TYPE, CHOOSE_QUIZ, QUIZ, AVAILABLE_COUNSELING, IN_TEXT, IN_TELEPHONE, IN_VIDEO, IN_PERSON, ADD_NEW_VISA, AGENCY_NAME, AGENCY_LATIN_NAME, MANAGER_NAME, MANAGER_PHONE, ITGUY_NAME, ITGUY_PHONE, LICENSE_TYPE, WEBSITE, EMAIL, ADDRESS, PHONES, UPLOAD_LOGO, DEFINE_USERS, ADD_NEW_USER, LAST_NAME, NATIONAL_CODE, USER_TYPE, AVAILABLE_LICENSES, RATE, PHONE, ABOUT_COUNSELER, TELEPHONE, ADD_NEW_TELEPHONE, DZ_MESSAGE, REMOVE_FILE, UPLOAD_A_FILE_AS_MAIN, UPLOAD_A_FILE_AS_LOGO, DZ_HELP, CANT_DELETE_ALL, default */
+/*! exports provided: BRAND, LOGIN_TO_ACC, , USERNAME, USERNAME/EMAIL, PASSWORD, REMEMBER_ME, LOG_IN, FORGOT_PASSWORD, MANAGE_ACC, ARE_YOU_SURE, ITEM_DELETED, LAST_WEEK_CHART, LOGOUT, MAIN_MENU, OTHER_SETTINGS, LOADING, RECENT_SHOP_LIST, NEW_VISA, VISA_LIST, NEW_AGENCY, AGENCY_LIST, CONFIRM, ACTIONS, EDIT, DELETE, UPLOAD, YES, CANCEL, TODAY_SELL_COUNT, TODAY_INCOME, TODAY_COUNSELING_SESSIONS, ACTIVE_VISA_COUNT, DASHBOARD, MAIN_DASHBOARD, MANAGE_VISA, MANAGE_AGENCIES, USERS, COUNSELING_SESSIONS, BANK_TRANSACTIONS, FACTORS, CONTRACTS, QUIZ_MAKER, COUNTRY_FA_NAME, COUNTRY_LATIN_NAME, ISO_CODE, COUNTRY_CODE, BRIEF_INFO, MAIN_PICTURE, FULL_INFO, LANG, LOCAL_NAME, GALLERY_PHOTOS, UPLOAD_PICTURES, THIS_WILL_BE_YOUR_MAIN_PICTURE, OTHER_PICTURES, PICTURE_NUMBER_X, NOT_REQUIRED, NEW_PICTURE, DEFINE_VISA_TYPE, NAME, LATIN_NAME, CONDITIONS, DOCUMENTS, ONLINE_SOPPING, ISSUANCE_TIME, ISSUANCE_STEPS, FIRST_PICTURE, VISA_TYPE, CHOOSE_QUIZ, QUIZ, AVAILABLE_COUNSELING, IN_TEXT, IN_TELEPHONE, IN_VIDEO, IN_PERSON, ADD_NEW_VISA, AGENCY_NAME, AGENCY_LATIN_NAME, MANAGER_NAME, MANAGER_PHONE, ITGUY_NAME, ITGUY_PHONE, LICENSE_TYPE, WEBSITE, EMAIL, ADDRESS, PHONES, UPLOAD_LOGO, DEFINE_USERS, ADD_NEW_USER, LAST_NAME, NATIONAL_CODE, USER_TYPE, AVAILABLE_LICENSES, RATE, PHONE, ABOUT_COUNSELER, TELEPHONE, ADD_NEW_TELEPHONE, COUNSELING_HOURS, SET_COUNSELING_HOURS, DZ_MESSAGE, REMOVE_FILE, UPLOAD_A_FILE_AS_MAIN, UPLOAD_A_FILE_AS_LOGO, DZ_HELP, CANT_DELETE_ALL, SATURDAY, SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THRSDAY, FRIDAY, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"BRAND\":\"سفر به راه\",\"LOGIN_TO_ACC\":\"ورود به حساب کاربری\",\"\":\"\",\"USERNAME\":\"نام کاربری\",\"USERNAME/EMAIL\":\"نام کاربری یا ایمیل\",\"PASSWORD\":\"رمزعبور\",\"REMEMBER_ME\":\"مرا به خاطر بسپار\",\"LOG_IN\":\"ورود به حساب\",\"FORGOT_PASSWORD\":\"فراموشی رمزعبور\",\"MANAGE_ACC\":\"مدیریت حساب کاربری\",\"ARE_YOU_SURE\":\"آیا مطمئن هستید\",\"ITEM_DELETED\":\"آیتم مورد نظر با موفقیت حذف شد.\",\"LAST_WEEK_CHART\":\"چارت هفته گذشته\",\"LOGOUT\":\"خروج\",\"MAIN_MENU\":\"منوی اصلی\",\"OTHER_SETTINGS\":\"سایر تنظیمات\",\"LOADING\":\"در حال بارگذاری...\",\"RECENT_SHOP_LIST\":\"لیست آخرین خرید ها\",\"NEW_VISA\":\"تعریف ویزا\",\"VISA_LIST\":\"لیست ویزا ها\",\"NEW_AGENCY\":\"تعریف آژانس\",\"AGENCY_LIST\":\"لیست آژانس ها\",\"CONFIRM\":\"تایید\",\"ACTIONS\":\"عملیات\",\"EDIT\":\"ویرایش\",\"DELETE\":\"حذف\",\"UPLOAD\":\"آپلود\",\"YES\":\"بله\",\"CANCEL\":\"انصراف\",\"TODAY_SELL_COUNT\":\"تعداد فروش امروز\",\"TODAY_INCOME\":\"دریافتی های امروز\",\"TODAY_COUNSELING_SESSIONS\":\"جلسات مشاوره امروز\",\"ACTIVE_VISA_COUNT\":\"تعداد ویزا های فعال\",\"DASHBOARD\":\"داشبورد\",\"MAIN_DASHBOARD\":\"داشبورد اصلی\",\"MANAGE_VISA\":\"مدیریت ویزا\",\"MANAGE_AGENCIES\":\"مدیریت آژانس ها\",\"USERS\":\"کاربران\",\"COUNSELING_SESSIONS\":\"جلسات مشاوره\",\"BANK_TRANSACTIONS\":\"تراکنش های بانکی\",\"FACTORS\":\"فاکتور ها\",\"CONTRACTS\":\"قرارداد ها\",\"QUIZ_MAKER\":\"آزمون ساز\",\"COUNTRY_FA_NAME\":\"نام کشور به فارسی\",\"COUNTRY_LATIN_NAME\":\"نام کشور به لاتین\",\"ISO_CODE\":\"کد دو حرفی ISO\",\"COUNTRY_CODE\":\"پیش شماره کشور\",\"BRIEF_INFO\":\"توضیحات مختصر\",\"MAIN_PICTURE\":\"تصویر اصلی\",\"FULL_INFO\":\"توضیحات کامل\",\"LANG\":\"زبان\",\"LOCAL_NAME\":\"نام محلی\",\"GALLERY_PHOTOS\":\"گالری تصاویر\",\"UPLOAD_PICTURES\":\"آپلود تصاویر\",\"THIS_WILL_BE_YOUR_MAIN_PICTURE\":\"این تصویر، تصویر اصلی شما خواهد بود\",\"OTHER_PICTURES\":\"سایر تصاویر\",\"PICTURE_NUMBER_X\":\"تصویر شماره \",\"NOT_REQUIRED\":\"اختیاری\",\"NEW_PICTURE\":\"اضافه کردن تصویر جدید\",\"DEFINE_VISA_TYPE\":\"تعریف انواع ویزا\",\"NAME\":\"نام\",\"LATIN_NAME\":\"نام لاتین\",\"CONDITIONS\":\"شرایط\",\"DOCUMENTS\":\"مدارک\",\"ONLINE_SOPPING\":\"خریدآنلاین\",\"ISSUANCE_TIME\":\"زمان صدور\",\"ISSUANCE_STEPS\":\"مراحل صدور\",\"FIRST_PICTURE\":\"تصویر اول\",\"VISA_TYPE\":\"نوع ویزا\",\"CHOOSE_QUIZ\":\"انتخاب آزمون\",\"QUIZ\":\"آزمون\",\"AVAILABLE_COUNSELING\":\"نوع مشاوره های در دسترس\",\"IN_TEXT\":\"متنی\",\"IN_TELEPHONE\":\"تلفنی\",\"IN_VIDEO\":\"تصویری\",\"IN_PERSON\":\"حضوری\",\"ADD_NEW_VISA\":\"اضافه کردن ویزا جدید\",\"AGENCY_NAME\":\"نام آژانس\",\"AGENCY_LATIN_NAME\":\"نام آژانس به لاتین\",\"MANAGER_NAME\":\"نام مدیر\",\"MANAGER_PHONE\":\"شماره مدیر\",\"ITGUY_NAME\":\"نام مسئول IT\",\"ITGUY_PHONE\":\"شماره مسئول IT\",\"LICENSE_TYPE\":\"نوع مجوز\",\"WEBSITE\":\"وبسایت\",\"EMAIL\":\"ایمیل\",\"ADDRESS\":\"آدرس\",\"PHONES\":\"شماره تماس ها\",\"UPLOAD_LOGO\":\"آپلود لوگو\",\"DEFINE_USERS\":\"تعریف کاربران\",\"ADD_NEW_USER\":\"تعریف کاربر جدید\",\"LAST_NAME\":\"نام خانوادگی\",\"NATIONAL_CODE\":\"کدملی\",\"USER_TYPE\":\"نوع کاربری\",\"AVAILABLE_LICENSES\":\"ویزاهای مجاز\",\"RATE\":\"Rate & Review\",\"PHONE\":\"شماره موبایل\",\"ABOUT_COUNSELER\":\"درباره مشاور\",\"TELEPHONE\":\"تلفن\",\"ADD_NEW_TELEPHONE\":\"تلفن جدید\",\"DZ_MESSAGE\":\"برای آپلود یا کلیک کنید، یا فایل مورد نظر را اینجا درگ کنید\",\"REMOVE_FILE\":\"حذف فایل\",\"UPLOAD_A_FILE_AS_MAIN\":\"لطفا یک فایل را جهت استفاده به عنوان تصویر اصلی آپلود کنید.\",\"UPLOAD_A_FILE_AS_LOGO\":\"لطفا تصویر مربوط به لوگو را بارگذاری کنید.\",\"DZ_HELP\":\"با کلیک مجدد میتوانید بیش از یک فایل آپلود کنید.\",\"CANT_DELETE_ALL\":\"همه موارد را نمیتوان حذف کرد\"}");
+module.exports = JSON.parse("{\"BRAND\":\"سفر به راه\",\"LOGIN_TO_ACC\":\"ورود به حساب کاربری\",\"\":\"\",\"USERNAME\":\"نام کاربری\",\"USERNAME/EMAIL\":\"نام کاربری یا ایمیل\",\"PASSWORD\":\"رمزعبور\",\"REMEMBER_ME\":\"مرا به خاطر بسپار\",\"LOG_IN\":\"ورود به حساب\",\"FORGOT_PASSWORD\":\"فراموشی رمزعبور\",\"MANAGE_ACC\":\"مدیریت حساب کاربری\",\"ARE_YOU_SURE\":\"آیا مطمئن هستید\",\"ITEM_DELETED\":\"آیتم مورد نظر با موفقیت حذف شد.\",\"LAST_WEEK_CHART\":\"چارت هفته گذشته\",\"LOGOUT\":\"خروج\",\"MAIN_MENU\":\"منوی اصلی\",\"OTHER_SETTINGS\":\"سایر تنظیمات\",\"LOADING\":\"در حال بارگذاری...\",\"RECENT_SHOP_LIST\":\"لیست آخرین خرید ها\",\"NEW_VISA\":\"تعریف ویزا\",\"VISA_LIST\":\"لیست ویزا ها\",\"NEW_AGENCY\":\"تعریف آژانس\",\"AGENCY_LIST\":\"لیست آژانس ها\",\"CONFIRM\":\"تایید\",\"ACTIONS\":\"عملیات\",\"EDIT\":\"ویرایش\",\"DELETE\":\"حذف\",\"UPLOAD\":\"آپلود\",\"YES\":\"بله\",\"CANCEL\":\"انصراف\",\"TODAY_SELL_COUNT\":\"تعداد فروش امروز\",\"TODAY_INCOME\":\"دریافتی های امروز\",\"TODAY_COUNSELING_SESSIONS\":\"جلسات مشاوره امروز\",\"ACTIVE_VISA_COUNT\":\"تعداد ویزا های فعال\",\"DASHBOARD\":\"داشبورد\",\"MAIN_DASHBOARD\":\"داشبورد اصلی\",\"MANAGE_VISA\":\"مدیریت ویزا\",\"MANAGE_AGENCIES\":\"مدیریت آژانس ها\",\"USERS\":\"کاربران\",\"COUNSELING_SESSIONS\":\"جلسات مشاوره\",\"BANK_TRANSACTIONS\":\"تراکنش های بانکی\",\"FACTORS\":\"فاکتور ها\",\"CONTRACTS\":\"قرارداد ها\",\"QUIZ_MAKER\":\"آزمون ساز\",\"COUNTRY_FA_NAME\":\"نام کشور به فارسی\",\"COUNTRY_LATIN_NAME\":\"نام کشور به لاتین\",\"ISO_CODE\":\"کد دو حرفی ISO\",\"COUNTRY_CODE\":\"پیش شماره کشور\",\"BRIEF_INFO\":\"توضیحات مختصر\",\"MAIN_PICTURE\":\"تصویر اصلی\",\"FULL_INFO\":\"توضیحات کامل\",\"LANG\":\"زبان\",\"LOCAL_NAME\":\"نام محلی\",\"GALLERY_PHOTOS\":\"گالری تصاویر\",\"UPLOAD_PICTURES\":\"آپلود تصاویر\",\"THIS_WILL_BE_YOUR_MAIN_PICTURE\":\"این تصویر، تصویر اصلی شما خواهد بود\",\"OTHER_PICTURES\":\"سایر تصاویر\",\"PICTURE_NUMBER_X\":\"تصویر شماره \",\"NOT_REQUIRED\":\"اختیاری\",\"NEW_PICTURE\":\"اضافه کردن تصویر جدید\",\"DEFINE_VISA_TYPE\":\"تعریف انواع ویزا\",\"NAME\":\"نام\",\"LATIN_NAME\":\"نام لاتین\",\"CONDITIONS\":\"شرایط\",\"DOCUMENTS\":\"مدارک\",\"ONLINE_SOPPING\":\"خریدآنلاین\",\"ISSUANCE_TIME\":\"زمان صدور\",\"ISSUANCE_STEPS\":\"مراحل صدور\",\"FIRST_PICTURE\":\"تصویر اول\",\"VISA_TYPE\":\"نوع ویزا\",\"CHOOSE_QUIZ\":\"انتخاب آزمون\",\"QUIZ\":\"آزمون\",\"AVAILABLE_COUNSELING\":\"نوع مشاوره های در دسترس\",\"IN_TEXT\":\"متنی\",\"IN_TELEPHONE\":\"تلفنی\",\"IN_VIDEO\":\"تصویری\",\"IN_PERSON\":\"حضوری\",\"ADD_NEW_VISA\":\"اضافه کردن ویزا جدید\",\"AGENCY_NAME\":\"نام آژانس\",\"AGENCY_LATIN_NAME\":\"نام آژانس به لاتین\",\"MANAGER_NAME\":\"نام مدیر\",\"MANAGER_PHONE\":\"شماره مدیر\",\"ITGUY_NAME\":\"نام مسئول IT\",\"ITGUY_PHONE\":\"شماره مسئول IT\",\"LICENSE_TYPE\":\"نوع مجوز\",\"WEBSITE\":\"وبسایت\",\"EMAIL\":\"ایمیل\",\"ADDRESS\":\"آدرس\",\"PHONES\":\"شماره تماس ها\",\"UPLOAD_LOGO\":\"آپلود لوگو\",\"DEFINE_USERS\":\"تعریف کاربران\",\"ADD_NEW_USER\":\"تعریف کاربر جدید\",\"LAST_NAME\":\"نام خانوادگی\",\"NATIONAL_CODE\":\"کدملی\",\"USER_TYPE\":\"نوع کاربری\",\"AVAILABLE_LICENSES\":\"ویزاهای مجاز\",\"RATE\":\"Rate & Review\",\"PHONE\":\"شماره موبایل\",\"ABOUT_COUNSELER\":\"درباره مشاور\",\"TELEPHONE\":\"تلفن\",\"ADD_NEW_TELEPHONE\":\"تلفن جدید\",\"COUNSELING_HOURS\":\"ساعات مشاوره\",\"SET_COUNSELING_HOURS\":\"تنظیم ساعات مشاوره\",\"DZ_MESSAGE\":\"برای آپلود یا کلیک کنید، یا فایل مورد نظر را اینجا درگ کنید\",\"REMOVE_FILE\":\"حذف فایل\",\"UPLOAD_A_FILE_AS_MAIN\":\"لطفا یک فایل را جهت استفاده به عنوان تصویر اصلی آپلود کنید.\",\"UPLOAD_A_FILE_AS_LOGO\":\"لطفا تصویر مربوط به لوگو را بارگذاری کنید.\",\"DZ_HELP\":\"با کلیک مجدد میتوانید بیش از یک فایل آپلود کنید.\",\"CANT_DELETE_ALL\":\"همه موارد را نمیتوان حذف کرد\",\"SATURDAY\":\"شنبه\",\"SUNDAY\":\"یکشنبه\",\"MONDAY\":\"دوشنبه\",\"TUESDAY\":\"سه شنبه\",\"WEDNESDAY\":\"چهارشنبه\",\"THRSDAY\":\"پنجشنبه\",\"FRIDAY\":\"جمعه\"}");
 
 /***/ }),
 

@@ -73,3 +73,7 @@ function swalSuccess(message = 'تغییرات با موفقیت ذخیره شد
 $(document).on('change', '.upload-hidden-image', function () {
     $(this).siblings('i').fadeIn();
 });
+
+$(document).on('click', '.schedule > div:not(:first-child)', function () {
+    $(this).toggleClass('bg-success text-light');
+});

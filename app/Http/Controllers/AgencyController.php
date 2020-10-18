@@ -71,6 +71,7 @@ class AgencyController extends Controller
         foreach ($request->employees as $employeeData) {
             $employeeData['user_id'] = 0;
             $employeeData['agency_id'] = $agency->id;
+            $employeeData['schedule'] = implode('&', $employeeData['hours']);
             Employee::updateOrCreate(['id' => $employeeData['id'] ?? 0], $employeeData);
         }
 
@@ -83,6 +84,7 @@ class AgencyController extends Controller
                 Gallery::create($galleryData);
             }
         }
+
 
         // delete those in delete list
         parent::deleteRows($request, Employee::class);

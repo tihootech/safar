@@ -22,3 +22,10 @@
     border: 2px dashed rgba(0, 0, 0, 0.3) !important;
     border-radius: 5px;
 }
+
+
+@media (min-width: 992px) {
+    .modal-xl {
+        max-width: 1200px;
+    }
+}

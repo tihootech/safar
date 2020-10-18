@@ -117,7 +117,8 @@
     "ABOUT_COUNSELER" : "درباره مشاور",
     "TELEPHONE" : "تلفن",
     "ADD_NEW_TELEPHONE" : "تلفن جدید",
-    "" : "",
+    "COUNSELING_HOURS" : "ساعات مشاوره",
+    "SET_COUNSELING_HOURS" : "تنظیم ساعات مشاوره",
     "" : "",
 
 
@@ -131,6 +132,15 @@
 
     "CANT_DELETE_ALL": "همه موارد را نمیتوان حذف کرد",
 
+
+
+    "SATURDAY" : "شنبه",
+    "SUNDAY" : "یکشنبه",
+    "MONDAY" : "دوشنبه",
+    "TUESDAY" : "سه شنبه",
+    "WEDNESDAY" : "چهارشنبه",
+    "THRSDAY" : "پنجشنبه",
+    "FRIDAY" : "جمعه",
 
 
     "" : ""

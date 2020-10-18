@@ -121,6 +121,7 @@
                                 <th> {{fa.PHONE}} </th>
                                 <th> {{fa.EMAIL}} </th>
                                 <th> {{fa.ABOUT_COUNSELER}} </th>
+                                <th> {{fa.ACTIONS}} </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -157,12 +158,48 @@
                                 <td>
                                     <textarea name="info" rows="1" class="form-control" v-model="e.info"></textarea>
                                 </td>
+                                <td>
+                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" v-bind:data-target="`#set-hours-${i}`">
+                                        {{fa.COUNSELING_HOURS}}
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+
+        <section id="modals">
+            <div v-for="e, i in agency.employees">
+                <div class="modal fade" :id="`set-hours-${i}`" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{{fa.SET_COUNSELING_HOURS}}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h5 v-if="e.first_name && e.last_name" class="mb-3"> <i class="mdi mdi-person ml-1"></i> {{`${e.first_name} ${e.last_name}`}} </h5>
+                                <div class="schedule" v-for="day, dayNumber in weekDays">
+                                    <div class="bg-info text-light">
+                                        {{day}}
+                                    </div>
+                                    <div v-for="range in dayHours" @click="setHour(dayNumber, range, i)" :class="{'bg-success text-light':(e.hours && e.hours.includes(`${dayNumber},${range}`))}">
+                                        {{range}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal"> {{fa.CONFIRM}} </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <div class="row justify-content-center my-3">
             <div class="col-md-2">
@@ -186,6 +223,8 @@ export default {
     props : ['fa'],
     data() {
         return {
+            weekDays : [this.fa.SATURDAY, this.fa.SUNDAY, this.fa.MONDAY, this.fa.TUESDAY, this.fa.WEDNESDAY, this.fa.THRSDAY, this.fa.FRIDAY],
+            dayHours : ['6~7', '7~8', '8~9', '9~10', '10~11', '11~12', '12~13', '13~14', '14~15', '15~16', '16~17', '17~18', '18~19', '19~20'],
             phonelist : [''],
             deletelist : [],
             agency: {
@@ -217,6 +256,18 @@ export default {
                 let path = '/storage/images/'+file.name;
                 axios.post('/api/gallery/delete', {path:path});
             }
+        },
+        setHour : function (day, range, employeeIndex) {
+            var employee = this.agency.employees[employeeIndex];
+            var hoursList = employee.hours ? employee.hours : [];
+            var format = `${day},${range}`;
+            var foundIndex = hoursList.indexOf(format);
+            if (foundIndex == -1) {
+                hoursList.push(format);
+            }else {
+                hoursList.splice(foundIndex, 1);
+            }
+            this.agency.employees[employeeIndex].hours = hoursList;
         },
         formSubmit : function () {
 
@@ -301,6 +352,8 @@ export default {
                 let first_picture = res.data.first_picture;
                 let logo = res.data.logo;
                 let phones = res.data.phones;
+
+                // load pictures
                 if (first_picture) {
                     var file = { size: 0, name: first_picture.path.replace('/storage/images/',''), type: "image/png" };
                     var url = first_picture.path;
@@ -311,9 +364,19 @@ export default {
                     var url = logo.path;
                     this.$refs.logoDropzone.manuallyAddFile(file, url);
                 }
+
+                // display phones
                 if (phones) {
                     this.phonelist = phones.split(',');
                 }
+
+                // display employee schedule
+                var employees = res.data.employees;
+                for (var i = 0; i < employees.length; i++) {
+                    let e = employees[i];
+                    e.hours = e.schedule ? e.schedule.split('&') : [];
+                }
+                this.agency.employees = employees;
             });
         }
 
@@ -326,6 +389,22 @@ export default {
     .excel-form {
         white-space: nowrap;
         overflow-x: auto;
+    }
+
+    .schedule {
+        display: flex;
+    }
+
+    .schedule > div {
+        text-align: center;
+        border: 1px solid #000;
+        padding: 10px;
+        width: 6.66%;
+    }
+
+    .schedule > div:not(:first-child) {
+        cursor: pointer;
+        direction: ltr;
     }
 
 </style>

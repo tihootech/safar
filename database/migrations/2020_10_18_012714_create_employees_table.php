@@ -26,6 +26,7 @@ class CreateEmployeesTable extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->text('info')->nullable();
+            $table->text('schedule')->nullable();
             $table->timestamps();
         });
     }
