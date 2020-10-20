@@ -9,6 +9,12 @@ class Visa extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    protected $appends = ['country_name'];
+
+    public function getCountryNameAttribute()
+    {
+        return $this->country->fa_name ?? '';
+    }
 
     public function country()
     {

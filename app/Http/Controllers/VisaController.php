@@ -21,6 +21,11 @@ class VisaController extends Controller
         return Country::all();
     }
 
+    public function allVisas()
+    {
+        return Visa::all();
+    }
+
     public function getVisas($cid)
     {
         return Visa::where('country_id', $cid)->get();

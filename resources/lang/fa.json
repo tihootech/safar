@@ -119,6 +119,14 @@
     "ADD_NEW_TELEPHONE" : "تلفن جدید",
     "COUNSELING_HOURS" : "ساعات مشاوره",
     "SET_COUNSELING_HOURS" : "تنظیم ساعات مشاوره",
+    "SET_AVAILABLE_VISAS" : "انتخاب ویزاهای مجاز",
+    "COUNSELER" : "مشاور",
+    "MANAGER" : "مدیر",
+    "VISA_NAME" : "نام ویزا",
+    "VISA_LATIN_NAME" : "نام لاتین ویزا",
+    "COUNTRY" : "کشور",
+    "SELECT" : "انتخاب",
+    "" : "",
     "" : "",
 
 

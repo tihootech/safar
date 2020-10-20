@@ -27,7 +27,7 @@ class CreateAgenciesTable extends Migration
             $table->text('brief_info')->nullable();
             $table->text('full_info')->nullable();
             $table->text('address')->nullable();
-            $table->text('phones')->nullable();
+            $table->text('phones')->nullable(); // commo seperated list of phones
             $table->timestamps();
         });
     }

@@ -6,40 +6,45 @@
             <h4 class="mt-2 mb-2"> {{fa.NEW_VISA}} </h4>
         </div>
         <div class="card card-body" id="country-data">
-            <div class="row justify-content-center">
-                <div class="col-md-3 form-group">
-                    <label> {{fa.COUNTRY_FA_NAME}} </label>
-                    <input type="text" class="form-control" name="fa_name" v-model="country.fa_name">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 form-group">
+                            <label> {{fa.COUNTRY_FA_NAME}} </label>
+                            <input type="text" class="form-control" name="fa_name" v-model="country.fa_name">
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label> {{fa.COUNTRY_LATIN_NAME}} </label>
+                            <input type="text" class="form-control" name="latin_name" v-model="country.latin_name">
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label> {{fa.ISO_CODE}} </label>
+                            <input type="text" class="form-control" name="iso_code" v-model="country.iso_code" maxlength="2" dir="ltr">
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label> {{fa.COUNTRY_CODE}} </label>
+                            <input type="text" class="form-control" name="country_code" v-model="country.country_code" dir="ltr">
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label> {{fa.LANG}} </label>
+                            <input type="text" class="form-control" name="lang" v-model="country.lang">
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label> {{fa.LOCAL_NAME}} </label>
+                            <input type="text" class="form-control" name="local_name" v-model="country.local_name">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label> {{fa.BRIEF_INFO}} </label>
+                            <textarea name="brief_info" rows="3" class="form-control" v-model="country.brief_info"></textarea>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-3 form-group">
-                    <label> {{fa.COUNTRY_LATIN_NAME}} </label>
-                    <input type="text" class="form-control" name="latin_name" v-model="country.latin_name">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label> {{fa.FULL_INFO}} </label>
+                        <vue-editor v-model="country.full_info" :editorToolbar="customToolbar"></vue-editor>
+                    </div>
                 </div>
-                <div class="col-md-3 form-group">
-                    <label> {{fa.ISO_CODE}} </label>
-                    <input type="text" class="form-control" name="iso_code" v-model="country.iso_code" maxlength="2" dir="ltr">
-                </div>
-                <div class="col-md-3 form-group">
-                    <label> {{fa.COUNTRY_CODE}} </label>
-                    <input type="text" class="form-control" name="country_code" v-model="country.country_code" dir="ltr">
-                </div>
-                <div class="col-md-3 form-group">
-                    <label> {{fa.LANG}} </label>
-                    <input type="text" class="form-control" name="lang" v-model="country.lang">
-                </div>
-                <div class="col-md-3 form-group">
-                    <label> {{fa.LOCAL_NAME}} </label>
-                    <input type="text" class="form-control" name="local_name" v-model="country.local_name">
-                </div>
-                <div class="col-md-12 form-group">
-                    <label> {{fa.BRIEF_INFO}} </label>
-                    <textarea name="brief_info" rows="3" class="form-control" v-model="country.brief_info"></textarea>
-                </div>
-                <div class="col-md-12 form-group">
-                    <label> {{fa.FULL_INFO}} </label>
-                    <textarea name="full_info" rows="6" class="form-control" v-model="country.full_info"></textarea>
-                </div>
-
             </div>
         </div>
 
@@ -48,13 +53,13 @@
             <h4> {{fa.UPLOAD_PICTURES}}</h4>
         </div>
         <div class="row" id="upload-images">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <h5> {{fa.MAIN_PICTURE}} </h5>
                 <p> {{fa.UPLOAD_A_FILE_AS_MAIN}} </p>
                 <hr>
                 <vue-dropzone ref="mainDropzone" @vdropzone-removed-file="dzRemoveMain" id="main-dropzone" :options="dropzoneOptions"></vue-dropzone>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <h5> {{fa.OTHER_PICTURES}} </h5>
                 <p> {{fa.DZ_HELP}} </p>
                 <hr>
@@ -176,16 +181,19 @@
 <script>
 
 import vue2Dropzone from 'vue2-dropzone';
+import { VueEditor } from "vue2-editor";
 import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
 
 export default {
     components: {
-        'vueDropzone': vue2Dropzone
+        'vueDropzone': vue2Dropzone,
+        'VueEditor' : VueEditor
     },
     props : ['fa'],
     data() {
         return {
+            customToolbar: [["bold", "italic", "underline", "strike"], [{ align:"right" }, { align:"center" }, { align:"" }], [{ list: "ordered" }, { list: "bullet" }]],
             country: {
                 visas : [{}],
                 gallery : [{}],

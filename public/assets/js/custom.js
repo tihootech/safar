@@ -1,21 +1,3 @@
-window.DROPIFY_OPTIONS = {
-    messages: {
-        default: 'برای آپلود یا کلیک کنید، یا فایل مورد نظر را اینجا درگ کنید',
-        replace: 'برای جایگزین کردن تصویر یا کلیک کنید، یا فایل مورد نظر را اینجا درگ کنید',
-        remove:  'حذف',
-        error:   'فایل آپلودی بیش از حد سنگین است'
-    }
-};
-
-window.SELECT2_OPTIONS = {
-    width : '100%'
-};
-
-window.COUNTER_OPTIONS = {
-    delay: 100,
-    time: 1200
-};
-
 function redirect(path) {
     window.location.href = path;
 }

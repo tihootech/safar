@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 // country and visas
 Route::post('/visa/upsert', 'VisaController@upsert');
 Route::get('/visa/index', 'VisaController@index');
+Route::get('/visa/all', 'VisaController@allVisas');
 Route::get('/visa/get/{cid}', 'VisaController@getVisas');
 Route::delete('/visa/{country}', 'VisaController@destroy');
 Route::get('/country/get/{cid}', 'VisaController@getCountry');

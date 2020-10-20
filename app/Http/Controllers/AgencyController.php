@@ -54,8 +54,7 @@ class AgencyController extends Controller
             'employees.*.first_name' => 'required|string',
             'employees.*.last_name' => 'required|string',
             'employees.*.national_code' => 'nullable|string',
-            'employees.*.access_type' => 'nullable|string',
-            'employees.*.available_licenses' => 'nullable|string',
+            'employees.*.access_type' => 'nullable|integer',
             'employees.*.rate' => 'nullable|integer',
             'employees.*.phone' => 'nullable|string',
             'employees.*.email' => 'nullable|string',
@@ -71,7 +70,8 @@ class AgencyController extends Controller
         foreach ($request->employees as $employeeData) {
             $employeeData['user_id'] = 0;
             $employeeData['agency_id'] = $agency->id;
-            $employeeData['schedule'] = implode('&', $employeeData['hours']);
+            $employeeData['schedule'] = (isset($employeeData['hours']) && is_array($employeeData['hours'])) ? implode('&', $employeeData['hours']) : '';
+            $employeeData['available_visas'] = (isset($employeeData['vlist']) && is_array($employeeData['vlist'])) ? implode(',', $employeeData['vlist']) : '';
             Employee::updateOrCreate(['id' => $employeeData['id'] ?? 0], $employeeData);
         }
 
