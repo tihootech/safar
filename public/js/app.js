@@ -36079,7 +36079,7 @@ var render = function() {
           "div",
           { staticClass: "row" },
           _vm._l(_vm.user.sessions, function(s, i) {
-            return _c("div", { staticClass: "col-md-4" }, [
+            return _c("div", { staticClass: "col-md-4 my-2" }, [
               _c(
                 "div",
                 { staticClass: "card bg-info text-light text-center" },

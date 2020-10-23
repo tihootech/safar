@@ -39,7 +39,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-4" v-for="s,i in user.sessions">
+                    <div class="col-md-4 my-2" v-for="s,i in user.sessions">
                         <div class="card bg-info text-light text-center">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
