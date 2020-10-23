@@ -109,6 +109,7 @@
                 <i class="mdi mdi-plus"></i> {{fa.ADD_NEW_USER}}
             </a>
         </div>
+        <p> {{fa.NEW_EMPLOYEE_GUIDE}} </p>
         <div class="card my-3 ">
             <div class="card-body">
                 <div class="excel-form">
@@ -146,7 +147,7 @@
                                 </td>
                                 <td>
                                     <select class="form-control" name="access_type" v-model="e.access_type">
-                                        <option :value="i+1" v-for="a, i in accesstypes" :selected="a==e.access_type" >{{a}}</option>
+                                        <option :value="key" v-for="persianText, key in accesstypes" :selected="key==e.access_type" >{{persianText}}</option>
                                     </select>
                                 </td>
                                 <td>
@@ -282,7 +283,10 @@ export default {
         return {
             weekDays : [this.fa.SATURDAY, this.fa.SUNDAY, this.fa.MONDAY, this.fa.TUESDAY, this.fa.WEDNESDAY, this.fa.THRSDAY, this.fa.FRIDAY],
             dayHours : ['6~7', '7~8', '8~9', '9~10', '10~11', '11~12', '12~13', '13~14', '14~15', '15~16', '16~17', '17~18', '18~19', '19~20'],
-            accesstypes : [this.fa.COUNSELER, this.fa.MANAGER],
+            accesstypes : {
+                COUNSELER : this.fa.COUNSELER,
+                MANAGER : this.fa.MANAGER
+            },
             rates : [1,2,3,4,5],
             customToolbar: [["bold", "italic", "underline", "strike"], [{ align:"right" }, { align:"center" }, { align:"" }], [{ list: "ordered" }, { list: "bullet" }]],
             phonelist : [''],

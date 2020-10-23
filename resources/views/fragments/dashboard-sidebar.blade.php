@@ -46,10 +46,7 @@
                     <span>  @lang('USERS') </span>
                 </a>
                 <ul class="child-list">
-                    <li><a href="#"> Item 1 </a></li>
-                    <li><a href="#"> Item 2 </a></li>
-                    <li><a href="#"> Item 3 </a></li>
-                    <li><a href="#"> Item 4 </a></li>
+                    <li><a href="#/user-list"> <i class="mdi mdi-format-list-bulleted"></i> @lang('USER_LIST') </a></li>
                 </ul>
             </li>
             <li class="menu-list">

@@ -4,7 +4,7 @@
 <div class="header-section">
     <!--logo and logo icon start-->
     <div class="logo">
-        <a href="index.html">
+        <a href="/#home">
             <span class="logo-img">
                 <img src="assets/images/logo_sm.png" alt="" height="26">
             </span>
@@ -27,7 +27,7 @@
                         <img src="assets/images/users/avatar-1.jpg" alt="">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-menu text-right">
-                        <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5 text-muted"></i> @lang('MANAGE_ACC') </a>
+                        <a class="dropdown-item" href="#/acc"><i class="mdi mdi-account-circle m-r-5 text-muted"></i> @lang('MANAGE_ACC') </a>
                         <form method="POST" action="{{ route('logout') }}" class="d-inline">
                             @csrf
                             <a class="dropdown-item" href="#" onclick="$(this).parents('form').submit()">

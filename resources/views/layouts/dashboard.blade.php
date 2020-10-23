@@ -19,7 +19,7 @@
         <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
         <link href="{{asset('assets/plugins/sweet-alert/sweetalert2.min.css')}}" rel="stylesheet" type="text/css">
 
-        <link href="{{asset('assets/css/custom.css')}}?v=1.2" rel="stylesheet">
+        <link href="{{asset('assets/css/custom.css')}}?v=1.3" rel="stylesheet">
 
     </head>
 
@@ -57,9 +57,9 @@
         <!--plugins js-->
         <script src="{{asset('assets/plugins/sweet-alert/sweetalert2.min.js')}}"></script>
 
-        <script src="{{asset('assets/js/custom.js')}}?v=1.2"></script>
-        <script src="{{asset('js/app.js')}}?v=1.2"></script>
-        <script src="{{asset('assets/js/jquery.app.js')}}?v=1.2"></script>
+        <script src="{{asset('assets/js/custom.js')}}?v=1.3"></script>
+        <script src="{{asset('js/app.js')}}?v=1.3"></script>
+        <script src="{{asset('assets/js/jquery.app.js')}}?v=1.3"></script>
 
     </body>
 </html>

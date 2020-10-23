@@ -12,6 +12,8 @@
     import VisaForm from './visas/VisaForm.vue';
     import AgencyList from './agencies/AgencyList.vue';
     import AgencyForm from './agencies/AgencyForm.vue';
+    import ManageAccount from './acc/ManageAccount.vue';
+    import UserList from './acc/UserList.vue';
 
     export default {
         router : new VueRouter ({
@@ -44,6 +46,16 @@
                     path : '/agency/:aid?',
                     component : AgencyForm,
                     name : 'agency-form'
+                },
+                {
+                    path : '/acc',
+                    component : ManageAccount,
+                    name : 'manage-account'
+                },
+                {
+                    path : '/user-list',
+                    component : UserList,
+                    name : 'user-list'
                 },
             ]
         }),

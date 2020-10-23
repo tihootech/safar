@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Agency;
 use App\Models\Employee;
 use App\Models\Gallery;
+use App\Models\User;
+
+use Illuminate\Validation\Rule;
+use App\Rules\NationalCode as NationalCodeRule;
+
 
 class AgencyController extends Controller
 {
@@ -53,13 +58,23 @@ class AgencyController extends Controller
             'agency.phones' => 'nullable|string',
             'employees.*.first_name' => 'required|string',
             'employees.*.last_name' => 'required|string',
-            'employees.*.national_code' => 'nullable|string',
-            'employees.*.access_type' => 'nullable|integer',
+            'employees.*.national_code' => ['required', new NationalCodeRule],
+            'employees.*.access_type' => ['required', Rule::in(['COUNSELER', 'MANAGER'])],
             'employees.*.rate' => 'nullable|integer',
             'employees.*.phone' => 'nullable|string',
-            'employees.*.email' => 'nullable|string',
+            'employees.*.email' => 'required|email|string',
             'employees.*.info' => 'nullable|string',
         ]);
+
+        // validate uniqueness of email and national code for each employee
+        foreach ($request->employees as $key => $employee) {
+            $employee_id = $employee['id'] ?? 0;
+            $employee_user_id = $employee['user_id'] ?? 0;
+            $request->validate([
+                "employees.$key.email" => "unique:employees,email,$employee_id|unique:users,email,$employee_user_id",
+                "employees.$key.national_code" => "unique:employees,national_code,$employee_id",
+            ]);
+        }
 
         // create or update agency instance
         $agencyData = $request->agency;
@@ -68,7 +83,20 @@ class AgencyController extends Controller
 
         // create or update employees
         foreach ($request->employees as $employeeData) {
-            $employeeData['user_id'] = 0;
+
+            // if not on edit mode create a new user for this employee
+            if (!isset($employeeData['id'])) {
+                $user =  User::create([
+                    'name' => $employeeData['first_name'] . ' ' . $employeeData['last_name'],
+                    'email' => $employeeData['email'],
+                    'phone' => $employeeData['phone'],
+                    'password' => bcrypt($employeeData['national_code']),
+                    'type' => $employeeData['access_type'],
+                ]);
+                $employeeData['user_id'] = $user->id;
+            }
+
+            // prepare other data for employee
             $employeeData['agency_id'] = $agency->id;
             $employeeData['schedule'] = (isset($employeeData['hours']) && is_array($employeeData['hours'])) ? implode('&', $employeeData['hours']) : '';
             $employeeData['available_visas'] = (isset($employeeData['vlist']) && is_array($employeeData['vlist'])) ? implode(',', $employeeData['vlist']) : '';
@@ -87,7 +115,13 @@ class AgencyController extends Controller
 
 
         // delete those in delete list
-        parent::deleteRows($request, Employee::class);
+        if ($request->deletelist && count($request->deletelist)) {
+            $employeesDeleteList = Employee::WhereIn('id', $request->deletelist)->get();
+            foreach ($employeesDeleteList as $employeeToBeDeleted) {
+                User::where('id', $employeeToBeDeleted->user_id)->delete();
+                $employeeToBeDeleted->delete();
+            }
+        }
 
         // delete files from db and storage
         parent::deleteFiles($request);
@@ -97,7 +131,11 @@ class AgencyController extends Controller
 
     public function destroy(Agency $agency)
     {
-        Employee::where('agency_id', $agency->id)->delete();
+        $employees = Employee::where('agency_id', $agency->id)->get();
+        foreach ($employees as $employee) {
+            User::where('id', $employee->user_id)->delete();
+            $employee->delete();
+        }
         $agency->delete();
         return ['success' => true];
     }

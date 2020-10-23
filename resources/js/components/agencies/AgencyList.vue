@@ -116,13 +116,15 @@ export default {
                 cancelButtonClass: 'btn btn-secondary',
                 confirmButtonText: fa.YES,
                 cancelButtonText: fa.CANCEL,
-            }).then(function () {
-                agencies.splice(index);
-                axios.delete(`/api/agency/${aid}`).then( res => {
-                    if (res.data.success) {
-                        swalSuccess(fa.ITEM_DELETED);
-                    }
-                });
+            }).then(function (result) {
+                if (result.value) {
+                    agencies.splice(index);
+                    axios.delete(`/api/agency/${aid}`).then( res => {
+                        if (res.data.success) {
+                            swalSuccess(fa.ITEM_DELETED);
+                        }
+                    });
+                }
             });
         }
     }

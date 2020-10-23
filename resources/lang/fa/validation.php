@@ -127,6 +127,16 @@ return array(
         'employees.*.first_name' => 'نام کاربر',
         'employees.*.last_name' => 'نام خانوادگی کاربر',
         'employees.*.rate' => 'ارزیابی کاربر',
+        'employees.*.national_code' => 'کدملی کاربر',
+        'employees.*.email' => 'ایمیل کاربر',
+        'employees.*.access_type' => 'سطح دسترسی کاربر',
+
+
+        'name' => 'نام',
+        'email' => 'ایمیل',
+        'phone' => 'شماره موبایل',
+
+
         '' => '',
     ],
 );

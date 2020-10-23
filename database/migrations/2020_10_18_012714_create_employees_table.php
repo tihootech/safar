@@ -19,12 +19,12 @@ class CreateEmployeesTable extends Migration
             $table->unsignedInteger('agency_id');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('national_code')->nullable();
-            $table->unsignedSmallInteger('access_type')->nullable(); // 1:COUNSELER, 2:MANAGER
+            $table->string('national_code')->unique()->nullable();
+            $table->string('access_type')->nullable(); // COUNSELER, MANAGER
             $table->text('available_visas')->nullable(); // commo seperated list of visa_id
             $table->unsignedSmallInteger('rate')->default(0); // an integer max to 5
             $table->string('phone')->nullable();
-            $table->string('email')->nullable();
+            $table->string('email')->unique()->nullable();
             $table->text('info')->nullable();
             $table->text('schedule')->nullable();
             $table->timestamps();

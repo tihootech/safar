@@ -79,7 +79,7 @@
                                       <td> {{v.type}} </td>
                                       <td> {{v.quiz}} </td>
                                       <td> {{displayCounselings(v.counselings)}} </td>
-                                      <td v-html="$options.filters.boolIcon(v.online_sopping)"> </td>
+                                      <td v-html="boolIcon(v.online_sopping)"> </td>
                                   </tr>
                               </tbody>
                           </table>
@@ -128,13 +128,15 @@ export default {
                 cancelButtonClass: 'btn btn-secondary',
                 confirmButtonText: fa.YES,
                 cancelButtonText: fa.CANCEL,
-            }).then(function () {
-                countries.splice(index);
-                axios.delete(`/api/visa/${cid}`).then( res => {
-                    if (res.data.success) {
-                        swalSuccess(fa.ITEM_DELETED);
-                    }
-                });
+            }).then(function (result) {
+                if (result.value) {
+                    countries.splice(index);
+                    axios.delete(`/api/visa/${cid}`).then( res => {
+                        if (res.data.success) {
+                            swalSuccess(fa.ITEM_DELETED);
+                        }
+                    });
+                }
             });
         }
     }

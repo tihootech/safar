@@ -14,7 +14,7 @@
     "ARE_YOU_SURE" : "آیا مطمئن هستید",
     "ITEM_DELETED" : "آیتم مورد نظر با موفقیت حذف شد.",
     "LAST_WEEK_CHART" : "چارت هفته گذشته",
-    "" : "",
+    "UPDATE" : "به روز رسانی",
     "" : "",
 
     "LOGOUT" : "خروج",
@@ -33,8 +33,10 @@
     "UPLOAD" : "آپلود",
     "YES" : "بله",
     "CANCEL" : "انصراف",
-    "" : "",
-    "" : "",
+    "CHANGE_PASSWORD" : "تغییر گذرواژه",
+    "NEW_PASSWORD" : "رمزعبور جدید",
+    "CONFIRM_NEW_PASSWORD" : "تکرار رمزعبور جدید",
+    "OLD_PASSWORD" : "رمزعبور قبلی",
     "" : "",
 
 
@@ -54,9 +56,14 @@
     "FACTORS" : "فاکتور ها",
     "CONTRACTS" : "قرارداد ها",
     "QUIZ_MAKER" : "آزمون ساز",
-    "" : "",
-    "" : "",
-    "" : "",
+    "MANAGE_SESSIONS" : "مدیریت نشست ها",
+    "CUT_ACCESS" : "قطع دسترسی",
+    "THIS_SESSION" : "همین نشست",
+    "SOME_SESSION_ELSE" : "نشست دیگر",
+    "MOBILE" : "موبایل",
+    "TABLET" : "تبلت",
+    "COMPUTER" : "رایانه",
+    "LAST_ACTIVITY_DATE" : "تاریخ آخرین فعالیت",
 
 
     "COUNTRY_FA_NAME" : "نام کشور به فارسی",
@@ -126,8 +133,18 @@
     "VISA_LATIN_NAME" : "نام لاتین ویزا",
     "COUNTRY" : "کشور",
     "SELECT" : "انتخاب",
-    "" : "",
-    "" : "",
+    "USER_LIST" : "لیست کاربران",
+    "ACCESS_LEVEL" : "سطح دسترسی",
+    "ACTIVE" : "فعال",
+    "ADMIN" : "ادمین",
+    "REGISTER_DATE" : "تاریخ ثبت نام",
+    "SHOP_COUNT" : "تعداد خرید",
+    "ORDERS_LIST" : "لیست سفارشات",
+    "BEDEHKARI" : "بدهکاری",
+    "BESTANKARI" : "بستانکاری",
+    "ACTIVATE" : "فعال سازی",
+    "INACTIVATE" : "غیرفعال سازی",
+    "EDIT_USER" : "ویرایش کاربر",
 
 
     "DZ_MESSAGE": "برای آپلود یا کلیک کنید، یا فایل مورد نظر را اینجا درگ کنید",
@@ -139,7 +156,16 @@
     "DZ_HELP": "با کلیک مجدد میتوانید بیش از یک فایل آپلود کنید.",
 
     "CANT_DELETE_ALL": "همه موارد را نمیتوان حذف کرد",
+    "NEW_EMPLOYEE_GUIDE": "پس از اینکه کاربر در سیستم تعریف شد، نام کاربری ایمیل شخص و رمزعبور کدملی او خواهد بود",
+    "USER_IS_NOW_ACTIVE": "کاربر مورد نظر فعال شد",
+    "USER_IS_NOW_INACTIVE": "کاربر مورد نظر غیرفعال شد",
+    "USER_UPDATED_SUCCESSFULLY": "کاربر مورد نظر با موفقیت ویرایش شد.",
 
+
+    "WRONG_OLD_PASSWORD" : "رمزعبور قبلی اشتباه است",
+    "PASSWORDS_ARE_NOT_SAME" : "رمزعبور جدید با تکرار رمزعبور جدید همخوانی ندارد",
+    "AT_LEAST_6_CHARACTERES_REQUIRED_FOR_NEW_PASSWORD" : "حداقل 6 کاراکتر برای رمز عبور جدید نیاز است.",
+    "SESSION_DELETED" : "نشست موردنظر حذف شد.",
 
 
     "SATURDAY" : "شنبه",

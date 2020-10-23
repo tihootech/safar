@@ -27,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
     ];
 
     /**
@@ -61,11 +62,19 @@ class User extends Authenticatable
 
 
     /**
+     * Relations ...
+     */
+     public function sessions()
+     {
+         return $this->hasMany(Session::class);
+     }
+
+    /**
      * Custom methods ...
      */
 
      public function isAdmin()
      {
-         return $this->type == 'admin';
+         return $this->type == 'ADMIN';
      }
 }
