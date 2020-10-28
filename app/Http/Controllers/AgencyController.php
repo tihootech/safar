@@ -18,12 +18,18 @@ class AgencyController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('admin');
+        $this->middleware('admin')->except(['currentAgency', 'getAgency', 'upsert']);
+        $this->middleware('managers')->only(['currentAgency', 'getAgency', 'upsert']);
     }
 
     public function index()
     {
         return Agency::all();
+    }
+
+    public function currentAgency()
+    {
+        return currentAgency();
     }
 
     public function getEmployees($aid)
@@ -33,14 +39,25 @@ class AgencyController extends Controller
 
     public function getAgency($aid)
     {
+        if (user()->isManager()) {
+            $agency = currentAgency();
+            $aid = $agency->id;
+        }
         return Agency::where('id', $aid)->with('employees', 'first_picture', 'logo')->first();
     }
 
     public function upsert(Request $request)
     {
-
         // validate incoming data
         $aid = $request->agency['id'] ?? 0;
+
+        // manager check
+        if (user()->isManager()) {
+            $agency = currentAgency();
+            if ($aid != $agency->id) {
+                abort(403);
+            }
+        }
 
         $request->validate([
             'agency.name' => 'required|string',

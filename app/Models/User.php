@@ -70,6 +70,11 @@ class User extends Authenticatable
          return $this->hasMany(Session::class);
      }
 
+     public function employee()
+     {
+        return $this->hasOne(Employee::class);
+     }
+
     /**
      * Custom methods ...
      */
@@ -79,7 +84,7 @@ class User extends Authenticatable
          return $this->type == 'ADMIN';
      }
 
-     public function isMnager()
+     public function isManager()
      {
          return $this->type == 'MANAGER';
      }
@@ -88,4 +93,5 @@ class User extends Authenticatable
      {
          return $this->type == 'COUNSELER';
      }
+
 }

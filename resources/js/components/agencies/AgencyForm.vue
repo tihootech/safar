@@ -193,15 +193,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <h5 v-if="e.first_name && e.last_name" class="mb-3"> <i class="mdi mdi-account ml-1"></i> {{`${e.first_name} ${e.last_name}`}} </h5>
-                                <div class="schedule" v-for="day, dayNumber in weekDays">
-                                    <div class="bg-info text-light">
-                                        {{day}}
-                                    </div>
-                                    <div v-for="range in dayHours" @click="setHour(dayNumber, range, i)" :class="{'bg-success text-light':(e.hours && e.hours.includes(`${dayNumber},${range}`))}">
-                                        {{range}}
-                                    </div>
-                                </div>
+                                <schedule :fa="fa" :employee="e" :agency="agency" :index="i"></schedule>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal"> {{fa.CONFIRM}} </button>
@@ -268,6 +260,7 @@
 
 <script>
 
+import Schedule from './Schedule.vue';
 import vue2Dropzone from 'vue2-dropzone';
 import { VueEditor } from "vue2-editor";
 import 'vue2-dropzone/dist/vue2Dropzone.min.css';
@@ -275,14 +268,13 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
 export default {
     components: {
+        'schedule': Schedule,
         'vueDropzone': vue2Dropzone,
         'VueEditor' : VueEditor
     },
     props : ['fa'],
     data() {
         return {
-            weekDays : [this.fa.SATURDAY, this.fa.SUNDAY, this.fa.MONDAY, this.fa.TUESDAY, this.fa.WEDNESDAY, this.fa.THRSDAY, this.fa.FRIDAY],
-            dayHours : ['6~7', '7~8', '8~9', '9~10', '10~11', '11~12', '12~13', '13~14', '14~15', '15~16', '16~17', '17~18', '18~19', '19~20'],
             accesstypes : {
                 COUNSELER : this.fa.COUNSELER,
                 MANAGER : this.fa.MANAGER
@@ -321,18 +313,6 @@ export default {
                 let path = '/storage/images/'+file.name;
                 axios.post('/api/gallery/delete', {path:path});
             }
-        },
-        setHour : function (day, range, employeeIndex) {
-            var employee = this.agency.employees[employeeIndex];
-            var hoursList = employee.hours ? employee.hours : [];
-            var format = `${day},${range}`;
-            var foundIndex = hoursList.indexOf(format);
-            if (foundIndex == -1) {
-                hoursList.push(format);
-            }else {
-                hoursList.splice(foundIndex, 1);
-            }
-            this.agency.employees[employeeIndex].hours = hoursList;
         },
         setVisa : function (vid, employeeIndex) {
             var employee = this.agency.employees[employeeIndex];
@@ -381,7 +361,11 @@ export default {
 
             axios.post('/api/agency/upsert', formData).then( res => {
                 if (res.status == 200 && res.data.success) {
-                    redirect("/dashboard#/agency-list");
+                    if (this.$route.name == 'edit-agency') {
+                        redirect("/dashboard#/agency-employees");
+                    }else {
+                        redirect("/dashboard#/agency-list");
+                    }
                     swalSuccess();
                 }else {
                     swalError();
@@ -436,7 +420,7 @@ export default {
 
         // find object in db if agency id is provided
         var aid = this.$route.params.aid;
-        if (aid) {
+        if (aid || this.$route.name == 'edit-agency') {
             axios.get(`api/agency/get/${aid}`).then( res => {
                 this.agency = res.data;
                 let first_picture = res.data.first_picture;
@@ -481,22 +465,6 @@ export default {
     .excel-form {
         white-space: nowrap;
         overflow-x: auto;
-    }
-
-    .schedule {
-        display: flex;
-    }
-
-    .schedule > div {
-        text-align: center;
-        border: 1px solid #000;
-        padding: 10px;
-        width: 6.66%;
-    }
-
-    .schedule > div:not(:first-child) {
-        cursor: pointer;
-        direction: ltr;
     }
 
     .excel-form thead th:nth-child(n+3):nth-child(-n+5), .excel-form thead th:nth-child(n+8):nth-child(-n+9) { /* 3~5 & 8~9 */

@@ -189,6 +189,18 @@
     "NEW_PASSWORD_IS" : "رمز جدید : ",
 
 
+    "MANAGE_USERS" : "مدیریت کاربران",
+    "MANAGE_AGENCY" : "مدیریت آژانس",
+    "AGENCY_MEMBER_LIST" : "لیست اعضای آژانس",
+    "EDIT_AGENCY" : "ویرایش آژانس",
+    "USERS_WITH_MANAGER_ACCESS" : "کاربران با سطح دسترسی مدیر",
+    "USERS_WITH_COUNSELER_ACCESS" : "کاربران با سطح دسترسی مشاور",
+
+
+
+
+
+
     "SATURDAY" : "شنبه",
     "SUNDAY" : "یکشنبه",
     "MONDAY" : "دوشنبه",

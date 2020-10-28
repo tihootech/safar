@@ -24,10 +24,12 @@ Route::get('/country/get/{cid}', 'VisaController@getCountry');
 
 // employee and agencies
 Route::post('/agency/upsert', 'AgencyController@upsert');
+Route::get('/agency/current', 'AgencyController@currentAgency');
 Route::get('/agency/index', 'AgencyController@index');
 Route::get('/employee/get/{aid}', 'AgencyController@getEmployees');
 Route::delete('/agency/{agency}', 'AgencyController@destroy');
-Route::get('/agency/get/{aid}', 'AgencyController@getAgency');
+Route::get('/agency/get/{aid?}', 'AgencyController@getAgency');
+Route::put('/employee/schedule/update', 'EmployeeController@updateSchedule');
 
 // gallery
 Route::post('gallery/upload', 'GalleryController@upload');

@@ -1916,9 +1916,10 @@ var _lang_fa_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
 /* harmony import */ var _visas_VisaForm_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./visas/VisaForm.vue */ "./resources/js/components/visas/VisaForm.vue");
 /* harmony import */ var _agencies_AgencyList_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./agencies/AgencyList.vue */ "./resources/js/components/agencies/AgencyList.vue");
 /* harmony import */ var _agencies_AgencyForm_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./agencies/AgencyForm.vue */ "./resources/js/components/agencies/AgencyForm.vue");
-/* harmony import */ var _acc_ManageAccount_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./acc/ManageAccount.vue */ "./resources/js/components/acc/ManageAccount.vue");
-/* harmony import */ var _acc_UserList_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./acc/UserList.vue */ "./resources/js/components/acc/UserList.vue");
-/* harmony import */ var _sms_TextMessages_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./sms/TextMessages.vue */ "./resources/js/components/sms/TextMessages.vue");
+/* harmony import */ var _agencies_AgencyEmployees_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./agencies/AgencyEmployees.vue */ "./resources/js/components/agencies/AgencyEmployees.vue");
+/* harmony import */ var _acc_ManageAccount_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./acc/ManageAccount.vue */ "./resources/js/components/acc/ManageAccount.vue");
+/* harmony import */ var _acc_UserList_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./acc/UserList.vue */ "./resources/js/components/acc/UserList.vue");
+/* harmony import */ var _sms_TextMessages_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./sms/TextMessages.vue */ "./resources/js/components/sms/TextMessages.vue");
 //
 //
 //
@@ -1926,6 +1927,7 @@ var _lang_fa_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
 //
 //
  // translate file
+
 
 
 
@@ -1964,16 +1966,24 @@ var _lang_fa_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
       component: _agencies_AgencyForm_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
       name: 'agency-form'
     }, {
+      path: '/edit-agency',
+      component: _agencies_AgencyForm_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+      name: 'edit-agency'
+    }, {
+      path: '/agency-employees',
+      component: _agencies_AgencyEmployees_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+      name: 'agency-employees'
+    }, {
       path: '/acc',
-      component: _acc_ManageAccount_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+      component: _acc_ManageAccount_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
       name: 'manage-account'
     }, {
       path: '/user-list',
-      component: _acc_UserList_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+      component: _acc_UserList_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
       name: 'user-list'
     }, {
       path: '/text-messages',
-      component: _sms_TextMessages_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+      component: _sms_TextMessages_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
       name: 'text-messages'
     }]
   }),
@@ -1995,6 +2005,7 @@ var _lang_fa_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _agencies_Schedule_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./agencies/Schedule.vue */ "./resources/js/components/agencies/Schedule.vue");
 //
 //
 //
@@ -2097,8 +2108,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['fa']
+  props: ['fa'],
+  components: {
+    'schedule': _agencies_Schedule_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      user: {}
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/user/current').then(function (res) {
+      _this.user = res.data;
+    });
+  }
 });
 
 /***/ }),
@@ -2462,6 +2500,58 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agencies/AgencyEmployees.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/agencies/AgencyEmployees.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EmployeesTable_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmployeesTable.vue */ "./resources/js/components/agencies/EmployeesTable.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['fa'],
+  components: {
+    'employees-table': _EmployeesTable_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      agency: []
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/agency/current').then(function (res) {
+      _this.agency = res.data;
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agencies/AgencyForm.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/agencies/AgencyForm.vue?vue&type=script&lang=js& ***!
@@ -2471,11 +2561,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue2-dropzone */ "./node_modules/vue2-dropzone/dist/vue2Dropzone.js");
-/* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue2_dropzone__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue2_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue2-editor */ "./node_modules/vue2-editor/dist/vue2-editor.esm.js");
-/* harmony import */ var vue2_dropzone_dist_vue2Dropzone_min_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue2-dropzone/dist/vue2Dropzone.min.css */ "./node_modules/vue2-dropzone/dist/vue2Dropzone.min.css");
-/* harmony import */ var vue2_dropzone_dist_vue2Dropzone_min_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue2_dropzone_dist_vue2Dropzone_min_css__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Schedule_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Schedule.vue */ "./resources/js/components/agencies/Schedule.vue");
+/* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue2-dropzone */ "./node_modules/vue2-dropzone/dist/vue2Dropzone.js");
+/* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue2_dropzone__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue2_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue2-editor */ "./node_modules/vue2-editor/dist/vue2-editor.esm.js");
+/* harmony import */ var vue2_dropzone_dist_vue2Dropzone_min_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue2-dropzone/dist/vue2Dropzone.min.css */ "./node_modules/vue2-dropzone/dist/vue2Dropzone.min.css");
+/* harmony import */ var vue2_dropzone_dist_vue2Dropzone_min_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue2_dropzone_dist_vue2Dropzone_min_css__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -2736,27 +2827,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    'vueDropzone': vue2_dropzone__WEBPACK_IMPORTED_MODULE_0___default.a,
-    'VueEditor': vue2_editor__WEBPACK_IMPORTED_MODULE_1__["VueEditor"]
+    'schedule': _Schedule_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    'vueDropzone': vue2_dropzone__WEBPACK_IMPORTED_MODULE_1___default.a,
+    'VueEditor': vue2_editor__WEBPACK_IMPORTED_MODULE_2__["VueEditor"]
   },
   props: ['fa'],
   data: function data() {
     return {
-      weekDays: [this.fa.SATURDAY, this.fa.SUNDAY, this.fa.MONDAY, this.fa.TUESDAY, this.fa.WEDNESDAY, this.fa.THRSDAY, this.fa.FRIDAY],
-      dayHours: ['6~7', '7~8', '8~9', '9~10', '10~11', '11~12', '12~13', '13~14', '14~15', '15~16', '16~17', '17~18', '18~19', '19~20'],
       accesstypes: {
         COUNSELER: this.fa.COUNSELER,
         MANAGER: this.fa.MANAGER
@@ -2812,20 +2895,6 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    setHour: function setHour(day, range, employeeIndex) {
-      var employee = this.agency.employees[employeeIndex];
-      var hoursList = employee.hours ? employee.hours : [];
-      var format = "".concat(day, ",").concat(range);
-      var foundIndex = hoursList.indexOf(format);
-
-      if (foundIndex == -1) {
-        hoursList.push(format);
-      } else {
-        hoursList.splice(foundIndex, 1);
-      }
-
-      this.agency.employees[employeeIndex].hours = hoursList;
-    },
     setVisa: function setVisa(vid, employeeIndex) {
       var employee = this.agency.employees[employeeIndex];
       var visaList = employee.vlist ? employee.vlist : [];
@@ -2846,6 +2915,8 @@ __webpack_require__.r(__webpack_exports__);
       return foundIndex != -1;
     },
     formSubmit: function formSubmit() {
+      var _this = this;
+
       var formData = {
         agency: this.agency,
         employees: this.agency.employees,
@@ -2875,7 +2946,12 @@ __webpack_require__.r(__webpack_exports__);
       formData.agency.phones = this.phonelist.join(',');
       axios.post('/api/agency/upsert', formData).then(function (res) {
         if (res.status == 200 && res.data.success) {
-          redirect("/dashboard#/agency-list");
+          if (_this.$route.name == 'edit-agency') {
+            redirect("/dashboard#/agency-employees");
+          } else {
+            redirect("/dashboard#/agency-list");
+          }
+
           swalSuccess();
         } else {
           swalError();
@@ -2925,18 +3001,18 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     // get all visas from db
     axios.get('api/visa/all/').then(function (res) {
-      _this.allvisas = res.data;
+      _this2.allvisas = res.data;
     }); // find object in db if agency id is provided
 
     var aid = this.$route.params.aid;
 
-    if (aid) {
+    if (aid || this.$route.name == 'edit-agency') {
       axios.get("api/agency/get/".concat(aid)).then(function (res) {
-        _this.agency = res.data;
+        _this2.agency = res.data;
         var first_picture = res.data.first_picture;
         var logo = res.data.logo;
         var phones = res.data.phones; // load pictures
@@ -2949,7 +3025,7 @@ __webpack_require__.r(__webpack_exports__);
           };
           var url = first_picture.path;
 
-          _this.$refs.mainDropzone.manuallyAddFile(file, url);
+          _this2.$refs.mainDropzone.manuallyAddFile(file, url);
         }
 
         if (logo) {
@@ -2960,12 +3036,12 @@ __webpack_require__.r(__webpack_exports__);
           };
           var url = logo.path;
 
-          _this.$refs.logoDropzone.manuallyAddFile(file, url);
+          _this2.$refs.logoDropzone.manuallyAddFile(file, url);
         } // display phones
 
 
         if (phones) {
-          _this.phonelist = phones.split(',');
+          _this2.phonelist = phones.split(',');
         } // display employee schedule && mark selected visas for each employee
 
 
@@ -2977,7 +3053,7 @@ __webpack_require__.r(__webpack_exports__);
           e.vlist = e.available_visas ? e.available_visas.split(',') : [];
         }
 
-        _this.agency.employees = employees;
+        _this2.agency.employees = employees;
       });
     }
   }
@@ -3128,6 +3204,112 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agencies/EmployeesTable.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/agencies/EmployeesTable.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['fa', 'list']
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agencies/Schedule.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/agencies/Schedule.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['fa', 'employee', 'agency', 'index'],
+  data: function data() {
+    return {
+      weekDays: [this.fa.SATURDAY, this.fa.SUNDAY, this.fa.MONDAY, this.fa.TUESDAY, this.fa.WEDNESDAY, this.fa.THRSDAY, this.fa.FRIDAY],
+      dayHours: ['6~7', '7~8', '8~9', '9~10', '10~11', '11~12', '12~13', '13~14', '14~15', '15~16', '16~17', '17~18', '18~19', '19~20'],
+      hoursList: []
+    };
+  },
+  methods: {
+    setHour: function setHour(day, range, employeeIndex) {
+      var format = "".concat(day, ",").concat(range);
+      var foundIndex = this.hoursList.indexOf(format);
+      console.log(foundIndex);
+
+      if (foundIndex == -1) {
+        this.hoursList.push(format);
+      } else {
+        this.hoursList.splice(foundIndex, 1);
+      }
+
+      if (employeeIndex != -1) {
+        this.agency.employees[employeeIndex].hours = this.hoursList;
+      }
+    },
+    updateSchedule: function updateSchedule() {
+      axios.put('api/employee/schedule/update/', this.hoursList).then(function (res) {
+        if (res.data.success) {
+          swalSuccess();
+        }
+      });
+    }
+  },
+  mounted: function mounted() {
+    if (this.employee.schedule) {
+      this.hoursList = this.employee.schedule.split('&');
     }
   }
 });
@@ -5808,7 +5990,26 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.excel-form[data-v-28dd783a] {\n    white-space: nowrap;\n    overflow-x: auto;\n}\n.schedule[data-v-28dd783a] {\n    display: flex;\n}\n.schedule > div[data-v-28dd783a] {\n    text-align: center;\n    border: 1px solid #000;\n    padding: 10px;\n    width: 6.66%;\n}\n.schedule > div[data-v-28dd783a]:not(:first-child) {\n    cursor: pointer;\n    direction: ltr;\n}\n.excel-form thead th[data-v-28dd783a]:nth-child(n+3):nth-child(-n+5), .excel-form thead th[data-v-28dd783a]:nth-child(n+8):nth-child(-n+9) { /* 3~5 & 8~9 */\n    min-width: 150px;\n}\n.excel-form thead th[data-v-28dd783a]:nth-child(6) { /* 6 */\n    min-width: 125px;\n}\n.excel-form thead th[data-v-28dd783a]:nth-child(10) { /* 10 */\n    min-width: 200px;\n}\n\n", ""]);
+exports.push([module.i, "\n.excel-form[data-v-28dd783a] {\n    white-space: nowrap;\n    overflow-x: auto;\n}\n.excel-form thead th[data-v-28dd783a]:nth-child(n+3):nth-child(-n+5), .excel-form thead th[data-v-28dd783a]:nth-child(n+8):nth-child(-n+9) { /* 3~5 & 8~9 */\n    min-width: 150px;\n}\n.excel-form thead th[data-v-28dd783a]:nth-child(6) { /* 6 */\n    min-width: 125px;\n}\n.excel-form thead th[data-v-28dd783a]:nth-child(10) { /* 10 */\n    min-width: 200px;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agencies/Schedule.vue?vue&type=style&index=0&id=791868b0&scoped=true&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/agencies/Schedule.vue?vue&type=style&index=0&id=791868b0&scoped=true&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.schedule[data-v-791868b0] {\r\n    display: flex;\n}\n.schedule > div[data-v-791868b0] {\r\n    text-align: center;\r\n    border: 1px solid #000;\r\n    padding: 10px;\r\n    width: 6.66%;\n}\n.schedule > div[data-v-791868b0]:not(:first-child) {\r\n    cursor: pointer;\r\n    direction: ltr;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -35188,6 +35389,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agencies/Schedule.vue?vue&type=style&index=0&id=791868b0&scoped=true&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/agencies/Schedule.vue?vue&type=style&index=0&id=791868b0&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Schedule.vue?vue&type=style&index=0&id=791868b0&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agencies/Schedule.vue?vue&type=style&index=0&id=791868b0&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/visas/VisaForm.vue?vue&type=style&index=0&id=84c45026&scoped=true&lang=css&":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/visas/VisaForm.vue?vue&type=style&index=0&id=84c45026&scoped=true&lang=css& ***!
@@ -35842,136 +36073,171 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "row mt-5" }, [
-      _c("div", { staticClass: "col-lg-12 col-sm-12" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-lg-3 col-sm-3" }, [
-            _c("div", { staticClass: "widget-box bg-white m-b-30" }, [
-              _c(
-                "div",
-                { staticClass: "row d-flex text-center align-items-center" },
-                [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-8" }, [
-                    _c("div", { staticClass: "dynamicbar" }, [
-                      _vm._v(_vm._s(_vm.fa.LAST_WEEK_CHART))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("hr", { staticClass: "col-10" }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-12" }, [
-                    _c("h3", { staticClass: "m-0 counter" }, [_vm._v("548")]),
-                    _vm._v(" "),
-                    _c("p", [_vm._v(_vm._s(_vm.fa.TODAY_SELL_COUNT))])
+    _vm.user.type == "ADMIN"
+      ? _c("div", [
+          _c("div", { staticClass: "row mt-5" }, [
+            _c("div", { staticClass: "col-lg-12 col-sm-12" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-lg-3 col-sm-3" }, [
+                  _c("div", { staticClass: "widget-box bg-white m-b-30" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "row d-flex text-center align-items-center"
+                      },
+                      [
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-8" }, [
+                          _c("div", { staticClass: "dynamicbar" }, [
+                            _vm._v(_vm._s(_vm.fa.LAST_WEEK_CHART))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("hr", { staticClass: "col-10" }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-12" }, [
+                          _c("h3", { staticClass: "m-0 counter" }, [
+                            _vm._v("548")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.fa.TODAY_SELL_COUNT))])
+                        ])
+                      ]
+                    )
                   ])
-                ]
-              )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-lg-3 col-sm-3" }, [
+                  _c("div", { staticClass: "widget-box bg-white m-b-30" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "row d-flex text-center align-items-center"
+                      },
+                      [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-8" }, [
+                          _c("div", { staticClass: "dynamicbar" }, [
+                            _vm._v(_vm._s(_vm.fa.LAST_WEEK_CHART))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("hr", { staticClass: "col-10" }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-12" }, [
+                          _c("h3", { staticClass: "m-0 counter" }, [
+                            _vm._v("15,800,000")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.fa.TODAY_INCOME))])
+                        ])
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-lg-3 col-sm-3" }, [
+                  _c("div", { staticClass: "widget-box bg-white m-b-30" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "row d-flex text-center align-items-center text-center"
+                      },
+                      [
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-8" }, [
+                          _c("div", { staticClass: "inlinesparkline" }, [
+                            _vm._v(_vm._s(_vm.fa.LAST_WEEK_CHART))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("hr", { staticClass: "col-10" }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-12" }, [
+                          _c("h3", { staticClass: "m-0 counter" }, [
+                            _vm._v("946")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(_vm._s(_vm.fa.TODAY_COUNSELING_SESSIONS))
+                          ])
+                        ])
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-lg-3 col-sm-3" }, [
+                  _c("div", { staticClass: "widget-box bg-white m-b-30" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "row d-flex text-center align-items-center"
+                      },
+                      [
+                        _vm._m(3),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-8" }, [
+                          _c("div", { staticClass: "inlinesparkline" }, [
+                            _vm._v(_vm._s(_vm.fa.LAST_WEEK_CHART))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("hr", { staticClass: "col-10" }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-12" }, [
+                          _c("h3", { staticClass: "m-0 counter" }, [
+                            _vm._v("850")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.fa.ACTIVE_VISA_COUNT))])
+                        ])
+                      ]
+                    )
+                  ])
+                ])
+              ])
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-lg-3 col-sm-3" }, [
-            _c("div", { staticClass: "widget-box bg-white m-b-30" }, [
-              _c(
-                "div",
-                { staticClass: "row d-flex text-center align-items-center" },
-                [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-8" }, [
-                    _c("div", { staticClass: "dynamicbar" }, [
-                      _vm._v(_vm._s(_vm.fa.LAST_WEEK_CHART))
-                    ])
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-3 col-sm-12" }, [
+              _c("div", { staticClass: "card m-b-30" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("h5", { staticClass: "header-title pb-3" }, [
+                    _vm._v(" " + _vm._s(_vm.fa.RECENT_SHOP_LIST) + " ")
                   ]),
                   _vm._v(" "),
-                  _c("hr", { staticClass: "col-10" }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-12" }, [
-                    _c("h3", { staticClass: "m-0 counter" }, [
-                      _vm._v("15,800,000")
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [_vm._v(_vm._s(_vm.fa.TODAY_INCOME))])
-                  ])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-3 col-sm-3" }, [
-            _c("div", { staticClass: "widget-box bg-white m-b-30" }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "row d-flex text-center align-items-center text-center"
-                },
-                [
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-8" }, [
-                    _c("div", { staticClass: "inlinesparkline" }, [
-                      _vm._v(_vm._s(_vm.fa.LAST_WEEK_CHART))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("hr", { staticClass: "col-10" }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-12" }, [
-                    _c("h3", { staticClass: "m-0 counter" }, [_vm._v("946")]),
-                    _vm._v(" "),
-                    _c("p", [_vm._v(_vm._s(_vm.fa.TODAY_COUNSELING_SESSIONS))])
-                  ])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-3 col-sm-3" }, [
-            _c("div", { staticClass: "widget-box bg-white m-b-30" }, [
-              _c(
-                "div",
-                { staticClass: "row d-flex text-center align-items-center" },
-                [
-                  _vm._m(3),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-8" }, [
-                    _c("div", { staticClass: "inlinesparkline" }, [
-                      _vm._v(_vm._s(_vm.fa.LAST_WEEK_CHART))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("hr", { staticClass: "col-10" }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-12" }, [
-                    _c("h3", { staticClass: "m-0 counter" }, [_vm._v("850")]),
-                    _vm._v(" "),
-                    _c("p", [_vm._v(_vm._s(_vm.fa.ACTIVE_VISA_COUNT))])
-                  ])
-                ]
-              )
-            ])
-          ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-3 col-sm-12" }, [
-        _c("div", { staticClass: "card m-b-30" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("h5", { staticClass: "header-title pb-3" }, [
-              _vm._v(" " + _vm._s(_vm.fa.RECENT_SHOP_LIST) + " ")
+                  _c("hr")
+                ])
+              ])
             ]),
             _vm._v(" "),
-            _c("hr")
+            _vm._m(4)
           ])
         ])
-      ]),
-      _vm._v(" "),
-      _vm._m(4)
-    ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.user.type == "COUNSELER"
+      ? _c("div", [
+          _c("div", { staticClass: "card mt-4" }, [
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _c("schedule", {
+                  attrs: { fa: _vm.fa, employee: _vm.user.employee, index: -1 }
+                })
+              ],
+              1
+            )
+          ])
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
@@ -36022,7 +36288,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-lg-9 col-sm-12" }, [
       _c("div", { staticClass: "card m-b-30" }, [
         _c("div", { staticClass: "card-body" }, [
-          _vm._v("\n                    تقویم ......\n                ")
+          _vm._v("\n                        تقویم ......\n                    ")
         ])
       ])
     ])
@@ -36561,33 +36827,6 @@ var render = function() {
                             )
                           ]
                         )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-sm btn-success",
-                            attrs: {
-                              type: "button",
-                              "data-toggle": "modal",
-                              "data-target": "#edit-user"
-                            },
-                            on: {
-                              click: function($event) {
-                                return _vm.loadUser(u.id)
-                              }
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "mdi mdi-pencil" }),
-                            _vm._v(
-                              " " +
-                                _vm._s(_vm.fa.EDIT) +
-                                "\n                                    "
-                            )
-                          ]
-                        )
                       ])
                     ])
                   }),
@@ -36598,67 +36837,80 @@ var render = function() {
           ])
         ])
       ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: { id: "edit-user", tabindex: "-1", role: "dialog" }
-      },
-      [
-        _c("div", { staticClass: "modal-dialog modal-lg" }, [
-          _c("div", { staticClass: "modal-content" }, [
-            _c("div", { staticClass: "modal-header" }, [
-              _c("h5", { staticClass: "modal-title" }, [
-                _vm._v(_vm._s(_vm.fa.EDIT_USER))
-              ]),
-              _vm._v(" "),
-              _vm._m(0)
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "modal-body" },
-              [
-                _c("edit-user-info", {
-                  attrs: { user: _vm.user, fa: _vm.fa, colspan: 4 }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-footer" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-secondary",
-                  attrs: { type: "button", "data-dismiss": "modal" }
-                },
-                [_vm._v(_vm._s(_vm.fa.CANCEL))]
-              )
-            ])
-          ])
-        ])
-      ]
-    )
+    ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: { type: "button", "data-dismiss": "modal" }
-      },
-      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
-  }
-]
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agencies/AgencyEmployees.vue?vue&type=template&id=7ad8b77f&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/agencies/AgencyEmployees.vue?vue&type=template&id=7ad8b77f&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "page-head mt-4" }, [
+      _c("h4", [
+        _vm._v(
+          " " +
+            _vm._s(_vm.agency.name) +
+            " (" +
+            _vm._s(_vm.agency.latin_name) +
+            ") "
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card my-2" }, [
+      _c(
+        "div",
+        { staticClass: "card-body" },
+        [
+          _c("h6", { staticClass: "text-info font-weight-bold" }, [
+            _vm._v(" " + _vm._s(_vm.fa.USERS_WITH_MANAGER_ACCESS) + " ")
+          ]),
+          _vm._v(" "),
+          _c("employees-table", {
+            attrs: { fa: _vm.fa, list: _vm.agency.managers }
+          })
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card my-2" }, [
+      _c(
+        "div",
+        { staticClass: "card-body" },
+        [
+          _c("h6", { staticClass: "text-info font-weight-bold" }, [
+            _vm._v(" " + _vm._s(_vm.fa.USERS_WITH_COUNSELER_ACCESS) + " ")
+          ]),
+          _vm._v(" "),
+          _c("employees-table", {
+            attrs: { fa: _vm.fa, list: _vm.agency.counselers }
+          })
+        ],
+        1
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -37586,72 +37838,16 @@ var render = function() {
                           "div",
                           { staticClass: "modal-body" },
                           [
-                            e.first_name && e.last_name
-                              ? _c("h5", { staticClass: "mb-3" }, [
-                                  _c("i", {
-                                    staticClass: "mdi mdi-account ml-1"
-                                  }),
-                                  _vm._v(
-                                    " " +
-                                      _vm._s(e.first_name + " " + e.last_name) +
-                                      " "
-                                  )
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm._l(_vm.weekDays, function(day, dayNumber) {
-                              return _c(
-                                "div",
-                                { staticClass: "schedule" },
-                                [
-                                  _c(
-                                    "div",
-                                    { staticClass: "bg-info text-light" },
-                                    [
-                                      _vm._v(
-                                        "\n                                    " +
-                                          _vm._s(day) +
-                                          "\n                                "
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _vm._l(_vm.dayHours, function(range) {
-                                    return _c(
-                                      "div",
-                                      {
-                                        class: {
-                                          "bg-success text-light":
-                                            e.hours &&
-                                            e.hours.includes(
-                                              dayNumber + "," + range
-                                            )
-                                        },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.setHour(
-                                              dayNumber,
-                                              range,
-                                              i
-                                            )
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                    " +
-                                            _vm._s(range) +
-                                            "\n                                "
-                                        )
-                                      ]
-                                    )
-                                  })
-                                ],
-                                2
-                              )
+                            _c("schedule", {
+                              attrs: {
+                                fa: _vm.fa,
+                                employee: e,
+                                agency: _vm.agency,
+                                index: i
+                              }
                             })
                           ],
-                          2
+                          1
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "modal-footer" }, [
@@ -38139,6 +38335,146 @@ var staticRenderFns = [
     )
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agencies/EmployeesTable.vue?vue&type=template&id=9adc8ecc&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/agencies/EmployeesTable.vue?vue&type=template&id=9adc8ecc&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "table-responsive" }, [
+    _c("table", { staticClass: "table" }, [
+      _c("thead", [
+        _c("tr", [
+          _c("th", [_vm._v(" " + _vm._s(_vm.fa.NAME) + " ")]),
+          _vm._v(" "),
+          _c("th", [_vm._v(" " + _vm._s(_vm.fa.NATIONAL_CODE) + " ")]),
+          _vm._v(" "),
+          _c("th", [_vm._v(" " + _vm._s(_vm.fa.PHONE) + " ")]),
+          _vm._v(" "),
+          _c("th", [_vm._v(" " + _vm._s(_vm.fa.EMAIL) + " ")])
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.list, function(e, i) {
+          return _c("tr", [
+            _c("td", [
+              _vm._v(" " + _vm._s(e.first_name + " " + e.last_name) + " ")
+            ]),
+            _vm._v(" "),
+            _c("td", [_vm._v(" " + _vm._s(e.national_code) + " ")]),
+            _vm._v(" "),
+            _c("td", [_vm._v(" " + _vm._s(e.phone) + " ")]),
+            _vm._v(" "),
+            _c("td", [_vm._v(" " + _vm._s(e.email) + " ")])
+          ])
+        }),
+        0
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agencies/Schedule.vue?vue&type=template&id=791868b0&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/agencies/Schedule.vue?vue&type=template&id=791868b0&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _vm.employee.first_name && _vm.employee.last_name
+        ? _c("h5", { staticClass: "mb-3" }, [
+            _c("i", { staticClass: "mdi mdi-account ml-1" }),
+            _vm._v(
+              " " +
+                _vm._s(_vm.employee.first_name + " " + _vm.employee.last_name) +
+                " "
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.weekDays, function(day, dayNumber) {
+        return _c(
+          "div",
+          { staticClass: "schedule" },
+          [
+            _c("div", { staticClass: "bg-info text-light" }, [
+              _vm._v("\n            " + _vm._s(day) + "\n        ")
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.dayHours, function(range) {
+              return _c(
+                "div",
+                {
+                  class: _vm.hoursList.includes(dayNumber + "," + range)
+                    ? "bg-success text-light"
+                    : "",
+                  on: {
+                    click: function($event) {
+                      return _vm.setHour(dayNumber, range, _vm.index)
+                    }
+                  }
+                },
+                [_vm._v("\n            " + _vm._s(range) + "\n        ")]
+              )
+            })
+          ],
+          2
+        )
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "text-center mt-2" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: { type: "button" },
+            on: { click: _vm.updateSchedule }
+          },
+          [
+            _c("i", { staticClass: "mdi mdi-check ml-1" }),
+            _vm._v(" " + _vm._s(_vm.fa.CONFIRM) + " ")
+          ]
+        )
+      ])
+    ],
+    2
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -55762,14 +56098,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*!******************************************************!*\
   !*** ./resources/js/components/DashboardManager.vue ***!
   \******************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DashboardManager_vue_vue_type_template_id_3ee81c64___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DashboardManager.vue?vue&type=template&id=3ee81c64& */ "./resources/js/components/DashboardManager.vue?vue&type=template&id=3ee81c64&");
 /* harmony import */ var _DashboardManager_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DashboardManager.vue?vue&type=script&lang=js& */ "./resources/js/components/DashboardManager.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _DashboardManager_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _DashboardManager_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -55799,7 +56136,7 @@ component.options.__file = "resources/js/components/DashboardManager.vue"
 /*!*******************************************************************************!*\
   !*** ./resources/js/components/DashboardManager.vue?vue&type=script&lang=js& ***!
   \*******************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56103,6 +56440,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/agencies/AgencyEmployees.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/agencies/AgencyEmployees.vue ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AgencyEmployees_vue_vue_type_template_id_7ad8b77f_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AgencyEmployees.vue?vue&type=template&id=7ad8b77f&scoped=true& */ "./resources/js/components/agencies/AgencyEmployees.vue?vue&type=template&id=7ad8b77f&scoped=true&");
+/* harmony import */ var _AgencyEmployees_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AgencyEmployees.vue?vue&type=script&lang=js& */ "./resources/js/components/agencies/AgencyEmployees.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AgencyEmployees_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AgencyEmployees_vue_vue_type_template_id_7ad8b77f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AgencyEmployees_vue_vue_type_template_id_7ad8b77f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "7ad8b77f",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/agencies/AgencyEmployees.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/agencies/AgencyEmployees.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/agencies/AgencyEmployees.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AgencyEmployees_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./AgencyEmployees.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agencies/AgencyEmployees.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AgencyEmployees_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/agencies/AgencyEmployees.vue?vue&type=template&id=7ad8b77f&scoped=true&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/agencies/AgencyEmployees.vue?vue&type=template&id=7ad8b77f&scoped=true& ***!
+  \*********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AgencyEmployees_vue_vue_type_template_id_7ad8b77f_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./AgencyEmployees.vue?vue&type=template&id=7ad8b77f&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agencies/AgencyEmployees.vue?vue&type=template&id=7ad8b77f&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AgencyEmployees_vue_vue_type_template_id_7ad8b77f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AgencyEmployees_vue_vue_type_template_id_7ad8b77f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/agencies/AgencyForm.vue":
 /*!*********************************************************!*\
   !*** ./resources/js/components/agencies/AgencyForm.vue ***!
@@ -56254,6 +56660,162 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AgencyList_vue_vue_type_template_id_5cd69f14_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AgencyList_vue_vue_type_template_id_5cd69f14_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/agencies/EmployeesTable.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/agencies/EmployeesTable.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EmployeesTable_vue_vue_type_template_id_9adc8ecc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmployeesTable.vue?vue&type=template&id=9adc8ecc&scoped=true& */ "./resources/js/components/agencies/EmployeesTable.vue?vue&type=template&id=9adc8ecc&scoped=true&");
+/* harmony import */ var _EmployeesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmployeesTable.vue?vue&type=script&lang=js& */ "./resources/js/components/agencies/EmployeesTable.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _EmployeesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EmployeesTable_vue_vue_type_template_id_9adc8ecc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EmployeesTable_vue_vue_type_template_id_9adc8ecc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "9adc8ecc",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/agencies/EmployeesTable.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/agencies/EmployeesTable.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/agencies/EmployeesTable.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmployeesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./EmployeesTable.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agencies/EmployeesTable.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmployeesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/agencies/EmployeesTable.vue?vue&type=template&id=9adc8ecc&scoped=true&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/agencies/EmployeesTable.vue?vue&type=template&id=9adc8ecc&scoped=true& ***!
+  \********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmployeesTable_vue_vue_type_template_id_9adc8ecc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./EmployeesTable.vue?vue&type=template&id=9adc8ecc&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agencies/EmployeesTable.vue?vue&type=template&id=9adc8ecc&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmployeesTable_vue_vue_type_template_id_9adc8ecc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmployeesTable_vue_vue_type_template_id_9adc8ecc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/agencies/Schedule.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/agencies/Schedule.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Schedule_vue_vue_type_template_id_791868b0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Schedule.vue?vue&type=template&id=791868b0&scoped=true& */ "./resources/js/components/agencies/Schedule.vue?vue&type=template&id=791868b0&scoped=true&");
+/* harmony import */ var _Schedule_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Schedule.vue?vue&type=script&lang=js& */ "./resources/js/components/agencies/Schedule.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Schedule_vue_vue_type_style_index_0_id_791868b0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Schedule.vue?vue&type=style&index=0&id=791868b0&scoped=true&lang=css& */ "./resources/js/components/agencies/Schedule.vue?vue&type=style&index=0&id=791868b0&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Schedule_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Schedule_vue_vue_type_template_id_791868b0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Schedule_vue_vue_type_template_id_791868b0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "791868b0",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/agencies/Schedule.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/agencies/Schedule.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/agencies/Schedule.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Schedule_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Schedule.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agencies/Schedule.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Schedule_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/agencies/Schedule.vue?vue&type=style&index=0&id=791868b0&scoped=true&lang=css&":
+/*!****************************************************************************************************************!*\
+  !*** ./resources/js/components/agencies/Schedule.vue?vue&type=style&index=0&id=791868b0&scoped=true&lang=css& ***!
+  \****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Schedule_vue_vue_type_style_index_0_id_791868b0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Schedule.vue?vue&type=style&index=0&id=791868b0&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agencies/Schedule.vue?vue&type=style&index=0&id=791868b0&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Schedule_vue_vue_type_style_index_0_id_791868b0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Schedule_vue_vue_type_style_index_0_id_791868b0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Schedule_vue_vue_type_style_index_0_id_791868b0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Schedule_vue_vue_type_style_index_0_id_791868b0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Schedule_vue_vue_type_style_index_0_id_791868b0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/agencies/Schedule.vue?vue&type=template&id=791868b0&scoped=true&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/agencies/Schedule.vue?vue&type=template&id=791868b0&scoped=true& ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Schedule_vue_vue_type_template_id_791868b0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Schedule.vue?vue&type=template&id=791868b0&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agencies/Schedule.vue?vue&type=template&id=791868b0&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Schedule_vue_vue_type_template_id_791868b0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Schedule_vue_vue_type_template_id_791868b0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -56488,10 +57050,10 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************!*\
   !*** ./resources/lang/fa.json ***!
   \********************************/
-/*! exports provided: BRAND, LOGIN_TO_ACC, , USERNAME, USERNAME/EMAIL, PASSWORD, REMEMBER_ME, LOG_IN, FORGOT_PASSWORD, MANAGE_ACC, ARE_YOU_SURE, ITEM_DELETED, LAST_WEEK_CHART, UPDATE, LOGOUT, MAIN_MENU, OTHER_SETTINGS, LOADING, RECENT_SHOP_LIST, NEW_VISA, VISA_LIST, NEW_AGENCY, AGENCY_LIST, CONFIRM, ACTIONS, EDIT, DELETE, UPLOAD, YES, CANCEL, CHANGE_PASSWORD, NEW_PASSWORD, CONFIRM_NEW_PASSWORD, OLD_PASSWORD, MANAGE_TEXT_MESSAGES, NOT_SENT_YET, RECEPTOR, TEXT, SENT, RESEND, SENDER, COST, T, DATE, TIME, TODAY_SELL_COUNT, TODAY_INCOME, TODAY_COUNSELING_SESSIONS, ACTIVE_VISA_COUNT, ARE_YOU_SURE_TO_RESEND, SMS_Q_TO_SENT, RECHECK_SMS_STATUS, TEXT_MESSAGES_LIST, DASHBOARD, MAIN_DASHBOARD, MANAGE_VISA, MANAGE_AGENCIES, USERS, COUNSELING_SESSIONS, BANK_TRANSACTIONS, FACTORS, CONTRACTS, QUIZ_MAKER, MANAGE_SESSIONS, CUT_ACCESS, THIS_SESSION, SOME_SESSION_ELSE, MOBILE, TABLET, COMPUTER, LAST_ACTIVITY_DATE, COUNTRY_FA_NAME, COUNTRY_LATIN_NAME, ISO_CODE, COUNTRY_CODE, BRIEF_INFO, MAIN_PICTURE, FULL_INFO, LANG, LOCAL_NAME, GALLERY_PHOTOS, UPLOAD_PICTURES, THIS_WILL_BE_YOUR_MAIN_PICTURE, OTHER_PICTURES, PICTURE_NUMBER_X, NOT_REQUIRED, NEW_PICTURE, DEFINE_VISA_TYPE, NAME, LATIN_NAME, CONDITIONS, DOCUMENTS, ONLINE_SOPPING, ISSUANCE_TIME, ISSUANCE_STEPS, FIRST_PICTURE, VISA_TYPE, CHOOSE_QUIZ, QUIZ, AVAILABLE_COUNSELING, IN_TEXT, IN_TELEPHONE, IN_VIDEO, IN_PERSON, ADD_NEW_VISA, AGENCY_NAME, AGENCY_LATIN_NAME, MANAGER_NAME, MANAGER_PHONE, ITGUY_NAME, ITGUY_PHONE, LICENSE_TYPE, WEBSITE, EMAIL, ADDRESS, PHONES, UPLOAD_LOGO, DEFINE_USERS, ADD_NEW_USER, LAST_NAME, NATIONAL_CODE, USER_TYPE, AVAILABLE_LICENSES, RATE, PHONE, ABOUT_COUNSELER, TELEPHONE, ADD_NEW_TELEPHONE, COUNSELING_HOURS, SET_COUNSELING_HOURS, SET_AVAILABLE_VISAS, COUNSELER, MANAGER, VISA_NAME, VISA_LATIN_NAME, COUNTRY, SELECT, USER_LIST, ACCESS_LEVEL, ACTIVE, ADMIN, REGISTER_DATE, SHOP_COUNT, ORDERS_LIST, BEDEHKARI, BESTANKARI, ACTIVATE, INACTIVATE, EDIT_USER, NOTHING_FOUND, DZ_MESSAGE, REMOVE_FILE, UPLOAD_A_FILE_AS_MAIN, UPLOAD_A_FILE_AS_LOGO, DZ_HELP, CANT_DELETE_ALL, NEW_EMPLOYEE_GUIDE, USER_IS_NOW_ACTIVE, USER_IS_NOW_INACTIVE, USER_UPDATED_SUCCESSFULLY, WRONG_OLD_PASSWORD, PASSWORDS_ARE_NOT_SAME, AT_LEAST_6_CHARACTERES_REQUIRED_FOR_NEW_PASSWORD, SESSION_DELETED, CHANGE_PASSWORD_GUIDE, CONFIRM_AND_CHANGE_PWASSWORD, USER_PASS_CHANGED_AND_NOTIFIED_VIA_SMS, USER_PASS_CHANGED_BUT_NOT_NOTIFIED_VIA_SMS, NEW_PASSWORD_IS, SATURDAY, SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THRSDAY, FRIDAY, PASSWORD_CHANGED_SMS, default */
+/*! exports provided: BRAND, LOGIN_TO_ACC, , USERNAME, USERNAME/EMAIL, PASSWORD, REMEMBER_ME, LOG_IN, FORGOT_PASSWORD, MANAGE_ACC, ARE_YOU_SURE, ITEM_DELETED, LAST_WEEK_CHART, UPDATE, LOGOUT, MAIN_MENU, OTHER_SETTINGS, LOADING, RECENT_SHOP_LIST, NEW_VISA, VISA_LIST, NEW_AGENCY, AGENCY_LIST, CONFIRM, ACTIONS, EDIT, DELETE, UPLOAD, YES, CANCEL, CHANGE_PASSWORD, NEW_PASSWORD, CONFIRM_NEW_PASSWORD, OLD_PASSWORD, MANAGE_TEXT_MESSAGES, NOT_SENT_YET, RECEPTOR, TEXT, SENT, RESEND, SENDER, COST, T, DATE, TIME, TODAY_SELL_COUNT, TODAY_INCOME, TODAY_COUNSELING_SESSIONS, ACTIVE_VISA_COUNT, ARE_YOU_SURE_TO_RESEND, SMS_Q_TO_SENT, RECHECK_SMS_STATUS, TEXT_MESSAGES_LIST, DASHBOARD, MAIN_DASHBOARD, MANAGE_VISA, MANAGE_AGENCIES, USERS, COUNSELING_SESSIONS, BANK_TRANSACTIONS, FACTORS, CONTRACTS, QUIZ_MAKER, MANAGE_SESSIONS, CUT_ACCESS, THIS_SESSION, SOME_SESSION_ELSE, MOBILE, TABLET, COMPUTER, LAST_ACTIVITY_DATE, COUNTRY_FA_NAME, COUNTRY_LATIN_NAME, ISO_CODE, COUNTRY_CODE, BRIEF_INFO, MAIN_PICTURE, FULL_INFO, LANG, LOCAL_NAME, GALLERY_PHOTOS, UPLOAD_PICTURES, THIS_WILL_BE_YOUR_MAIN_PICTURE, OTHER_PICTURES, PICTURE_NUMBER_X, NOT_REQUIRED, NEW_PICTURE, DEFINE_VISA_TYPE, NAME, LATIN_NAME, CONDITIONS, DOCUMENTS, ONLINE_SOPPING, ISSUANCE_TIME, ISSUANCE_STEPS, FIRST_PICTURE, VISA_TYPE, CHOOSE_QUIZ, QUIZ, AVAILABLE_COUNSELING, IN_TEXT, IN_TELEPHONE, IN_VIDEO, IN_PERSON, ADD_NEW_VISA, AGENCY_NAME, AGENCY_LATIN_NAME, MANAGER_NAME, MANAGER_PHONE, ITGUY_NAME, ITGUY_PHONE, LICENSE_TYPE, WEBSITE, EMAIL, ADDRESS, PHONES, UPLOAD_LOGO, DEFINE_USERS, ADD_NEW_USER, LAST_NAME, NATIONAL_CODE, USER_TYPE, AVAILABLE_LICENSES, RATE, PHONE, ABOUT_COUNSELER, TELEPHONE, ADD_NEW_TELEPHONE, COUNSELING_HOURS, SET_COUNSELING_HOURS, SET_AVAILABLE_VISAS, COUNSELER, MANAGER, VISA_NAME, VISA_LATIN_NAME, COUNTRY, SELECT, USER_LIST, ACCESS_LEVEL, ACTIVE, ADMIN, REGISTER_DATE, SHOP_COUNT, ORDERS_LIST, BEDEHKARI, BESTANKARI, ACTIVATE, INACTIVATE, EDIT_USER, NOTHING_FOUND, DZ_MESSAGE, REMOVE_FILE, UPLOAD_A_FILE_AS_MAIN, UPLOAD_A_FILE_AS_LOGO, DZ_HELP, CANT_DELETE_ALL, NEW_EMPLOYEE_GUIDE, USER_IS_NOW_ACTIVE, USER_IS_NOW_INACTIVE, USER_UPDATED_SUCCESSFULLY, WRONG_OLD_PASSWORD, PASSWORDS_ARE_NOT_SAME, AT_LEAST_6_CHARACTERES_REQUIRED_FOR_NEW_PASSWORD, SESSION_DELETED, CHANGE_PASSWORD_GUIDE, CONFIRM_AND_CHANGE_PWASSWORD, USER_PASS_CHANGED_AND_NOTIFIED_VIA_SMS, USER_PASS_CHANGED_BUT_NOT_NOTIFIED_VIA_SMS, NEW_PASSWORD_IS, MANAGE_USERS, MANAGE_AGENCY, AGENCY_MEMBER_LIST, EDIT_AGENCY, USERS_WITH_MANAGER_ACCESS, USERS_WITH_COUNSELER_ACCESS, SATURDAY, SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THRSDAY, FRIDAY, PASSWORD_CHANGED_SMS, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"BRAND\":\"سفر به راه\",\"LOGIN_TO_ACC\":\"ورود به حساب کاربری\",\"\":\"\",\"USERNAME\":\"نام کاربری\",\"USERNAME/EMAIL\":\"نام کاربری یا ایمیل\",\"PASSWORD\":\"رمزعبور\",\"REMEMBER_ME\":\"مرا به خاطر بسپار\",\"LOG_IN\":\"ورود به حساب\",\"FORGOT_PASSWORD\":\"فراموشی رمزعبور\",\"MANAGE_ACC\":\"مدیریت حساب کاربری\",\"ARE_YOU_SURE\":\"آیا مطمئن هستید\",\"ITEM_DELETED\":\"آیتم مورد نظر با موفقیت حذف شد.\",\"LAST_WEEK_CHART\":\"چارت هفته گذشته\",\"UPDATE\":\"به روز رسانی\",\"LOGOUT\":\"خروج\",\"MAIN_MENU\":\"منوی اصلی\",\"OTHER_SETTINGS\":\"سایر تنظیمات\",\"LOADING\":\"در حال بارگذاری...\",\"RECENT_SHOP_LIST\":\"لیست آخرین خرید ها\",\"NEW_VISA\":\"تعریف ویزا\",\"VISA_LIST\":\"لیست ویزا ها\",\"NEW_AGENCY\":\"تعریف آژانس\",\"AGENCY_LIST\":\"لیست آژانس ها\",\"CONFIRM\":\"تایید\",\"ACTIONS\":\"عملیات\",\"EDIT\":\"ویرایش\",\"DELETE\":\"حذف\",\"UPLOAD\":\"آپلود\",\"YES\":\"بله\",\"CANCEL\":\"انصراف\",\"CHANGE_PASSWORD\":\"تغییر رمز\",\"NEW_PASSWORD\":\"رمزعبور جدید\",\"CONFIRM_NEW_PASSWORD\":\"تکرار رمزعبور جدید\",\"OLD_PASSWORD\":\"رمزعبور قبلی\",\"MANAGE_TEXT_MESSAGES\":\"مدیریت پیامک ها\",\"NOT_SENT_YET\":\"هنوز ارسال نشده\",\"RECEPTOR\":\"دریافت کننده\",\"TEXT\":\"متن\",\"SENT\":\"ارسال شده\",\"RESEND\":\"ارسال مجدد\",\"SENDER\":\"ارسال کننده\",\"COST\":\"هزینه\",\"T\":\"ت\",\"DATE\":\"تاریخ\",\"TIME\":\"زمان\",\"TODAY_SELL_COUNT\":\"تعداد فروش امروز\",\"TODAY_INCOME\":\"دریافتی های امروز\",\"TODAY_COUNSELING_SESSIONS\":\"جلسات مشاوره امروز\",\"ACTIVE_VISA_COUNT\":\"تعداد ویزا های فعال\",\"ARE_YOU_SURE_TO_RESEND\":\"از ارسال مجدد پیامک اطمینان دارید؟\",\"SMS_Q_TO_SENT\":\"پیامک در صف ارسال قرار گرفت\",\"RECHECK_SMS_STATUS\":\"بررسی مجدد وضعیت پیامک ها\",\"TEXT_MESSAGES_LIST\":\"لیست پیامک های ارسالی\",\"DASHBOARD\":\"داشبورد\",\"MAIN_DASHBOARD\":\"داشبورد اصلی\",\"MANAGE_VISA\":\"مدیریت ویزا\",\"MANAGE_AGENCIES\":\"مدیریت آژانس ها\",\"USERS\":\"کاربران\",\"COUNSELING_SESSIONS\":\"جلسات مشاوره\",\"BANK_TRANSACTIONS\":\"تراکنش های بانکی\",\"FACTORS\":\"فاکتور ها\",\"CONTRACTS\":\"قرارداد ها\",\"QUIZ_MAKER\":\"آزمون ساز\",\"MANAGE_SESSIONS\":\"مدیریت نشست ها\",\"CUT_ACCESS\":\"قطع دسترسی\",\"THIS_SESSION\":\"همین نشست\",\"SOME_SESSION_ELSE\":\"نشست دیگر\",\"MOBILE\":\"موبایل\",\"TABLET\":\"تبلت\",\"COMPUTER\":\"رایانه\",\"LAST_ACTIVITY_DATE\":\"تاریخ آخرین فعالیت\",\"COUNTRY_FA_NAME\":\"نام کشور به فارسی\",\"COUNTRY_LATIN_NAME\":\"نام کشور به لاتین\",\"ISO_CODE\":\"کد دو حرفی ISO\",\"COUNTRY_CODE\":\"پیش شماره کشور\",\"BRIEF_INFO\":\"توضیحات مختصر\",\"MAIN_PICTURE\":\"تصویر اصلی\",\"FULL_INFO\":\"توضیحات کامل\",\"LANG\":\"زبان\",\"LOCAL_NAME\":\"نام محلی\",\"GALLERY_PHOTOS\":\"گالری تصاویر\",\"UPLOAD_PICTURES\":\"آپلود تصاویر\",\"THIS_WILL_BE_YOUR_MAIN_PICTURE\":\"این تصویر، تصویر اصلی شما خواهد بود\",\"OTHER_PICTURES\":\"سایر تصاویر\",\"PICTURE_NUMBER_X\":\"تصویر شماره \",\"NOT_REQUIRED\":\"اختیاری\",\"NEW_PICTURE\":\"اضافه کردن تصویر جدید\",\"DEFINE_VISA_TYPE\":\"تعریف انواع ویزا\",\"NAME\":\"نام\",\"LATIN_NAME\":\"نام لاتین\",\"CONDITIONS\":\"شرایط\",\"DOCUMENTS\":\"مدارک\",\"ONLINE_SOPPING\":\"خریدآنلاین\",\"ISSUANCE_TIME\":\"زمان صدور\",\"ISSUANCE_STEPS\":\"مراحل صدور\",\"FIRST_PICTURE\":\"تصویر اول\",\"VISA_TYPE\":\"نوع ویزا\",\"CHOOSE_QUIZ\":\"انتخاب آزمون\",\"QUIZ\":\"آزمون\",\"AVAILABLE_COUNSELING\":\"نوع مشاوره های در دسترس\",\"IN_TEXT\":\"متنی\",\"IN_TELEPHONE\":\"تلفنی\",\"IN_VIDEO\":\"تصویری\",\"IN_PERSON\":\"حضوری\",\"ADD_NEW_VISA\":\"اضافه کردن ویزا جدید\",\"AGENCY_NAME\":\"نام آژانس\",\"AGENCY_LATIN_NAME\":\"نام آژانس به لاتین\",\"MANAGER_NAME\":\"نام مدیر\",\"MANAGER_PHONE\":\"شماره مدیر\",\"ITGUY_NAME\":\"نام مسئول IT\",\"ITGUY_PHONE\":\"شماره مسئول IT\",\"LICENSE_TYPE\":\"نوع مجوز\",\"WEBSITE\":\"وبسایت\",\"EMAIL\":\"ایمیل\",\"ADDRESS\":\"آدرس\",\"PHONES\":\"شماره تماس ها\",\"UPLOAD_LOGO\":\"آپلود لوگو\",\"DEFINE_USERS\":\"تعریف کاربران\",\"ADD_NEW_USER\":\"تعریف کاربر جدید\",\"LAST_NAME\":\"نام خانوادگی\",\"NATIONAL_CODE\":\"کدملی\",\"USER_TYPE\":\"نوع کاربری\",\"AVAILABLE_LICENSES\":\"ویزاهای مجاز\",\"RATE\":\"Rate & Review\",\"PHONE\":\"شماره موبایل\",\"ABOUT_COUNSELER\":\"درباره مشاور\",\"TELEPHONE\":\"تلفن\",\"ADD_NEW_TELEPHONE\":\"تلفن جدید\",\"COUNSELING_HOURS\":\"ساعات مشاوره\",\"SET_COUNSELING_HOURS\":\"تنظیم ساعات مشاوره\",\"SET_AVAILABLE_VISAS\":\"انتخاب ویزاهای مجاز\",\"COUNSELER\":\"مشاور\",\"MANAGER\":\"مدیر\",\"VISA_NAME\":\"نام ویزا\",\"VISA_LATIN_NAME\":\"نام لاتین ویزا\",\"COUNTRY\":\"کشور\",\"SELECT\":\"انتخاب\",\"USER_LIST\":\"لیست کاربران\",\"ACCESS_LEVEL\":\"سطح دسترسی\",\"ACTIVE\":\"فعال\",\"ADMIN\":\"ادمین\",\"REGISTER_DATE\":\"تاریخ ثبت نام\",\"SHOP_COUNT\":\"تعداد خرید\",\"ORDERS_LIST\":\"لیست سفارشات\",\"BEDEHKARI\":\"بدهکاری\",\"BESTANKARI\":\"بستانکاری\",\"ACTIVATE\":\"فعال سازی\",\"INACTIVATE\":\"غیرفعال سازی\",\"EDIT_USER\":\"ویرایش کاربر\",\"NOTHING_FOUND\":\"موردی یافت نشد!\",\"DZ_MESSAGE\":\"برای آپلود یا کلیک کنید، یا فایل مورد نظر را اینجا درگ کنید\",\"REMOVE_FILE\":\"حذف فایل\",\"UPLOAD_A_FILE_AS_MAIN\":\"لطفا یک فایل را جهت استفاده به عنوان تصویر اصلی آپلود کنید.\",\"UPLOAD_A_FILE_AS_LOGO\":\"لطفا تصویر مربوط به لوگو را بارگذاری کنید.\",\"DZ_HELP\":\"با کلیک مجدد میتوانید بیش از یک فایل آپلود کنید.\",\"CANT_DELETE_ALL\":\"همه موارد را نمیتوان حذف کرد\",\"NEW_EMPLOYEE_GUIDE\":\"پس از اینکه کاربر در سیستم تعریف شد، نام کاربری ایمیل شخص و رمزعبور کدملی او خواهد بود\",\"USER_IS_NOW_ACTIVE\":\"کاربر مورد نظر فعال شد\",\"USER_IS_NOW_INACTIVE\":\"کاربر مورد نظر غیرفعال شد\",\"USER_UPDATED_SUCCESSFULLY\":\"کاربر مورد نظر با موفقیت ویرایش شد.\",\"WRONG_OLD_PASSWORD\":\"رمزعبور قبلی اشتباه است\",\"PASSWORDS_ARE_NOT_SAME\":\"رمزعبور جدید با تکرار رمزعبور جدید همخوانی ندارد\",\"AT_LEAST_6_CHARACTERES_REQUIRED_FOR_NEW_PASSWORD\":\"حداقل 6 کاراکتر برای رمز عبور جدید نیاز است.\",\"SESSION_DELETED\":\"نشست موردنظر حذف شد.\",\"CHANGE_PASSWORD_GUIDE\":\"در صورت تایید، سیستم یک رمز 6 رقمی تولید میکند و رمز جدید را برای کاربر پیامک خواهد کرد.\",\"CONFIRM_AND_CHANGE_PWASSWORD\":\"تایید و تغییر رمزعبور\",\"USER_PASS_CHANGED_AND_NOTIFIED_VIA_SMS\":\"رمزعبور کاربر تغییر یافت و از طریق پیامک برای کاربر ارسال شد.\",\"USER_PASS_CHANGED_BUT_NOT_NOTIFIED_VIA_SMS\":\"رمزعبور کاربر تغییر یافت، اما از آنجایی که برای این کاربر شماره موبایل تعریف نشده، پیامکی ارسال نشد.\",\"NEW_PASSWORD_IS\":\"رمز جدید : \",\"SATURDAY\":\"شنبه\",\"SUNDAY\":\"یکشنبه\",\"MONDAY\":\"دوشنبه\",\"TUESDAY\":\"سه شنبه\",\"WEDNESDAY\":\"چهارشنبه\",\"THRSDAY\":\"پنجشنبه\",\"FRIDAY\":\"جمعه\",\"PASSWORD_CHANGED_SMS\":\"با سلام. کاربر محترم رمز شما در سفر به راه با موفقیت عوض شد. رمز جدید = :pass\"}");
+module.exports = JSON.parse("{\"BRAND\":\"سفر به راه\",\"LOGIN_TO_ACC\":\"ورود به حساب کاربری\",\"\":\"\",\"USERNAME\":\"نام کاربری\",\"USERNAME/EMAIL\":\"نام کاربری یا ایمیل\",\"PASSWORD\":\"رمزعبور\",\"REMEMBER_ME\":\"مرا به خاطر بسپار\",\"LOG_IN\":\"ورود به حساب\",\"FORGOT_PASSWORD\":\"فراموشی رمزعبور\",\"MANAGE_ACC\":\"مدیریت حساب کاربری\",\"ARE_YOU_SURE\":\"آیا مطمئن هستید\",\"ITEM_DELETED\":\"آیتم مورد نظر با موفقیت حذف شد.\",\"LAST_WEEK_CHART\":\"چارت هفته گذشته\",\"UPDATE\":\"به روز رسانی\",\"LOGOUT\":\"خروج\",\"MAIN_MENU\":\"منوی اصلی\",\"OTHER_SETTINGS\":\"سایر تنظیمات\",\"LOADING\":\"در حال بارگذاری...\",\"RECENT_SHOP_LIST\":\"لیست آخرین خرید ها\",\"NEW_VISA\":\"تعریف ویزا\",\"VISA_LIST\":\"لیست ویزا ها\",\"NEW_AGENCY\":\"تعریف آژانس\",\"AGENCY_LIST\":\"لیست آژانس ها\",\"CONFIRM\":\"تایید\",\"ACTIONS\":\"عملیات\",\"EDIT\":\"ویرایش\",\"DELETE\":\"حذف\",\"UPLOAD\":\"آپلود\",\"YES\":\"بله\",\"CANCEL\":\"انصراف\",\"CHANGE_PASSWORD\":\"تغییر رمز\",\"NEW_PASSWORD\":\"رمزعبور جدید\",\"CONFIRM_NEW_PASSWORD\":\"تکرار رمزعبور جدید\",\"OLD_PASSWORD\":\"رمزعبور قبلی\",\"MANAGE_TEXT_MESSAGES\":\"مدیریت پیامک ها\",\"NOT_SENT_YET\":\"هنوز ارسال نشده\",\"RECEPTOR\":\"دریافت کننده\",\"TEXT\":\"متن\",\"SENT\":\"ارسال شده\",\"RESEND\":\"ارسال مجدد\",\"SENDER\":\"ارسال کننده\",\"COST\":\"هزینه\",\"T\":\"ت\",\"DATE\":\"تاریخ\",\"TIME\":\"زمان\",\"TODAY_SELL_COUNT\":\"تعداد فروش امروز\",\"TODAY_INCOME\":\"دریافتی های امروز\",\"TODAY_COUNSELING_SESSIONS\":\"جلسات مشاوره امروز\",\"ACTIVE_VISA_COUNT\":\"تعداد ویزا های فعال\",\"ARE_YOU_SURE_TO_RESEND\":\"از ارسال مجدد پیامک اطمینان دارید؟\",\"SMS_Q_TO_SENT\":\"پیامک در صف ارسال قرار گرفت\",\"RECHECK_SMS_STATUS\":\"بررسی مجدد وضعیت پیامک ها\",\"TEXT_MESSAGES_LIST\":\"لیست پیامک های ارسالی\",\"DASHBOARD\":\"داشبورد\",\"MAIN_DASHBOARD\":\"داشبورد اصلی\",\"MANAGE_VISA\":\"مدیریت ویزا\",\"MANAGE_AGENCIES\":\"مدیریت آژانس ها\",\"USERS\":\"کاربران\",\"COUNSELING_SESSIONS\":\"جلسات مشاوره\",\"BANK_TRANSACTIONS\":\"تراکنش های بانکی\",\"FACTORS\":\"فاکتور ها\",\"CONTRACTS\":\"قرارداد ها\",\"QUIZ_MAKER\":\"آزمون ساز\",\"MANAGE_SESSIONS\":\"مدیریت نشست ها\",\"CUT_ACCESS\":\"قطع دسترسی\",\"THIS_SESSION\":\"همین نشست\",\"SOME_SESSION_ELSE\":\"نشست دیگر\",\"MOBILE\":\"موبایل\",\"TABLET\":\"تبلت\",\"COMPUTER\":\"رایانه\",\"LAST_ACTIVITY_DATE\":\"تاریخ آخرین فعالیت\",\"COUNTRY_FA_NAME\":\"نام کشور به فارسی\",\"COUNTRY_LATIN_NAME\":\"نام کشور به لاتین\",\"ISO_CODE\":\"کد دو حرفی ISO\",\"COUNTRY_CODE\":\"پیش شماره کشور\",\"BRIEF_INFO\":\"توضیحات مختصر\",\"MAIN_PICTURE\":\"تصویر اصلی\",\"FULL_INFO\":\"توضیحات کامل\",\"LANG\":\"زبان\",\"LOCAL_NAME\":\"نام محلی\",\"GALLERY_PHOTOS\":\"گالری تصاویر\",\"UPLOAD_PICTURES\":\"آپلود تصاویر\",\"THIS_WILL_BE_YOUR_MAIN_PICTURE\":\"این تصویر، تصویر اصلی شما خواهد بود\",\"OTHER_PICTURES\":\"سایر تصاویر\",\"PICTURE_NUMBER_X\":\"تصویر شماره \",\"NOT_REQUIRED\":\"اختیاری\",\"NEW_PICTURE\":\"اضافه کردن تصویر جدید\",\"DEFINE_VISA_TYPE\":\"تعریف انواع ویزا\",\"NAME\":\"نام\",\"LATIN_NAME\":\"نام لاتین\",\"CONDITIONS\":\"شرایط\",\"DOCUMENTS\":\"مدارک\",\"ONLINE_SOPPING\":\"خریدآنلاین\",\"ISSUANCE_TIME\":\"زمان صدور\",\"ISSUANCE_STEPS\":\"مراحل صدور\",\"FIRST_PICTURE\":\"تصویر اول\",\"VISA_TYPE\":\"نوع ویزا\",\"CHOOSE_QUIZ\":\"انتخاب آزمون\",\"QUIZ\":\"آزمون\",\"AVAILABLE_COUNSELING\":\"نوع مشاوره های در دسترس\",\"IN_TEXT\":\"متنی\",\"IN_TELEPHONE\":\"تلفنی\",\"IN_VIDEO\":\"تصویری\",\"IN_PERSON\":\"حضوری\",\"ADD_NEW_VISA\":\"اضافه کردن ویزا جدید\",\"AGENCY_NAME\":\"نام آژانس\",\"AGENCY_LATIN_NAME\":\"نام آژانس به لاتین\",\"MANAGER_NAME\":\"نام مدیر\",\"MANAGER_PHONE\":\"شماره مدیر\",\"ITGUY_NAME\":\"نام مسئول IT\",\"ITGUY_PHONE\":\"شماره مسئول IT\",\"LICENSE_TYPE\":\"نوع مجوز\",\"WEBSITE\":\"وبسایت\",\"EMAIL\":\"ایمیل\",\"ADDRESS\":\"آدرس\",\"PHONES\":\"شماره تماس ها\",\"UPLOAD_LOGO\":\"آپلود لوگو\",\"DEFINE_USERS\":\"تعریف کاربران\",\"ADD_NEW_USER\":\"تعریف کاربر جدید\",\"LAST_NAME\":\"نام خانوادگی\",\"NATIONAL_CODE\":\"کدملی\",\"USER_TYPE\":\"نوع کاربری\",\"AVAILABLE_LICENSES\":\"ویزاهای مجاز\",\"RATE\":\"Rate & Review\",\"PHONE\":\"شماره موبایل\",\"ABOUT_COUNSELER\":\"درباره مشاور\",\"TELEPHONE\":\"تلفن\",\"ADD_NEW_TELEPHONE\":\"تلفن جدید\",\"COUNSELING_HOURS\":\"ساعات مشاوره\",\"SET_COUNSELING_HOURS\":\"تنظیم ساعات مشاوره\",\"SET_AVAILABLE_VISAS\":\"انتخاب ویزاهای مجاز\",\"COUNSELER\":\"مشاور\",\"MANAGER\":\"مدیر\",\"VISA_NAME\":\"نام ویزا\",\"VISA_LATIN_NAME\":\"نام لاتین ویزا\",\"COUNTRY\":\"کشور\",\"SELECT\":\"انتخاب\",\"USER_LIST\":\"لیست کاربران\",\"ACCESS_LEVEL\":\"سطح دسترسی\",\"ACTIVE\":\"فعال\",\"ADMIN\":\"ادمین\",\"REGISTER_DATE\":\"تاریخ ثبت نام\",\"SHOP_COUNT\":\"تعداد خرید\",\"ORDERS_LIST\":\"لیست سفارشات\",\"BEDEHKARI\":\"بدهکاری\",\"BESTANKARI\":\"بستانکاری\",\"ACTIVATE\":\"فعال سازی\",\"INACTIVATE\":\"غیرفعال سازی\",\"EDIT_USER\":\"ویرایش کاربر\",\"NOTHING_FOUND\":\"موردی یافت نشد!\",\"DZ_MESSAGE\":\"برای آپلود یا کلیک کنید، یا فایل مورد نظر را اینجا درگ کنید\",\"REMOVE_FILE\":\"حذف فایل\",\"UPLOAD_A_FILE_AS_MAIN\":\"لطفا یک فایل را جهت استفاده به عنوان تصویر اصلی آپلود کنید.\",\"UPLOAD_A_FILE_AS_LOGO\":\"لطفا تصویر مربوط به لوگو را بارگذاری کنید.\",\"DZ_HELP\":\"با کلیک مجدد میتوانید بیش از یک فایل آپلود کنید.\",\"CANT_DELETE_ALL\":\"همه موارد را نمیتوان حذف کرد\",\"NEW_EMPLOYEE_GUIDE\":\"پس از اینکه کاربر در سیستم تعریف شد، نام کاربری ایمیل شخص و رمزعبور کدملی او خواهد بود\",\"USER_IS_NOW_ACTIVE\":\"کاربر مورد نظر فعال شد\",\"USER_IS_NOW_INACTIVE\":\"کاربر مورد نظر غیرفعال شد\",\"USER_UPDATED_SUCCESSFULLY\":\"کاربر مورد نظر با موفقیت ویرایش شد.\",\"WRONG_OLD_PASSWORD\":\"رمزعبور قبلی اشتباه است\",\"PASSWORDS_ARE_NOT_SAME\":\"رمزعبور جدید با تکرار رمزعبور جدید همخوانی ندارد\",\"AT_LEAST_6_CHARACTERES_REQUIRED_FOR_NEW_PASSWORD\":\"حداقل 6 کاراکتر برای رمز عبور جدید نیاز است.\",\"SESSION_DELETED\":\"نشست موردنظر حذف شد.\",\"CHANGE_PASSWORD_GUIDE\":\"در صورت تایید، سیستم یک رمز 6 رقمی تولید میکند و رمز جدید را برای کاربر پیامک خواهد کرد.\",\"CONFIRM_AND_CHANGE_PWASSWORD\":\"تایید و تغییر رمزعبور\",\"USER_PASS_CHANGED_AND_NOTIFIED_VIA_SMS\":\"رمزعبور کاربر تغییر یافت و از طریق پیامک برای کاربر ارسال شد.\",\"USER_PASS_CHANGED_BUT_NOT_NOTIFIED_VIA_SMS\":\"رمزعبور کاربر تغییر یافت، اما از آنجایی که برای این کاربر شماره موبایل تعریف نشده، پیامکی ارسال نشد.\",\"NEW_PASSWORD_IS\":\"رمز جدید : \",\"MANAGE_USERS\":\"مدیریت کاربران\",\"MANAGE_AGENCY\":\"مدیریت آژانس\",\"AGENCY_MEMBER_LIST\":\"لیست اعضای آژانس\",\"EDIT_AGENCY\":\"ویرایش آژانس\",\"USERS_WITH_MANAGER_ACCESS\":\"کاربران با سطح دسترسی مدیر\",\"USERS_WITH_COUNSELER_ACCESS\":\"کاربران با سطح دسترسی مشاور\",\"SATURDAY\":\"شنبه\",\"SUNDAY\":\"یکشنبه\",\"MONDAY\":\"دوشنبه\",\"TUESDAY\":\"سه شنبه\",\"WEDNESDAY\":\"چهارشنبه\",\"THRSDAY\":\"پنجشنبه\",\"FRIDAY\":\"جمعه\",\"PASSWORD_CHANGED_SMS\":\"با سلام. کاربر محترم رمز شما در سفر به راه با موفقیت عوض شد. رمز جدید = :pass\"}");
 
 /***/ }),
 

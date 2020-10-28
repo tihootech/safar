@@ -45,11 +45,11 @@
                                             <i class="mdi mdi-lock-open"></i> {{fa.CHANGE_PASSWORD}}
                                         </button>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#edit-user" @click="loadUser(u.id)">
                                             <i class="mdi mdi-pencil"></i> {{fa.EDIT}}
                                         </button>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             </tbody>
                         </table>
@@ -58,7 +58,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="edit-user" tabindex="-1" role="dialog">
+        <!-- <div class="modal fade" id="edit-user" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -75,7 +75,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 </template>

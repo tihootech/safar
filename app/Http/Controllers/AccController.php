@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Session;
+use App\Models\Employee;
 use App\Models\TextMessage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -16,16 +17,24 @@ class AccController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('admin')->except(['currentUser', 'deleteSession']);
+        $this->middleware('managers')->except(['currentUser', 'deleteSession']);
     }
 
     public function allUsers()
     {
-        return User::where('type', '!=', 'admin')->with('sessions')->get();
+        $users = User::query();
+        $users = $users->where('type', '!=', 'admin');
+        if (user()->isManager()) {
+            $agency = currentAgency();
+            $ids = Employee::where('agency_id', $agency->id)->pluck('user_id')->toArray();
+            $users = $users->whereIn('id', $ids);
+        }
+        return $users->with('sessions')->get();
     }
 
     public function changeActivationStatus(User $user)
     {
+        checkIfManagerHasAccessToThisUser($user);
         $user->active = !$user->active;
         $user->save();
         return ['success' => true, 'active' => $user->active];
@@ -33,6 +42,9 @@ class AccController extends Controller
 
     public function changePasswordByAdmin(User $user)
     {
+        // access check
+        checkIfManagerHasAccessToThisUser($user);
+
          // change user password
         $newPassword = rand(100000,999999);
         $user->password = bcrypt($newPassword);
@@ -51,16 +63,20 @@ class AccController extends Controller
 
     public function currentUser()
     {
-        return User::where('id', auth()->id())->with('sessions')->first();
+        return User::where('id', auth()->id())->with(['sessions', 'employee'])->first();
     }
 
     public function getUser(User $user)
     {
+        checkIfManagerHasAccessToThisUser($user);
         return $user;
     }
 
     public function updatePassword(User $user, Request $request)
     {
+        // access check
+        checkIfManagerHasAccessToThisUser($user);
+
         $errors = [];
         if (!Hash::check($request->old, $user->password)) {
             $errors []= __('WRONG_OLD_PASSWORD');
@@ -83,13 +99,16 @@ class AccController extends Controller
 
     public function updateUser(User $user, Request $request)
     {
+        // access check
+        checkIfManagerHasAccessToThisUser($user);
+
         $currentLoggedInUser = auth()->user();
         $data = $request->validate([
             "name" => "required|string",
             "email" => "required|string|unique:users,email,$user->id",
             "phone" => "nullable",
         ]);
-        if ($currentLoggedInUser->isAdmin() || $currentLoggedInUser->id == $user->id) {
+        if ($currentLoggedInUser->isAdmin() || $currentLoggedInUser->isManager() || $currentLoggedInUser->id == $user->id) {
             $user->update($data);
             return ['success' => true];
         }else {

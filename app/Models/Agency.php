@@ -22,6 +22,16 @@ class Agency extends Model
 
     public function employees()
     {
-        return $this->hasMany(Employee::class);
+        return $this->hasMany(Employee::class)->orderBy('access_type', 'DESC');
+    }
+
+    public function managers()
+    {
+        return $this->hasMany(Employee::class)->where('access_type', 'MANAGER');
+    }
+
+    public function counselers()
+    {
+        return $this->hasMany(Employee::class)->where('access_type', 'COUNSELER');
     }
 }

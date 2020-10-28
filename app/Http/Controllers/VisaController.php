@@ -13,7 +13,7 @@ class VisaController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('admin');
+        $this->middleware('admin')->except('allVisas');
     }
 
     public function index()

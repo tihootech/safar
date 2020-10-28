@@ -12,7 +12,7 @@ class Employee extends Model
 
     public function agency()
     {
-        return $this->belongsTo(Agency::class);
+        return $this->belongsTo(Agency::class)->with('managers', 'counselers');
     }
 
     public function user()
