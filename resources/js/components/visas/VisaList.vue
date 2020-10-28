@@ -3,7 +3,7 @@
       <div class="page-head mt-4">
           <h4> {{fa.VISA_LIST}} </h4>
       </div>
-      <div class="card">
+      <div class="card" v-if="countries.length">
           <div class="card-body">
               <div class="table-responsive">
                   <table class="table table-bordered table-striped table-hovered">
@@ -47,6 +47,9 @@
                   </table>
               </div>
           </div>
+      </div>
+      <div class="alert alert-info" v-else>
+          <i class="mdi mdi-alert"></i> {{fa.NOTHING_FOUND}}
       </div>
 
       <div class="modal fade" id="visa-list" tabindex="-1" role="dialog">

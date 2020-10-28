@@ -36,8 +36,13 @@
                                     <td v-html="boolIcon(u.active)"> </td>
                                     <td>
                                         <button type="button" :class="'btn btn-sm ' + (u.active ? 'btn-warning' : 'btn-info')" @click="changeActivationStatus(u.id, i)">
-                                            <span v-if="u.active">{{fa.INACTIVATE}}</span>
-                                            <span v-else>{{fa.ACTIVATE}}</span>
+                                            <span v-if="u.active"> <i class="mdi mdi-account-remove ml-1"></i> {{fa.INACTIVATE}} </span>
+                                            <span v-else> <i class="mdi mdi-account-check ml-1"></i> {{fa.ACTIVATE}} </span>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-info" @click="changePassword(u.id)">
+                                            <i class="mdi mdi-lock-open"></i> {{fa.CHANGE_PASSWORD}}
                                         </button>
                                     </td>
                                     <td>
@@ -83,7 +88,7 @@ export default {
         'edit-user-info' : EditUserInfo
     },
     data() {
-        return { users: [], user:null }
+        return { users: [], user: {} }
     },
     mounted : function () {
         axios.get('/api/user/all').then( res => {
@@ -105,6 +110,30 @@ export default {
         loadUser : function (userid) {
             axios.get(`/api/user/${userid}`).then( res => {
                 this.user = res.data;
+            });
+        },
+        changePassword : function (userid) {
+            let fa = this.fa;
+            swal({
+                title: fa.ARE_YOU_SURE,
+                text: fa.CHANGE_PASSWORD_GUIDE,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonClass: 'btn btn-primary',
+                cancelButtonClass: 'btn btn-secondary',
+                confirmButtonText: fa.CONFIRM_AND_CHANGE_PWASSWORD,
+                cancelButtonText: fa.CANCEL,
+            }).then(function (result) {
+                if (result.value) {
+                    axios.post(`/api/user/change-password/${userid}`).then( res => {
+                        if (res.data.success) {
+                            swalSuccess(fa.USER_PASS_CHANGED_AND_NOTIFIED_VIA_SMS+'<hr>'+fa.NEW_PASSWORD_IS+res.data.pass, true);
+                        }
+                        if (res.data.nophone) {
+                            swalSuccess(fa.USER_PASS_CHANGED_BUT_NOT_NOTIFIED_VIA_SMS+'<hr>'+fa.NEW_PASSWORD_IS+res.data.pass, true);
+                        }
+                    });
+                }
             });
         }
     }

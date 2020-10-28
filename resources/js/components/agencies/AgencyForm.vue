@@ -109,7 +109,7 @@
                 <i class="mdi mdi-plus"></i> {{fa.ADD_NEW_USER}}
             </a>
         </div>
-        <p> {{fa.NEW_EMPLOYEE_GUIDE}} </p>
+        <p> <span class="text-info">***</span> {{fa.NEW_EMPLOYEE_GUIDE}} </p>
         <div class="card my-3 ">
             <div class="card-body">
                 <div class="excel-form">

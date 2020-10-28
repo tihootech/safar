@@ -61,7 +61,7 @@ class AgencyController extends Controller
             'employees.*.national_code' => ['required', new NationalCodeRule],
             'employees.*.access_type' => ['required', Rule::in(['COUNSELER', 'MANAGER'])],
             'employees.*.rate' => 'nullable|integer',
-            'employees.*.phone' => 'nullable|string',
+            'employees.*.phone' => 'required|string',
             'employees.*.email' => 'required|email|string',
             'employees.*.info' => 'nullable|string',
         ]);
@@ -94,6 +94,16 @@ class AgencyController extends Controller
                     'type' => $employeeData['access_type'],
                 ]);
                 $employeeData['user_id'] = $user->id;
+            }else { // if on edit mode, then update user info as well
+                $employee = Employee::find($employeeData['id']);
+                if ($empUser = $employee->user) {
+                    $empUser->update([
+                        'name' => $employeeData['first_name'] . ' ' . $employeeData['last_name'],
+                        'email' => $employeeData['email'],
+                        'phone' => $employeeData['phone'],
+                        'type' => $employeeData['access_type'],
+                    ]);
+                }
             }
 
             // prepare other data for employee

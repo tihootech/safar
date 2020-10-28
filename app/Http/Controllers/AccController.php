@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Session;
+use App\Models\TextMessage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,6 +29,24 @@ class AccController extends Controller
         $user->active = !$user->active;
         $user->save();
         return ['success' => true, 'active' => $user->active];
+    }
+
+    public function changePasswordByAdmin(User $user)
+    {
+         // change user password
+        $newPassword = rand(100000,999999);
+        $user->password = bcrypt($newPassword);
+        $user->save();
+
+        // text message
+        if ($user->phone) {
+            $body = __('PASSWORD_CHANGED_SMS', ['pass' => $newPassword]);
+            TextMessage::make($user->phone, $body);
+            return ['success' => true, 'pass' => $newPassword];
+        }else {
+            return ['nophone' => true, 'pass' => $newPassword];
+        }
+
     }
 
     public function currentUser()

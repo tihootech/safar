@@ -41,15 +41,26 @@ function swalValidationErrors(errors) {
     });
 }
 
-function swalSuccess(message = 'تغییرات با موفقیت ذخیره شد') {
-    swal({
-        position: 'center',
-        icon: 'success',
-        title: message,
-        type: 'success',
-        showConfirmButton: false,
-        timer: 1500
-    });
+function swalSuccess(message = 'تغییرات با موفقیت ذخیره شد', confirm=false) {
+    if (confirm) {
+        swal({
+            position: 'center',
+            icon: 'success',
+            title: 'عالی!',
+            html: message,
+            type: 'success',
+            showConfirmButton: true,
+        });
+    }else {
+        swal({
+            position: 'center',
+            icon: 'success',
+            title: message,
+            type: 'success',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
 }
 
 $(document).on('change', '.upload-hidden-image', function () {

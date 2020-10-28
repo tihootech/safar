@@ -112,17 +112,8 @@
             <li>
                 <h3 class="navigation-title">@lang('OTHER_SETTINGS')</h3>
             </li>
-            <li class="menu-list">
-                <a href="javascript:void(0)">
-                    <i class="mdi mdi-google-circles-extended"></i>
-                    <span> نام منو </span>
-                </a>
-                <ul class="child-list">
-                    <li><a href="#"> Item 1 </a></li>
-                    <li><a href="#"> Item 2 </a></li>
-                    <li><a href="#"> Item 3 </a></li>
-                    <li><a href="#"> Item 4 </a></li>
-                </ul>
+            <li>
+                <a href="#/text-messages"><i class="mdi mdi-email"></i> <span> @lang('MANAGE_TEXT_MESSAGES') </span> </a>
             </li>
         </ul><!--sidebar nav end-->
     </div>

@@ -1918,6 +1918,7 @@ var _lang_fa_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
 /* harmony import */ var _agencies_AgencyForm_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./agencies/AgencyForm.vue */ "./resources/js/components/agencies/AgencyForm.vue");
 /* harmony import */ var _acc_ManageAccount_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./acc/ManageAccount.vue */ "./resources/js/components/acc/ManageAccount.vue");
 /* harmony import */ var _acc_UserList_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./acc/UserList.vue */ "./resources/js/components/acc/UserList.vue");
+/* harmony import */ var _sms_TextMessages_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./sms/TextMessages.vue */ "./resources/js/components/sms/TextMessages.vue");
 //
 //
 //
@@ -1925,6 +1926,7 @@ var _lang_fa_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
 //
 //
  // translate file
+
 
 
 
@@ -1969,6 +1971,10 @@ var _lang_fa_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
       path: '/user-list',
       component: _acc_UserList_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
       name: 'user-list'
+    }, {
+      path: '/text-messages',
+      component: _sms_TextMessages_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+      name: 'text-messages'
     }]
   }),
   data: function data() {
@@ -2286,7 +2292,6 @@ __webpack_require__.r(__webpack_exports__);
         if (res.data.errors && res.data.errors.length) {
           swalValidationErrors(res.data.errors);
         } else if (res.data.success) {
-          console.log('rrr');
           redirect('login');
         }
       });
@@ -2383,6 +2388,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['fa'],
@@ -2392,7 +2402,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       users: [],
-      user: null
+      user: {}
     };
   },
   mounted: function mounted() {
@@ -2420,6 +2430,31 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/api/user/".concat(userid)).then(function (res) {
         _this3.user = res.data;
+      });
+    },
+    changePassword: function changePassword(userid) {
+      var fa = this.fa;
+      swal({
+        title: fa.ARE_YOU_SURE,
+        text: fa.CHANGE_PASSWORD_GUIDE,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonClass: 'btn btn-primary',
+        cancelButtonClass: 'btn btn-secondary',
+        confirmButtonText: fa.CONFIRM_AND_CHANGE_PWASSWORD,
+        cancelButtonText: fa.CANCEL
+      }).then(function (result) {
+        if (result.value) {
+          axios.post("/api/user/change-password/".concat(userid)).then(function (res) {
+            if (res.data.success) {
+              swalSuccess(fa.USER_PASS_CHANGED_AND_NOTIFIED_VIA_SMS + '<hr>' + fa.NEW_PASSWORD_IS + res.data.pass, true);
+            }
+
+            if (res.data.nophone) {
+              swalSuccess(fa.USER_PASS_CHANGED_BUT_NOT_NOTIFIED_VIA_SMS + '<hr>' + fa.NEW_PASSWORD_IS + res.data.pass, true);
+            }
+          });
+        }
       });
     }
   }
@@ -3053,6 +3088,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['fa'],
   data: function data() {
@@ -3089,6 +3127,161 @@ __webpack_require__.r(__webpack_exports__);
             }
           });
         }
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/sms/TextMessages.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/sms/TextMessages.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['fa'],
+  data: function data() {
+    return {
+      list: []
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/sms/index').then(function (res) {
+      _this.list = res.data;
+    });
+  },
+  methods: {
+    destroy: function destroy(index) {
+      var list = this.list;
+      var smsid = list[index].id;
+      var fa = this.fa;
+      swal({
+        title: this.fa.ARE_YOU_SURE,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonClass: 'btn btn-danger',
+        cancelButtonClass: 'btn btn-secondary',
+        confirmButtonText: fa.YES,
+        cancelButtonText: fa.CANCEL
+      }).then(function (result) {
+        if (result.value) {
+          list.splice(index, 1);
+          axios["delete"]("/api/sms/".concat(smsid)).then(function (res) {
+            if (res.data.success) {
+              swalSuccess(fa.ITEM_DELETED);
+            }
+          });
+        }
+      });
+    },
+    resend: function resend(index) {
+      var list = this.list;
+      var smsid = list[index].id;
+      var fa = this.fa;
+      swal({
+        title: this.fa.ARE_YOU_SURE_TO_RESEND,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonClass: 'btn btn-primary',
+        cancelButtonClass: 'btn btn-secondary',
+        confirmButtonText: fa.YES,
+        cancelButtonText: fa.CANCEL
+      }).then(function (result) {
+        if (result.value) {
+          axios.post("/api/sms/resend/".concat(smsid)).then(function (res) {
+            if (res.data.success) {
+              swalSuccess(fa.SMS_Q_TO_SENT);
+              list.unshift(res.data.sms);
+            }
+          });
+        }
+      });
+    },
+    refresh: function refresh() {
+      var _this2 = this;
+
+      axios.get('/api/sms/index').then(function (res) {
+        _this2.list = res.data;
       });
     }
   }
@@ -3463,6 +3656,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -36082,7 +36278,7 @@ var render = function() {
             return _c("div", { staticClass: "col-md-4 my-2" }, [
               _c(
                 "div",
-                { staticClass: "card bg-info text-light text-center" },
+                { staticClass: "card bg-primary text-light text-center" },
                 [
                   _c("div", { staticClass: "card-header" }, [
                     _c(
@@ -36328,8 +36524,41 @@ var render = function() {
                           },
                           [
                             u.active
-                              ? _c("span", [_vm._v(_vm._s(_vm.fa.INACTIVATE))])
-                              : _c("span", [_vm._v(_vm._s(_vm.fa.ACTIVATE))])
+                              ? _c("span", [
+                                  _c("i", {
+                                    staticClass: "mdi mdi-account-remove ml-1"
+                                  }),
+                                  _vm._v(" " + _vm._s(_vm.fa.INACTIVATE) + " ")
+                                ])
+                              : _c("span", [
+                                  _c("i", {
+                                    staticClass: "mdi mdi-account-check ml-1"
+                                  }),
+                                  _vm._v(" " + _vm._s(_vm.fa.ACTIVATE) + " ")
+                                ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-info",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.changePassword(u.id)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "mdi mdi-lock-open" }),
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm.fa.CHANGE_PASSWORD) +
+                                "\n                                    "
+                            )
                           ]
                         )
                       ]),
@@ -36944,7 +37173,10 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("p", [_vm._v(" " + _vm._s(_vm.fa.NEW_EMPLOYEE_GUIDE) + " ")]),
+      _c("p", [
+        _c("span", { staticClass: "text-info" }, [_vm._v("***")]),
+        _vm._v(" " + _vm._s(_vm.fa.NEW_EMPLOYEE_GUIDE) + " ")
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "card my-3 " }, [
         _c("div", { staticClass: "card-body" }, [
@@ -37675,104 +37907,120 @@ var render = function() {
       _c("h4", [_vm._v(" " + _vm._s(_vm.fa.AGENCY_LIST) + " ")])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "table-responsive" }, [
-          _c(
-            "table",
-            { staticClass: "table table-bordered table-striped table-hovered" },
-            [
-              _c("thead", [
-                _c("tr", [
-                  _c("th", [_vm._v(" # ")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.AGENCY_NAME) + " ")]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(" " + _vm._s(_vm.fa.AGENCY_LATIN_NAME) + " ")
+    _vm.agencies.length
+      ? _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "table-responsive" }, [
+              _c(
+                "table",
+                {
+                  staticClass:
+                    "table table-bordered table-striped table-hovered"
+                },
+                [
+                  _c("thead", [
+                    _c("tr", [
+                      _c("th", [_vm._v(" # ")]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(" " + _vm._s(_vm.fa.AGENCY_NAME) + " ")
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(" " + _vm._s(_vm.fa.AGENCY_LATIN_NAME) + " ")
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(" " + _vm._s(_vm.fa.MANAGER_NAME) + " ")
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(" " + _vm._s(_vm.fa.MANAGER_PHONE) + " ")
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v(" " + _vm._s(_vm.fa.ITGUY_NAME) + " ")]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(" " + _vm._s(_vm.fa.ITGUY_PHONE) + " ")
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { attrs: { colspan: "3" } }, [
+                        _vm._v(" " + _vm._s(_vm.fa.ACTIONS) + " ")
+                      ])
+                    ])
                   ]),
                   _vm._v(" "),
-                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.MANAGER_NAME) + " ")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.MANAGER_PHONE) + " ")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.ITGUY_NAME) + " ")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.ITGUY_PHONE) + " ")]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { colspan: "3" } }, [
-                    _vm._v(" " + _vm._s(_vm.fa.ACTIONS) + " ")
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.agencies, function(a, i) {
-                  return _c("tr", [
-                    _c("td", [_vm._v(" " + _vm._s(i + 1) + " ")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(a.name) + " ")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(a.latin_name) + " ")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(a.manager_name) + " ")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(a.manager_phone) + " ")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(a.itguy_name) + " ")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(a.itguy_phone) + " ")]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-success btn-sm",
-                          attrs: { href: "#/agency/" + a.id }
-                        },
-                        [
-                          _c("i", { staticClass: "mdi mdi-pencil ml-1" }),
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(_vm.fa.EDIT) +
-                              "\n                                "
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.agencies, function(a, i) {
+                      return _c("tr", [
+                        _c("td", [_vm._v(" " + _vm._s(i + 1) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(a.name) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(a.latin_name) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(a.manager_name) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(a.manager_phone) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(a.itguy_name) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(a.itguy_phone) + " ")]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-success btn-sm",
+                              attrs: { href: "#/agency/" + a.id }
+                            },
+                            [
+                              _c("i", { staticClass: "mdi mdi-pencil ml-1" }),
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(_vm.fa.EDIT) +
+                                  "\n                                "
+                              )
+                            ]
                           )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-danger btn-sm",
-                          attrs: { href: "javascript:void(0)" },
-                          on: {
-                            click: function($event) {
-                              return _vm.destroy(i)
-                            }
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "mdi mdi-delete ml-1" }),
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(_vm.fa.DELETE) +
-                              "\n                                "
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-danger btn-sm",
+                              attrs: { href: "javascript:void(0)" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.destroy(i)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "mdi mdi-delete ml-1" }),
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(_vm.fa.DELETE) +
+                                  "\n                                "
+                              )
+                            ]
                           )
-                        ]
-                      )
-                    ])
-                  ])
-                }),
-                0
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+                ]
               )
-            ]
-          )
+            ])
+          ])
         ])
-      ])
-    ]),
+      : _c("div", { staticClass: "alert alert-info" }, [
+          _c("i", { staticClass: "mdi mdi-alert" }),
+          _vm._v(" " + _vm._s(_vm.fa.NOTHING_FOUND) + "\n    ")
+        ]),
     _vm._v(" "),
     _c(
       "div",
@@ -37891,6 +38139,203 @@ var staticRenderFns = [
     )
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/sms/TextMessages.vue?vue&type=template&id=1a389d7a&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/sms/TextMessages.vue?vue&type=template&id=1a389d7a&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "page-head mt-4" }, [
+      _c("h4", [_vm._v(" " + _vm._s(_vm.fa.TEXT_MESSAGES_LIST) + " ")])
+    ]),
+    _vm._v(" "),
+    _vm.list.length
+      ? _c("div", { staticClass: "text-center mb-3" }, [
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-info",
+              attrs: { href: "javascript:void(0)" },
+              on: { click: _vm.refresh }
+            },
+            [
+              _c("i", { staticClass: "mdi mdi-comment-question-outline ml-1" }),
+              _vm._v(
+                "\n            " +
+                  _vm._s(_vm.fa.RECHECK_SMS_STATUS) +
+                  "\n        "
+              )
+            ]
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.list.length
+      ? _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "table-responsive" }, [
+              _c(
+                "table",
+                {
+                  staticClass:
+                    "table table-bordered table-striped table-hovered"
+                },
+                [
+                  _c("thead", [
+                    _c("tr", [
+                      _c("th", [_vm._v(" # ")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v(" " + _vm._s(_vm.fa.RECEPTOR) + " ")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v(" " + _vm._s(_vm.fa.TEXT) + " ")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v(" " + _vm._s(_vm.fa.SENT) + " ")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v(" " + _vm._s(_vm.fa.DATE) + " ")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v(" " + _vm._s(_vm.fa.TIME) + " ")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v(" " + _vm._s(_vm.fa.SENDER) + " ")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v(" " + _vm._s(_vm.fa.COST) + " ")]),
+                      _vm._v(" "),
+                      _c("th", { attrs: { colspan: "2" } }, [
+                        _vm._v(" " + _vm._s(_vm.fa.ACTIONS) + " ")
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.list, function(sms, i) {
+                      return _c("tr", [
+                        _c("td", [_vm._v(" " + _vm._s(i + 1) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(sms.receptor) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(sms.body) + " ")]),
+                        _vm._v(" "),
+                        _c("td", {
+                          domProps: {
+                            innerHTML: _vm._s(_vm.boolIcon(sms.sent))
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.persianDate(sms.created_at)) +
+                              "\n                            "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.getTime(sms.created_at)) +
+                              "\n                            "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          sms.sent
+                            ? _c("span", [_vm._v(_vm._s(sms.sender))])
+                            : _c("em", [
+                                _vm._v(" " + _vm._s(_vm.fa.NOT_SENT_YET) + " ")
+                              ])
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          sms.sent
+                            ? _c("span", [_vm._v(_vm._s(sms.cost + _vm.fa.T))])
+                            : _c("em", [
+                                _vm._v(" " + _vm._s(_vm.fa.NOT_SENT_YET) + " ")
+                              ])
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          sms.sent
+                            ? _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-info btn-sm",
+                                  attrs: { href: "javascript:void(0)" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.resend(i)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "mdi mdi-refresh ml-1"
+                                  }),
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(_vm.fa.RESEND) +
+                                      "\n                                "
+                                  )
+                                ]
+                              )
+                            : _c("em", [
+                                _vm._v(" " + _vm._s(_vm.fa.NOT_SENT_YET) + " ")
+                              ])
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-danger btn-sm",
+                              attrs: { href: "javascript:void(0)" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.destroy(i)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "mdi mdi-delete ml-1" }),
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(_vm.fa.DELETE) +
+                                  "\n                                "
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+                ]
+              )
+            ])
+          ])
+        ])
+      : _c("div", { staticClass: "alert alert-info" }, [
+          _c("i", { staticClass: "mdi mdi-alert" }),
+          _vm._v(" " + _vm._s(_vm.fa.NOTHING_FOUND) + "\n    ")
+        ])
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -38714,127 +39159,137 @@ var render = function() {
       _c("h4", [_vm._v(" " + _vm._s(_vm.fa.VISA_LIST) + " ")])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "table-responsive" }, [
-          _c(
-            "table",
-            { staticClass: "table table-bordered table-striped table-hovered" },
-            [
-              _c("thead", [
-                _c("tr", [
-                  _c("th", [_vm._v(" # ")]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(" " + _vm._s(_vm.fa.COUNTRY_FA_NAME) + " ")
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(" " + _vm._s(_vm.fa.COUNTRY_LATIN_NAME) + " ")
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.ISO_CODE) + " ")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v(" " + _vm._s(_vm.fa.COUNTRY_CODE) + " ")]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { colspan: "3" } }, [
-                    _vm._v(" " + _vm._s(_vm.fa.ACTIONS) + " ")
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
+    _vm.countries.length
+      ? _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "table-responsive" }, [
               _c(
-                "tbody",
-                _vm._l(_vm.countries, function(c, i) {
-                  return _c("tr", [
-                    _c("td", [_vm._v(" " + _vm._s(i + 1) + " ")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(c.fa_name) + " ")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(c.latin_name) + " ")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(c.iso_code) + " ")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(c.country_code) + " ")]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-info btn-sm",
-                          attrs: {
-                            href: "#",
-                            "data-toggle": "modal",
-                            "data-target": "#visa-list"
-                          },
-                          on: {
-                            click: function($event) {
-                              return _vm.getVisas(c.id)
-                            }
-                          }
-                        },
-                        [
-                          _c("i", {
-                            staticClass: "mdi mdi-format-list-bulleted ml-1"
-                          }),
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(_vm.fa.VISA_LIST) +
-                              "\n                                "
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-success btn-sm",
-                          attrs: { href: "#/visa/" + c.id }
-                        },
-                        [
-                          _c("i", { staticClass: "mdi mdi-pencil ml-1" }),
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(_vm.fa.EDIT) +
-                              "\n                                "
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-danger btn-sm",
-                          attrs: { href: "javascript:void(0)" },
-                          on: {
-                            click: function($event) {
-                              return _vm.destroy(i)
-                            }
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "mdi mdi-delete ml-1" }),
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(_vm.fa.DELETE) +
-                              "\n                                "
-                          )
-                        ]
-                      )
+                "table",
+                {
+                  staticClass:
+                    "table table-bordered table-striped table-hovered"
+                },
+                [
+                  _c("thead", [
+                    _c("tr", [
+                      _c("th", [_vm._v(" # ")]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(" " + _vm._s(_vm.fa.COUNTRY_FA_NAME) + " ")
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(" " + _vm._s(_vm.fa.COUNTRY_LATIN_NAME) + " ")
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v(" " + _vm._s(_vm.fa.ISO_CODE) + " ")]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(" " + _vm._s(_vm.fa.COUNTRY_CODE) + " ")
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { attrs: { colspan: "3" } }, [
+                        _vm._v(" " + _vm._s(_vm.fa.ACTIONS) + " ")
+                      ])
                     ])
-                  ])
-                }),
-                0
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.countries, function(c, i) {
+                      return _c("tr", [
+                        _c("td", [_vm._v(" " + _vm._s(i + 1) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(c.fa_name) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(c.latin_name) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(c.iso_code) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(c.country_code) + " ")]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-info btn-sm",
+                              attrs: {
+                                href: "#",
+                                "data-toggle": "modal",
+                                "data-target": "#visa-list"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.getVisas(c.id)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "mdi mdi-format-list-bulleted ml-1"
+                              }),
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(_vm.fa.VISA_LIST) +
+                                  "\n                                "
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-success btn-sm",
+                              attrs: { href: "#/visa/" + c.id }
+                            },
+                            [
+                              _c("i", { staticClass: "mdi mdi-pencil ml-1" }),
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(_vm.fa.EDIT) +
+                                  "\n                                "
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-danger btn-sm",
+                              attrs: { href: "javascript:void(0)" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.destroy(i)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "mdi mdi-delete ml-1" }),
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(_vm.fa.DELETE) +
+                                  "\n                                "
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+                ]
               )
-            ]
-          )
+            ])
+          ])
         ])
-      ])
-    ]),
+      : _c("div", { staticClass: "alert alert-info" }, [
+          _c("i", { staticClass: "mdi mdi-alert" }),
+          _vm._v(" " + _vm._s(_vm.fa.NOTHING_FOUND) + "\n    ")
+        ]),
     _vm._v(" "),
     _c(
       "div",
@@ -55514,15 +55969,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*******************************************************!*\
   !*** ./resources/js/components/acc/ManageAccount.vue ***!
   \*******************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ManageAccount_vue_vue_type_template_id_193e5fc2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ManageAccount.vue?vue&type=template&id=193e5fc2&scoped=true& */ "./resources/js/components/acc/ManageAccount.vue?vue&type=template&id=193e5fc2&scoped=true&");
 /* harmony import */ var _ManageAccount_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ManageAccount.vue?vue&type=script&lang=js& */ "./resources/js/components/acc/ManageAccount.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ManageAccount_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ManageAccount_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -55552,7 +56006,7 @@ component.options.__file = "resources/js/components/acc/ManageAccount.vue"
 /*!********************************************************************************!*\
   !*** ./resources/js/components/acc/ManageAccount.vue?vue&type=script&lang=js& ***!
   \********************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -55805,6 +56259,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/sms/TextMessages.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/sms/TextMessages.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TextMessages_vue_vue_type_template_id_1a389d7a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TextMessages.vue?vue&type=template&id=1a389d7a&scoped=true& */ "./resources/js/components/sms/TextMessages.vue?vue&type=template&id=1a389d7a&scoped=true&");
+/* harmony import */ var _TextMessages_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TextMessages.vue?vue&type=script&lang=js& */ "./resources/js/components/sms/TextMessages.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TextMessages_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TextMessages_vue_vue_type_template_id_1a389d7a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TextMessages_vue_vue_type_template_id_1a389d7a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "1a389d7a",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/sms/TextMessages.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/sms/TextMessages.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/sms/TextMessages.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TextMessages_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./TextMessages.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/sms/TextMessages.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TextMessages_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/sms/TextMessages.vue?vue&type=template&id=1a389d7a&scoped=true&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/sms/TextMessages.vue?vue&type=template&id=1a389d7a&scoped=true& ***!
+  \*************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TextMessages_vue_vue_type_template_id_1a389d7a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./TextMessages.vue?vue&type=template&id=1a389d7a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/sms/TextMessages.vue?vue&type=template&id=1a389d7a&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TextMessages_vue_vue_type_template_id_1a389d7a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TextMessages_vue_vue_type_template_id_1a389d7a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/visas/VisaForm.vue":
 /*!****************************************************!*\
   !*** ./resources/js/components/visas/VisaForm.vue ***!
@@ -55965,10 +56488,10 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************!*\
   !*** ./resources/lang/fa.json ***!
   \********************************/
-/*! exports provided: BRAND, LOGIN_TO_ACC, , USERNAME, USERNAME/EMAIL, PASSWORD, REMEMBER_ME, LOG_IN, FORGOT_PASSWORD, MANAGE_ACC, ARE_YOU_SURE, ITEM_DELETED, LAST_WEEK_CHART, UPDATE, LOGOUT, MAIN_MENU, OTHER_SETTINGS, LOADING, RECENT_SHOP_LIST, NEW_VISA, VISA_LIST, NEW_AGENCY, AGENCY_LIST, CONFIRM, ACTIONS, EDIT, DELETE, UPLOAD, YES, CANCEL, CHANGE_PASSWORD, NEW_PASSWORD, CONFIRM_NEW_PASSWORD, OLD_PASSWORD, TODAY_SELL_COUNT, TODAY_INCOME, TODAY_COUNSELING_SESSIONS, ACTIVE_VISA_COUNT, DASHBOARD, MAIN_DASHBOARD, MANAGE_VISA, MANAGE_AGENCIES, USERS, COUNSELING_SESSIONS, BANK_TRANSACTIONS, FACTORS, CONTRACTS, QUIZ_MAKER, MANAGE_SESSIONS, CUT_ACCESS, THIS_SESSION, SOME_SESSION_ELSE, MOBILE, TABLET, COMPUTER, LAST_ACTIVITY_DATE, COUNTRY_FA_NAME, COUNTRY_LATIN_NAME, ISO_CODE, COUNTRY_CODE, BRIEF_INFO, MAIN_PICTURE, FULL_INFO, LANG, LOCAL_NAME, GALLERY_PHOTOS, UPLOAD_PICTURES, THIS_WILL_BE_YOUR_MAIN_PICTURE, OTHER_PICTURES, PICTURE_NUMBER_X, NOT_REQUIRED, NEW_PICTURE, DEFINE_VISA_TYPE, NAME, LATIN_NAME, CONDITIONS, DOCUMENTS, ONLINE_SOPPING, ISSUANCE_TIME, ISSUANCE_STEPS, FIRST_PICTURE, VISA_TYPE, CHOOSE_QUIZ, QUIZ, AVAILABLE_COUNSELING, IN_TEXT, IN_TELEPHONE, IN_VIDEO, IN_PERSON, ADD_NEW_VISA, AGENCY_NAME, AGENCY_LATIN_NAME, MANAGER_NAME, MANAGER_PHONE, ITGUY_NAME, ITGUY_PHONE, LICENSE_TYPE, WEBSITE, EMAIL, ADDRESS, PHONES, UPLOAD_LOGO, DEFINE_USERS, ADD_NEW_USER, LAST_NAME, NATIONAL_CODE, USER_TYPE, AVAILABLE_LICENSES, RATE, PHONE, ABOUT_COUNSELER, TELEPHONE, ADD_NEW_TELEPHONE, COUNSELING_HOURS, SET_COUNSELING_HOURS, SET_AVAILABLE_VISAS, COUNSELER, MANAGER, VISA_NAME, VISA_LATIN_NAME, COUNTRY, SELECT, USER_LIST, ACCESS_LEVEL, ACTIVE, ADMIN, REGISTER_DATE, SHOP_COUNT, ORDERS_LIST, BEDEHKARI, BESTANKARI, ACTIVATE, INACTIVATE, EDIT_USER, DZ_MESSAGE, REMOVE_FILE, UPLOAD_A_FILE_AS_MAIN, UPLOAD_A_FILE_AS_LOGO, DZ_HELP, CANT_DELETE_ALL, NEW_EMPLOYEE_GUIDE, USER_IS_NOW_ACTIVE, USER_IS_NOW_INACTIVE, USER_UPDATED_SUCCESSFULLY, WRONG_OLD_PASSWORD, PASSWORDS_ARE_NOT_SAME, AT_LEAST_6_CHARACTERES_REQUIRED_FOR_NEW_PASSWORD, SESSION_DELETED, SATURDAY, SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THRSDAY, FRIDAY, default */
+/*! exports provided: BRAND, LOGIN_TO_ACC, , USERNAME, USERNAME/EMAIL, PASSWORD, REMEMBER_ME, LOG_IN, FORGOT_PASSWORD, MANAGE_ACC, ARE_YOU_SURE, ITEM_DELETED, LAST_WEEK_CHART, UPDATE, LOGOUT, MAIN_MENU, OTHER_SETTINGS, LOADING, RECENT_SHOP_LIST, NEW_VISA, VISA_LIST, NEW_AGENCY, AGENCY_LIST, CONFIRM, ACTIONS, EDIT, DELETE, UPLOAD, YES, CANCEL, CHANGE_PASSWORD, NEW_PASSWORD, CONFIRM_NEW_PASSWORD, OLD_PASSWORD, MANAGE_TEXT_MESSAGES, NOT_SENT_YET, RECEPTOR, TEXT, SENT, RESEND, SENDER, COST, T, DATE, TIME, TODAY_SELL_COUNT, TODAY_INCOME, TODAY_COUNSELING_SESSIONS, ACTIVE_VISA_COUNT, ARE_YOU_SURE_TO_RESEND, SMS_Q_TO_SENT, RECHECK_SMS_STATUS, TEXT_MESSAGES_LIST, DASHBOARD, MAIN_DASHBOARD, MANAGE_VISA, MANAGE_AGENCIES, USERS, COUNSELING_SESSIONS, BANK_TRANSACTIONS, FACTORS, CONTRACTS, QUIZ_MAKER, MANAGE_SESSIONS, CUT_ACCESS, THIS_SESSION, SOME_SESSION_ELSE, MOBILE, TABLET, COMPUTER, LAST_ACTIVITY_DATE, COUNTRY_FA_NAME, COUNTRY_LATIN_NAME, ISO_CODE, COUNTRY_CODE, BRIEF_INFO, MAIN_PICTURE, FULL_INFO, LANG, LOCAL_NAME, GALLERY_PHOTOS, UPLOAD_PICTURES, THIS_WILL_BE_YOUR_MAIN_PICTURE, OTHER_PICTURES, PICTURE_NUMBER_X, NOT_REQUIRED, NEW_PICTURE, DEFINE_VISA_TYPE, NAME, LATIN_NAME, CONDITIONS, DOCUMENTS, ONLINE_SOPPING, ISSUANCE_TIME, ISSUANCE_STEPS, FIRST_PICTURE, VISA_TYPE, CHOOSE_QUIZ, QUIZ, AVAILABLE_COUNSELING, IN_TEXT, IN_TELEPHONE, IN_VIDEO, IN_PERSON, ADD_NEW_VISA, AGENCY_NAME, AGENCY_LATIN_NAME, MANAGER_NAME, MANAGER_PHONE, ITGUY_NAME, ITGUY_PHONE, LICENSE_TYPE, WEBSITE, EMAIL, ADDRESS, PHONES, UPLOAD_LOGO, DEFINE_USERS, ADD_NEW_USER, LAST_NAME, NATIONAL_CODE, USER_TYPE, AVAILABLE_LICENSES, RATE, PHONE, ABOUT_COUNSELER, TELEPHONE, ADD_NEW_TELEPHONE, COUNSELING_HOURS, SET_COUNSELING_HOURS, SET_AVAILABLE_VISAS, COUNSELER, MANAGER, VISA_NAME, VISA_LATIN_NAME, COUNTRY, SELECT, USER_LIST, ACCESS_LEVEL, ACTIVE, ADMIN, REGISTER_DATE, SHOP_COUNT, ORDERS_LIST, BEDEHKARI, BESTANKARI, ACTIVATE, INACTIVATE, EDIT_USER, NOTHING_FOUND, DZ_MESSAGE, REMOVE_FILE, UPLOAD_A_FILE_AS_MAIN, UPLOAD_A_FILE_AS_LOGO, DZ_HELP, CANT_DELETE_ALL, NEW_EMPLOYEE_GUIDE, USER_IS_NOW_ACTIVE, USER_IS_NOW_INACTIVE, USER_UPDATED_SUCCESSFULLY, WRONG_OLD_PASSWORD, PASSWORDS_ARE_NOT_SAME, AT_LEAST_6_CHARACTERES_REQUIRED_FOR_NEW_PASSWORD, SESSION_DELETED, CHANGE_PASSWORD_GUIDE, CONFIRM_AND_CHANGE_PWASSWORD, USER_PASS_CHANGED_AND_NOTIFIED_VIA_SMS, USER_PASS_CHANGED_BUT_NOT_NOTIFIED_VIA_SMS, NEW_PASSWORD_IS, SATURDAY, SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THRSDAY, FRIDAY, PASSWORD_CHANGED_SMS, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"BRAND\":\"سفر به راه\",\"LOGIN_TO_ACC\":\"ورود به حساب کاربری\",\"\":\"\",\"USERNAME\":\"نام کاربری\",\"USERNAME/EMAIL\":\"نام کاربری یا ایمیل\",\"PASSWORD\":\"رمزعبور\",\"REMEMBER_ME\":\"مرا به خاطر بسپار\",\"LOG_IN\":\"ورود به حساب\",\"FORGOT_PASSWORD\":\"فراموشی رمزعبور\",\"MANAGE_ACC\":\"مدیریت حساب کاربری\",\"ARE_YOU_SURE\":\"آیا مطمئن هستید\",\"ITEM_DELETED\":\"آیتم مورد نظر با موفقیت حذف شد.\",\"LAST_WEEK_CHART\":\"چارت هفته گذشته\",\"UPDATE\":\"به روز رسانی\",\"LOGOUT\":\"خروج\",\"MAIN_MENU\":\"منوی اصلی\",\"OTHER_SETTINGS\":\"سایر تنظیمات\",\"LOADING\":\"در حال بارگذاری...\",\"RECENT_SHOP_LIST\":\"لیست آخرین خرید ها\",\"NEW_VISA\":\"تعریف ویزا\",\"VISA_LIST\":\"لیست ویزا ها\",\"NEW_AGENCY\":\"تعریف آژانس\",\"AGENCY_LIST\":\"لیست آژانس ها\",\"CONFIRM\":\"تایید\",\"ACTIONS\":\"عملیات\",\"EDIT\":\"ویرایش\",\"DELETE\":\"حذف\",\"UPLOAD\":\"آپلود\",\"YES\":\"بله\",\"CANCEL\":\"انصراف\",\"CHANGE_PASSWORD\":\"تغییر گذرواژه\",\"NEW_PASSWORD\":\"رمزعبور جدید\",\"CONFIRM_NEW_PASSWORD\":\"تکرار رمزعبور جدید\",\"OLD_PASSWORD\":\"رمزعبور قبلی\",\"TODAY_SELL_COUNT\":\"تعداد فروش امروز\",\"TODAY_INCOME\":\"دریافتی های امروز\",\"TODAY_COUNSELING_SESSIONS\":\"جلسات مشاوره امروز\",\"ACTIVE_VISA_COUNT\":\"تعداد ویزا های فعال\",\"DASHBOARD\":\"داشبورد\",\"MAIN_DASHBOARD\":\"داشبورد اصلی\",\"MANAGE_VISA\":\"مدیریت ویزا\",\"MANAGE_AGENCIES\":\"مدیریت آژانس ها\",\"USERS\":\"کاربران\",\"COUNSELING_SESSIONS\":\"جلسات مشاوره\",\"BANK_TRANSACTIONS\":\"تراکنش های بانکی\",\"FACTORS\":\"فاکتور ها\",\"CONTRACTS\":\"قرارداد ها\",\"QUIZ_MAKER\":\"آزمون ساز\",\"MANAGE_SESSIONS\":\"مدیریت نشست ها\",\"CUT_ACCESS\":\"قطع دسترسی\",\"THIS_SESSION\":\"همین نشست\",\"SOME_SESSION_ELSE\":\"نشست دیگر\",\"MOBILE\":\"موبایل\",\"TABLET\":\"تبلت\",\"COMPUTER\":\"رایانه\",\"LAST_ACTIVITY_DATE\":\"تاریخ آخرین فعالیت\",\"COUNTRY_FA_NAME\":\"نام کشور به فارسی\",\"COUNTRY_LATIN_NAME\":\"نام کشور به لاتین\",\"ISO_CODE\":\"کد دو حرفی ISO\",\"COUNTRY_CODE\":\"پیش شماره کشور\",\"BRIEF_INFO\":\"توضیحات مختصر\",\"MAIN_PICTURE\":\"تصویر اصلی\",\"FULL_INFO\":\"توضیحات کامل\",\"LANG\":\"زبان\",\"LOCAL_NAME\":\"نام محلی\",\"GALLERY_PHOTOS\":\"گالری تصاویر\",\"UPLOAD_PICTURES\":\"آپلود تصاویر\",\"THIS_WILL_BE_YOUR_MAIN_PICTURE\":\"این تصویر، تصویر اصلی شما خواهد بود\",\"OTHER_PICTURES\":\"سایر تصاویر\",\"PICTURE_NUMBER_X\":\"تصویر شماره \",\"NOT_REQUIRED\":\"اختیاری\",\"NEW_PICTURE\":\"اضافه کردن تصویر جدید\",\"DEFINE_VISA_TYPE\":\"تعریف انواع ویزا\",\"NAME\":\"نام\",\"LATIN_NAME\":\"نام لاتین\",\"CONDITIONS\":\"شرایط\",\"DOCUMENTS\":\"مدارک\",\"ONLINE_SOPPING\":\"خریدآنلاین\",\"ISSUANCE_TIME\":\"زمان صدور\",\"ISSUANCE_STEPS\":\"مراحل صدور\",\"FIRST_PICTURE\":\"تصویر اول\",\"VISA_TYPE\":\"نوع ویزا\",\"CHOOSE_QUIZ\":\"انتخاب آزمون\",\"QUIZ\":\"آزمون\",\"AVAILABLE_COUNSELING\":\"نوع مشاوره های در دسترس\",\"IN_TEXT\":\"متنی\",\"IN_TELEPHONE\":\"تلفنی\",\"IN_VIDEO\":\"تصویری\",\"IN_PERSON\":\"حضوری\",\"ADD_NEW_VISA\":\"اضافه کردن ویزا جدید\",\"AGENCY_NAME\":\"نام آژانس\",\"AGENCY_LATIN_NAME\":\"نام آژانس به لاتین\",\"MANAGER_NAME\":\"نام مدیر\",\"MANAGER_PHONE\":\"شماره مدیر\",\"ITGUY_NAME\":\"نام مسئول IT\",\"ITGUY_PHONE\":\"شماره مسئول IT\",\"LICENSE_TYPE\":\"نوع مجوز\",\"WEBSITE\":\"وبسایت\",\"EMAIL\":\"ایمیل\",\"ADDRESS\":\"آدرس\",\"PHONES\":\"شماره تماس ها\",\"UPLOAD_LOGO\":\"آپلود لوگو\",\"DEFINE_USERS\":\"تعریف کاربران\",\"ADD_NEW_USER\":\"تعریف کاربر جدید\",\"LAST_NAME\":\"نام خانوادگی\",\"NATIONAL_CODE\":\"کدملی\",\"USER_TYPE\":\"نوع کاربری\",\"AVAILABLE_LICENSES\":\"ویزاهای مجاز\",\"RATE\":\"Rate & Review\",\"PHONE\":\"شماره موبایل\",\"ABOUT_COUNSELER\":\"درباره مشاور\",\"TELEPHONE\":\"تلفن\",\"ADD_NEW_TELEPHONE\":\"تلفن جدید\",\"COUNSELING_HOURS\":\"ساعات مشاوره\",\"SET_COUNSELING_HOURS\":\"تنظیم ساعات مشاوره\",\"SET_AVAILABLE_VISAS\":\"انتخاب ویزاهای مجاز\",\"COUNSELER\":\"مشاور\",\"MANAGER\":\"مدیر\",\"VISA_NAME\":\"نام ویزا\",\"VISA_LATIN_NAME\":\"نام لاتین ویزا\",\"COUNTRY\":\"کشور\",\"SELECT\":\"انتخاب\",\"USER_LIST\":\"لیست کاربران\",\"ACCESS_LEVEL\":\"سطح دسترسی\",\"ACTIVE\":\"فعال\",\"ADMIN\":\"ادمین\",\"REGISTER_DATE\":\"تاریخ ثبت نام\",\"SHOP_COUNT\":\"تعداد خرید\",\"ORDERS_LIST\":\"لیست سفارشات\",\"BEDEHKARI\":\"بدهکاری\",\"BESTANKARI\":\"بستانکاری\",\"ACTIVATE\":\"فعال سازی\",\"INACTIVATE\":\"غیرفعال سازی\",\"EDIT_USER\":\"ویرایش کاربر\",\"DZ_MESSAGE\":\"برای آپلود یا کلیک کنید، یا فایل مورد نظر را اینجا درگ کنید\",\"REMOVE_FILE\":\"حذف فایل\",\"UPLOAD_A_FILE_AS_MAIN\":\"لطفا یک فایل را جهت استفاده به عنوان تصویر اصلی آپلود کنید.\",\"UPLOAD_A_FILE_AS_LOGO\":\"لطفا تصویر مربوط به لوگو را بارگذاری کنید.\",\"DZ_HELP\":\"با کلیک مجدد میتوانید بیش از یک فایل آپلود کنید.\",\"CANT_DELETE_ALL\":\"همه موارد را نمیتوان حذف کرد\",\"NEW_EMPLOYEE_GUIDE\":\"پس از اینکه کاربر در سیستم تعریف شد، نام کاربری ایمیل شخص و رمزعبور کدملی او خواهد بود\",\"USER_IS_NOW_ACTIVE\":\"کاربر مورد نظر فعال شد\",\"USER_IS_NOW_INACTIVE\":\"کاربر مورد نظر غیرفعال شد\",\"USER_UPDATED_SUCCESSFULLY\":\"کاربر مورد نظر با موفقیت ویرایش شد.\",\"WRONG_OLD_PASSWORD\":\"رمزعبور قبلی اشتباه است\",\"PASSWORDS_ARE_NOT_SAME\":\"رمزعبور جدید با تکرار رمزعبور جدید همخوانی ندارد\",\"AT_LEAST_6_CHARACTERES_REQUIRED_FOR_NEW_PASSWORD\":\"حداقل 6 کاراکتر برای رمز عبور جدید نیاز است.\",\"SESSION_DELETED\":\"نشست موردنظر حذف شد.\",\"SATURDAY\":\"شنبه\",\"SUNDAY\":\"یکشنبه\",\"MONDAY\":\"دوشنبه\",\"TUESDAY\":\"سه شنبه\",\"WEDNESDAY\":\"چهارشنبه\",\"THRSDAY\":\"پنجشنبه\",\"FRIDAY\":\"جمعه\"}");
+module.exports = JSON.parse("{\"BRAND\":\"سفر به راه\",\"LOGIN_TO_ACC\":\"ورود به حساب کاربری\",\"\":\"\",\"USERNAME\":\"نام کاربری\",\"USERNAME/EMAIL\":\"نام کاربری یا ایمیل\",\"PASSWORD\":\"رمزعبور\",\"REMEMBER_ME\":\"مرا به خاطر بسپار\",\"LOG_IN\":\"ورود به حساب\",\"FORGOT_PASSWORD\":\"فراموشی رمزعبور\",\"MANAGE_ACC\":\"مدیریت حساب کاربری\",\"ARE_YOU_SURE\":\"آیا مطمئن هستید\",\"ITEM_DELETED\":\"آیتم مورد نظر با موفقیت حذف شد.\",\"LAST_WEEK_CHART\":\"چارت هفته گذشته\",\"UPDATE\":\"به روز رسانی\",\"LOGOUT\":\"خروج\",\"MAIN_MENU\":\"منوی اصلی\",\"OTHER_SETTINGS\":\"سایر تنظیمات\",\"LOADING\":\"در حال بارگذاری...\",\"RECENT_SHOP_LIST\":\"لیست آخرین خرید ها\",\"NEW_VISA\":\"تعریف ویزا\",\"VISA_LIST\":\"لیست ویزا ها\",\"NEW_AGENCY\":\"تعریف آژانس\",\"AGENCY_LIST\":\"لیست آژانس ها\",\"CONFIRM\":\"تایید\",\"ACTIONS\":\"عملیات\",\"EDIT\":\"ویرایش\",\"DELETE\":\"حذف\",\"UPLOAD\":\"آپلود\",\"YES\":\"بله\",\"CANCEL\":\"انصراف\",\"CHANGE_PASSWORD\":\"تغییر رمز\",\"NEW_PASSWORD\":\"رمزعبور جدید\",\"CONFIRM_NEW_PASSWORD\":\"تکرار رمزعبور جدید\",\"OLD_PASSWORD\":\"رمزعبور قبلی\",\"MANAGE_TEXT_MESSAGES\":\"مدیریت پیامک ها\",\"NOT_SENT_YET\":\"هنوز ارسال نشده\",\"RECEPTOR\":\"دریافت کننده\",\"TEXT\":\"متن\",\"SENT\":\"ارسال شده\",\"RESEND\":\"ارسال مجدد\",\"SENDER\":\"ارسال کننده\",\"COST\":\"هزینه\",\"T\":\"ت\",\"DATE\":\"تاریخ\",\"TIME\":\"زمان\",\"TODAY_SELL_COUNT\":\"تعداد فروش امروز\",\"TODAY_INCOME\":\"دریافتی های امروز\",\"TODAY_COUNSELING_SESSIONS\":\"جلسات مشاوره امروز\",\"ACTIVE_VISA_COUNT\":\"تعداد ویزا های فعال\",\"ARE_YOU_SURE_TO_RESEND\":\"از ارسال مجدد پیامک اطمینان دارید؟\",\"SMS_Q_TO_SENT\":\"پیامک در صف ارسال قرار گرفت\",\"RECHECK_SMS_STATUS\":\"بررسی مجدد وضعیت پیامک ها\",\"TEXT_MESSAGES_LIST\":\"لیست پیامک های ارسالی\",\"DASHBOARD\":\"داشبورد\",\"MAIN_DASHBOARD\":\"داشبورد اصلی\",\"MANAGE_VISA\":\"مدیریت ویزا\",\"MANAGE_AGENCIES\":\"مدیریت آژانس ها\",\"USERS\":\"کاربران\",\"COUNSELING_SESSIONS\":\"جلسات مشاوره\",\"BANK_TRANSACTIONS\":\"تراکنش های بانکی\",\"FACTORS\":\"فاکتور ها\",\"CONTRACTS\":\"قرارداد ها\",\"QUIZ_MAKER\":\"آزمون ساز\",\"MANAGE_SESSIONS\":\"مدیریت نشست ها\",\"CUT_ACCESS\":\"قطع دسترسی\",\"THIS_SESSION\":\"همین نشست\",\"SOME_SESSION_ELSE\":\"نشست دیگر\",\"MOBILE\":\"موبایل\",\"TABLET\":\"تبلت\",\"COMPUTER\":\"رایانه\",\"LAST_ACTIVITY_DATE\":\"تاریخ آخرین فعالیت\",\"COUNTRY_FA_NAME\":\"نام کشور به فارسی\",\"COUNTRY_LATIN_NAME\":\"نام کشور به لاتین\",\"ISO_CODE\":\"کد دو حرفی ISO\",\"COUNTRY_CODE\":\"پیش شماره کشور\",\"BRIEF_INFO\":\"توضیحات مختصر\",\"MAIN_PICTURE\":\"تصویر اصلی\",\"FULL_INFO\":\"توضیحات کامل\",\"LANG\":\"زبان\",\"LOCAL_NAME\":\"نام محلی\",\"GALLERY_PHOTOS\":\"گالری تصاویر\",\"UPLOAD_PICTURES\":\"آپلود تصاویر\",\"THIS_WILL_BE_YOUR_MAIN_PICTURE\":\"این تصویر، تصویر اصلی شما خواهد بود\",\"OTHER_PICTURES\":\"سایر تصاویر\",\"PICTURE_NUMBER_X\":\"تصویر شماره \",\"NOT_REQUIRED\":\"اختیاری\",\"NEW_PICTURE\":\"اضافه کردن تصویر جدید\",\"DEFINE_VISA_TYPE\":\"تعریف انواع ویزا\",\"NAME\":\"نام\",\"LATIN_NAME\":\"نام لاتین\",\"CONDITIONS\":\"شرایط\",\"DOCUMENTS\":\"مدارک\",\"ONLINE_SOPPING\":\"خریدآنلاین\",\"ISSUANCE_TIME\":\"زمان صدور\",\"ISSUANCE_STEPS\":\"مراحل صدور\",\"FIRST_PICTURE\":\"تصویر اول\",\"VISA_TYPE\":\"نوع ویزا\",\"CHOOSE_QUIZ\":\"انتخاب آزمون\",\"QUIZ\":\"آزمون\",\"AVAILABLE_COUNSELING\":\"نوع مشاوره های در دسترس\",\"IN_TEXT\":\"متنی\",\"IN_TELEPHONE\":\"تلفنی\",\"IN_VIDEO\":\"تصویری\",\"IN_PERSON\":\"حضوری\",\"ADD_NEW_VISA\":\"اضافه کردن ویزا جدید\",\"AGENCY_NAME\":\"نام آژانس\",\"AGENCY_LATIN_NAME\":\"نام آژانس به لاتین\",\"MANAGER_NAME\":\"نام مدیر\",\"MANAGER_PHONE\":\"شماره مدیر\",\"ITGUY_NAME\":\"نام مسئول IT\",\"ITGUY_PHONE\":\"شماره مسئول IT\",\"LICENSE_TYPE\":\"نوع مجوز\",\"WEBSITE\":\"وبسایت\",\"EMAIL\":\"ایمیل\",\"ADDRESS\":\"آدرس\",\"PHONES\":\"شماره تماس ها\",\"UPLOAD_LOGO\":\"آپلود لوگو\",\"DEFINE_USERS\":\"تعریف کاربران\",\"ADD_NEW_USER\":\"تعریف کاربر جدید\",\"LAST_NAME\":\"نام خانوادگی\",\"NATIONAL_CODE\":\"کدملی\",\"USER_TYPE\":\"نوع کاربری\",\"AVAILABLE_LICENSES\":\"ویزاهای مجاز\",\"RATE\":\"Rate & Review\",\"PHONE\":\"شماره موبایل\",\"ABOUT_COUNSELER\":\"درباره مشاور\",\"TELEPHONE\":\"تلفن\",\"ADD_NEW_TELEPHONE\":\"تلفن جدید\",\"COUNSELING_HOURS\":\"ساعات مشاوره\",\"SET_COUNSELING_HOURS\":\"تنظیم ساعات مشاوره\",\"SET_AVAILABLE_VISAS\":\"انتخاب ویزاهای مجاز\",\"COUNSELER\":\"مشاور\",\"MANAGER\":\"مدیر\",\"VISA_NAME\":\"نام ویزا\",\"VISA_LATIN_NAME\":\"نام لاتین ویزا\",\"COUNTRY\":\"کشور\",\"SELECT\":\"انتخاب\",\"USER_LIST\":\"لیست کاربران\",\"ACCESS_LEVEL\":\"سطح دسترسی\",\"ACTIVE\":\"فعال\",\"ADMIN\":\"ادمین\",\"REGISTER_DATE\":\"تاریخ ثبت نام\",\"SHOP_COUNT\":\"تعداد خرید\",\"ORDERS_LIST\":\"لیست سفارشات\",\"BEDEHKARI\":\"بدهکاری\",\"BESTANKARI\":\"بستانکاری\",\"ACTIVATE\":\"فعال سازی\",\"INACTIVATE\":\"غیرفعال سازی\",\"EDIT_USER\":\"ویرایش کاربر\",\"NOTHING_FOUND\":\"موردی یافت نشد!\",\"DZ_MESSAGE\":\"برای آپلود یا کلیک کنید، یا فایل مورد نظر را اینجا درگ کنید\",\"REMOVE_FILE\":\"حذف فایل\",\"UPLOAD_A_FILE_AS_MAIN\":\"لطفا یک فایل را جهت استفاده به عنوان تصویر اصلی آپلود کنید.\",\"UPLOAD_A_FILE_AS_LOGO\":\"لطفا تصویر مربوط به لوگو را بارگذاری کنید.\",\"DZ_HELP\":\"با کلیک مجدد میتوانید بیش از یک فایل آپلود کنید.\",\"CANT_DELETE_ALL\":\"همه موارد را نمیتوان حذف کرد\",\"NEW_EMPLOYEE_GUIDE\":\"پس از اینکه کاربر در سیستم تعریف شد، نام کاربری ایمیل شخص و رمزعبور کدملی او خواهد بود\",\"USER_IS_NOW_ACTIVE\":\"کاربر مورد نظر فعال شد\",\"USER_IS_NOW_INACTIVE\":\"کاربر مورد نظر غیرفعال شد\",\"USER_UPDATED_SUCCESSFULLY\":\"کاربر مورد نظر با موفقیت ویرایش شد.\",\"WRONG_OLD_PASSWORD\":\"رمزعبور قبلی اشتباه است\",\"PASSWORDS_ARE_NOT_SAME\":\"رمزعبور جدید با تکرار رمزعبور جدید همخوانی ندارد\",\"AT_LEAST_6_CHARACTERES_REQUIRED_FOR_NEW_PASSWORD\":\"حداقل 6 کاراکتر برای رمز عبور جدید نیاز است.\",\"SESSION_DELETED\":\"نشست موردنظر حذف شد.\",\"CHANGE_PASSWORD_GUIDE\":\"در صورت تایید، سیستم یک رمز 6 رقمی تولید میکند و رمز جدید را برای کاربر پیامک خواهد کرد.\",\"CONFIRM_AND_CHANGE_PWASSWORD\":\"تایید و تغییر رمزعبور\",\"USER_PASS_CHANGED_AND_NOTIFIED_VIA_SMS\":\"رمزعبور کاربر تغییر یافت و از طریق پیامک برای کاربر ارسال شد.\",\"USER_PASS_CHANGED_BUT_NOT_NOTIFIED_VIA_SMS\":\"رمزعبور کاربر تغییر یافت، اما از آنجایی که برای این کاربر شماره موبایل تعریف نشده، پیامکی ارسال نشد.\",\"NEW_PASSWORD_IS\":\"رمز جدید : \",\"SATURDAY\":\"شنبه\",\"SUNDAY\":\"یکشنبه\",\"MONDAY\":\"دوشنبه\",\"TUESDAY\":\"سه شنبه\",\"WEDNESDAY\":\"چهارشنبه\",\"THRSDAY\":\"پنجشنبه\",\"FRIDAY\":\"جمعه\",\"PASSWORD_CHANGED_SMS\":\"با سلام. کاربر محترم رمز شما در سفر به راه با موفقیت عوض شد. رمز جدید = :pass\"}");
 
 /***/ }),
 

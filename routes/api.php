@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 // user account control
 Route::get('user/current', 'AccController@currentUser');
+Route::post('user/change-password/{user}', 'AccController@changePasswordByAdmin');
 Route::get('user/all', 'AccController@allUsers');
 Route::post('user/change-activation-status/{user}', 'AccController@changeActivationStatus');
 Route::put('user/update-password/{user}', 'AccController@updatePassword');
@@ -31,6 +32,12 @@ Route::get('/agency/get/{aid}', 'AgencyController@getAgency');
 // gallery
 Route::post('gallery/upload', 'GalleryController@upload');
 Route::post('gallery/delete', 'GalleryController@clearFile');
+
+// text-message
+Route::get('sms/index', 'TextMessageController@index');
+Route::post('sms/store', 'TextMessageController@store');
+Route::post('sms/resend/{id}', 'TextMessageController@resend');
+Route::delete('sms/{id}', 'TextMessageController@destroy');
 
 
 // agency and users

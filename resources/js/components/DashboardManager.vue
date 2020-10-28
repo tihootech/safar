@@ -14,6 +14,7 @@
     import AgencyForm from './agencies/AgencyForm.vue';
     import ManageAccount from './acc/ManageAccount.vue';
     import UserList from './acc/UserList.vue';
+    import TextMessages from './sms/TextMessages.vue';
 
     export default {
         router : new VueRouter ({
@@ -56,6 +57,11 @@
                     path : '/user-list',
                     component : UserList,
                     name : 'user-list'
+                },
+                {
+                    path : '/text-messages',
+                    component : TextMessages,
+                    name : 'text-messages'
                 },
             ]
         }),

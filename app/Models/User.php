@@ -26,6 +26,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
         'type',
     ];
@@ -76,5 +77,15 @@ class User extends Authenticatable
      public function isAdmin()
      {
          return $this->type == 'ADMIN';
+     }
+
+     public function isMnager()
+     {
+         return $this->type == 'MANAGER';
+     }
+
+     public function isCounseler()
+     {
+         return $this->type == 'COUNSELER';
      }
 }

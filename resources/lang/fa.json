@@ -37,13 +37,27 @@
     "NEW_PASSWORD" : "رمزعبور جدید",
     "CONFIRM_NEW_PASSWORD" : "تکرار رمزعبور جدید",
     "OLD_PASSWORD" : "رمزعبور قبلی",
-    "" : "",
+    "MANAGE_TEXT_MESSAGES" : "مدیریت پیامک ها",
+    "NOT_SENT_YET" : "هنوز ارسال نشده",
+    "RECEPTOR" : "دریافت کننده",
+    "TEXT" : "متن",
+    "SENT" : "ارسال شده",
+    "RESEND" : "ارسال مجدد",
+    "SENDER" : "ارسال کننده",
+    "COST" : "هزینه",
+    "T" : "ت",
+    "DATE" : "تاریخ",
+    "TIME" : "زمان",
 
 
     "TODAY_SELL_COUNT" : "تعداد فروش امروز",
     "TODAY_INCOME" : "دریافتی های امروز",
     "TODAY_COUNSELING_SESSIONS" : "جلسات مشاوره امروز",
     "ACTIVE_VISA_COUNT" : "تعداد ویزا های فعال",
+    "ARE_YOU_SURE_TO_RESEND" : "از ارسال مجدد پیامک اطمینان دارید؟",
+    "SMS_Q_TO_SENT" : "پیامک در صف ارسال قرار گرفت",
+    "RECHECK_SMS_STATUS" : "بررسی مجدد وضعیت پیامک ها",
+    "TEXT_MESSAGES_LIST" : "لیست پیامک های ارسالی",
 
 
     "DASHBOARD" : "داشبورد",
@@ -145,6 +159,8 @@
     "ACTIVATE" : "فعال سازی",
     "INACTIVATE" : "غیرفعال سازی",
     "EDIT_USER" : "ویرایش کاربر",
+    "CHANGE_PASSWORD" : "تغییر رمز",
+    "NOTHING_FOUND" : "موردی یافت نشد!",
 
 
     "DZ_MESSAGE": "برای آپلود یا کلیک کنید، یا فایل مورد نظر را اینجا درگ کنید",
@@ -166,6 +182,11 @@
     "PASSWORDS_ARE_NOT_SAME" : "رمزعبور جدید با تکرار رمزعبور جدید همخوانی ندارد",
     "AT_LEAST_6_CHARACTERES_REQUIRED_FOR_NEW_PASSWORD" : "حداقل 6 کاراکتر برای رمز عبور جدید نیاز است.",
     "SESSION_DELETED" : "نشست موردنظر حذف شد.",
+    "CHANGE_PASSWORD_GUIDE" : "در صورت تایید، سیستم یک رمز 6 رقمی تولید میکند و رمز جدید را برای کاربر پیامک خواهد کرد.",
+    "CONFIRM_AND_CHANGE_PWASSWORD" : "تایید و تغییر رمزعبور",
+    "USER_PASS_CHANGED_AND_NOTIFIED_VIA_SMS" : "رمزعبور کاربر تغییر یافت و از طریق پیامک برای کاربر ارسال شد.",
+    "USER_PASS_CHANGED_BUT_NOT_NOTIFIED_VIA_SMS" : "رمزعبور کاربر تغییر یافت، اما از آنجایی که برای این کاربر شماره موبایل تعریف نشده، پیامکی ارسال نشد.",
+    "NEW_PASSWORD_IS" : "رمز جدید : ",
 
 
     "SATURDAY" : "شنبه",
@@ -176,6 +197,8 @@
     "THRSDAY" : "پنجشنبه",
     "FRIDAY" : "جمعه",
 
+
+    "PASSWORD_CHANGED_SMS" : "با سلام. کاربر محترم رمز شما در سفر به راه با موفقیت عوض شد. رمز جدید = :pass",
 
     "" : ""
 }

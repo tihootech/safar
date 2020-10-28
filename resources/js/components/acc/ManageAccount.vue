@@ -40,7 +40,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4 my-2" v-for="s,i in user.sessions">
-                        <div class="card bg-info text-light text-center">
+                        <div class="card bg-primary text-light text-center">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
                                     <h5 class="d-inline"> <small>IP :</small> <b>{{s.ip_address}}</b> </h5>
@@ -118,7 +118,6 @@ export default {
                 if (res.data.errors && res.data.errors.length) {
                     swalValidationErrors(res.data.errors);
                 }else if (res.data.success) {
-                    console.log('rrr');
                     redirect('login');
                 }
             });

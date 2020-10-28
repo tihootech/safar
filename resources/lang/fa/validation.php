@@ -129,6 +129,7 @@ return array(
         'employees.*.rate' => 'ارزیابی کاربر',
         'employees.*.national_code' => 'کدملی کاربر',
         'employees.*.email' => 'ایمیل کاربر',
+        'employees.*.phone' => 'موبایل کاربر',
         'employees.*.access_type' => 'سطح دسترسی کاربر',
 
 
